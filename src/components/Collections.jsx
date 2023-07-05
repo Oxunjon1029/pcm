@@ -184,11 +184,6 @@ const Collections = ({
         gap: '20px',
         margin: '0 auto',
       }}>
-      <img
-        src={DefaultImage}
-        alt='something'
-        style={{ width: '20%', height: '20%' }}
-      />
       <Box
         sx={{
           display: 'flex',
@@ -245,9 +240,8 @@ const Collections = ({
                     component='img'
                     height='140'
                     alt='Something'
-                    src={DefaultImage}
                     image={
-                      collection?.imageUrl ? collection?.imageUrl : DefaultImage
+                      collection?.imageUrl || DefaultImage
                     }
                   />
                 )}

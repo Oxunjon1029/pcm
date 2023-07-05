@@ -1,6 +1,6 @@
 import { getCookie } from "./cookies"
 
-export const baseUrl = 'http://localhost:4000'
+export const baseUrl = 'pcmback-production.up.railway.app'
 export const TOKEN = 'PCM_TOKEN'
 const token = getCookie(TOKEN)
 export const headers = {

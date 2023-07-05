@@ -240,6 +240,9 @@ const Collections = ({
                     component='img'
                     height='140'
                     alt='Something'
+                    src={
+                      collection?.imageUrl ? collection?.imageUrl : DefaultImage
+                    }
                     image={
                       collection?.imageUrl ? collection?.imageUrl : DefaultImage
                     }

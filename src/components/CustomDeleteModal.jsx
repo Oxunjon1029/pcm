@@ -7,7 +7,6 @@ import {
   DialogActions,
 } from '@mui/material';
 import React from 'react';
-// import { deleteCookie } from '../utils/cookies';
 
 const CustomDeleteModal = ({
   open,

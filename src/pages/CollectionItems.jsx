@@ -25,7 +25,7 @@ const CollectionItems = ({ lang }) => {
   const collectionId = location.state.collectionId;
   const collectionItemName = location.state.itemName;
   const collectionItemsByTagSearch = location.state.collectionItems;
-  
+
   const { data: collectionItemsByCollectionId, isLoading } =
     useGetAllCollectionItemsByCollectionIdQuery(collectionId);
   const { data: allCollectionItems } = useGetAllCollectionItemsQuery();
@@ -181,7 +181,16 @@ const CollectionItems = ({ lang }) => {
           alignItems: { sm: 'center' },
         }}>
         {isLoading || createLoading || updateLoading || deleteLoading ? (
-          <Loader />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+              width: '100%',
+            }}>
+            <Loader />
+          </Box>
         ) : (
           <Items
             user={user}

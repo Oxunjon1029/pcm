@@ -13,6 +13,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
+import { deleteCookie } from '../utils/cookies';
+import { TOKEN } from '../utils/host';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/user/userSlice';
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -64,6 +68,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSearchModal, setOpenSearchModal] = React.useState(false);
+  const user = useSelector(selectUser);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -107,7 +112,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
           <Box
             sx={{
               display: 'flex',
-              gap: '20px',
+              gap: { xs: '20px', md: '40px', lg: '20px' },
               justifyContent: 'center',
               alignItems: 'center',
               height: '70px',
@@ -179,6 +184,16 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                   }}>
                   Login
                 </MenuItem>
+                {user && (
+                  <MenuItem
+                    onClick={() => {
+                      deleteCookie(TOKEN);
+                      navigate('/login');
+                      handleClose();
+                    }}>
+                    Logout
+                  </MenuItem>
+                )}
                 <MenuItem
                   selected={location.pathname === '/user-profile'}
                   onClick={() => {

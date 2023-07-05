@@ -10,11 +10,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { CardHeader, CardMedia } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Button, CardHeader, CardMedia } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../features/user/userSlice';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import {
   useDeleteCollectionMutation,
   useGetS3UrlQuery,
@@ -36,6 +35,7 @@ const Collections = ({
 }) => {
   const { data: s3url, isSuccess: isS3urlSuccess } = useGetS3UrlQuery();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const url = useSelector(selectUrl);
   const [file, setFile] = useState({});
   const [editMode, setEditMode] = useState('');
@@ -132,7 +132,6 @@ const Collections = ({
             },
             imageUrl: (await url) ? await url?.split('?')[0] : values?.imageUrl,
           };
-          console.log(data?.imageUrl, await url?.split('?')[0]);
           updateCollection({ id: editMode, data });
           actions.resetForm();
           handleEditModeClose();
@@ -219,13 +218,13 @@ const Collections = ({
                   <CardHeader
                     title={
                       lang === 'en'
-                        ? 'Author :' + collection?.author
-                        : 'Egasi :' + collection?.author
+                        ? 'Author:' + collection?.author
+                        : 'Egasi:' + collection?.author
                     }
                     subheader={
                       lang === 'en'
-                        ? 'Items :' + collection.itemCount
-                        : 'Elementlar :' + collection.itemCount
+                        ? 'Items:' + collection.itemCount
+                        : 'Elementlar:' + collection.itemCount
                     }
                   />
                 )}
@@ -240,7 +239,11 @@ const Collections = ({
                     component='img'
                     height='140'
                     alt='Something'
-                    image={collection?.imageUrl || '../utils/default.jpg'}
+                    image={
+                      collection?.imageUrl === ''
+                        ? DefaultImage
+                        : collection?.imageUrl
+                    }
                   />
                 )}
                 <CardContent>
@@ -255,17 +258,11 @@ const Collections = ({
                       />
                     ) : (
                       <Typography
-                        variant='h5'
+                        variant='h4'
                         component='div'
-                        color='text.secondary'
+                        color='text.primary'
                         gutterBottom>
-                        <Link
-                          to='/collection/items'
-                          state={{
-                            collectionId: collection?._id,
-                          }}>
-                          {collection.name[lang]}
-                        </Link>
+                        {collection.name[lang]}
                       </Typography>
                     )}
                     {loading ? (
@@ -293,57 +290,71 @@ const Collections = ({
                   </Box>
                 </CardContent>
                 <CardActions
-                  sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  {loading ? (
-                    <Skeleton
-                      animation='wave'
-                      variant='circular'
-                      width={10}
-                      height={10}
-                    />
-                  ) : (
-                    <IconButton
-                      color='success'
-                      disabled={
-                        editMode === collection._id ||
-                        !user ||
-                        location.pathname === '/'
-                      }
-                      onClick={() =>
-                        makeEditMode(
-                          {
-                            name_uz: collection.name['uz'],
-                            name_en: collection.name['en'],
-                            description_uz: collection.description['uz'],
-                            description_en: collection.description['en'],
-                            imageUrl: collection.imageUrl,
-                            topic_uz: collection.topic['uz'],
-                            topic_en: collection.topic['en'],
-                          },
-                          collection._id
-                        )
-                      }>
-                      <EditIcon />
-                    </IconButton>
-                  )}
-                  {loading ? (
-                    <Skeleton
-                      animation='wave'
-                      variant='circular'
-                      width={10}
-                      height={10}
-                    />
-                  ) : (
-                    <IconButton
-                      color='error'
-                      onClick={() => {
-                        handleOpen();
-                        setId(collection?._id);
-                      }}
-                      disabled={!user || location.pathname === '/'}>
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Button
+                    variant='contained'
+                    onClick={() => {
+                      navigate('/collection/items', {
+                        state: { collectionId: collection?._id },
+                      });
+                    }}>
+                    View
+                  </Button>
+                  <Box>
+                    {loading ? (
+                      <Skeleton
+                        animation='wave'
+                        variant='circular'
+                        width={10}
+                        height={10}
+                      />
+                    ) : (
+                      <IconButton
+                        color='success'
+                        disabled={
+                          editMode === collection._id ||
+                          !user ||
+                          location.pathname === '/'
+                        }
+                        onClick={() =>
+                          makeEditMode(
+                            {
+                              name_uz: collection.name['uz'],
+                              name_en: collection.name['en'],
+                              description_uz: collection.description['uz'],
+                              description_en: collection.description['en'],
+                              imageUrl: collection.imageUrl,
+                              topic_uz: collection.topic['uz'],
+                              topic_en: collection.topic['en'],
+                            },
+                            collection._id
+                          )
+                        }>
+                        <EditIcon />
+                      </IconButton>
+                    )}
+                    {loading ? (
+                      <Skeleton
+                        animation='wave'
+                        variant='circular'
+                        width={10}
+                        height={10}
+                      />
+                    ) : (
+                      <IconButton
+                        color='error'
+                        onClick={() => {
+                          handleOpen();
+                          setId(collection?._id);
+                        }}
+                        disabled={!user || location.pathname === '/'}>
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
+                  </Box>
                 </CardActions>
               </Card>
             );

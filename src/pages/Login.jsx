@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import CustomForm from '../components/CustomForm';
 import { useLoginUserMutation } from '../features/api/authApi';
 import { toast } from 'react-toastify';
+
 const Login = () => {
   const navigator = useNavigate();
   const [loginUser, { isSuccess, data, isError, error, isLoading }] =
@@ -39,6 +40,7 @@ const Login = () => {
       toast.error(error?.data?.message);
     }
   }, [isSuccess, data, navigator, isError, error]);
+
   return (
     <Box
       sx={{

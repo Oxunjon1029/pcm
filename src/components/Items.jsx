@@ -42,7 +42,7 @@ const Items = ({
             flexDirection: 'column',
             justifyContent: 'space-between',
             flexGrow: 1,
-            minHeight: '150px',
+            minHeight: '195px',
             maxWidth: '400px',
             backgroundColor: `${
               collectionItemName &&

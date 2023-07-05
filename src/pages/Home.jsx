@@ -60,7 +60,7 @@ const Home = ({ lang }) => {
           flexDirection: 'column',
           gap: '20px',
         }}>
-        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '500' }}>
+        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '700' }}>
           Collection items
         </Typography>
         <Items
@@ -75,7 +75,7 @@ const Home = ({ lang }) => {
           flexDirection: 'column',
           gap: '20px',
         }}>
-        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '500' }}>
+        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '700' }}>
           Collections
         </Typography>
         <Collections
@@ -93,7 +93,7 @@ const Home = ({ lang }) => {
           flexDirection: 'column',
           gap: '20px',
         }}>
-        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '500' }}>
+        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '700' }}>
           Tags
         </Typography>
         <Box sx={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>

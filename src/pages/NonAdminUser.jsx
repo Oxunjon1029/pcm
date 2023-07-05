@@ -54,7 +54,6 @@ const NonAdminUser = ({ lang }) => {
       .then(async (data) => {
         if (data.url) {
           let imageUrl = await url?.split('?')[0];
-          console.log(imageUrl);
           let description = {
             en: values['description_en'],
             uz: values['description_uz'],
@@ -68,7 +67,7 @@ const NonAdminUser = ({ lang }) => {
             name,
             description,
             createdBy: location.state ? location.state : user?._id,
-            imageUrl,
+            imageUrl: file ? imageUrl : '',
             topic,
           };
           createCollection(data);

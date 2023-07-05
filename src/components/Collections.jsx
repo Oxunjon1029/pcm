@@ -240,9 +240,7 @@ const Collections = ({
                     component='img'
                     height='140'
                     alt='Something'
-                    image={
-                      collection?.imageUrl || DefaultImage
-                    }
+                    image={collection?.imageUrl || '../utils/default.jpg'}
                   />
                 )}
                 <CardContent>

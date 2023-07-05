@@ -25,7 +25,7 @@ import CreateCollectionModal from './CreateCollectionModal';
 import Skeleton from '@mui/material/Skeleton';
 import Loader from './Loader';
 import { selectUrl, setUrl } from '../features/bucket/bucketUrlSlice';
-import Img from '../utils/img.jpg';
+import DefaultImage from '../utils/default.jpg';
 const Collections = ({
   open,
   handleClose,
@@ -212,7 +212,7 @@ const Collections = ({
                 key={collection._id}
                 sx={{
                   flexGrow: 1,
-                  maxWidth: {lg:'320px'},
+                  maxWidth: { lg: '320px' },
                   minWidth: '300px',
                 }}>
                 {location.pathname === '/' && (
@@ -240,7 +240,9 @@ const Collections = ({
                     component='img'
                     height='140'
                     alt='Something'
-                    image={collection?.imageUrl ? collection?.imageUrl : Img}
+                    image={
+                      collection?.imageUrl ? collection?.imageUrl : DefaultImage
+                    }
                   />
                 )}
                 <CardContent>

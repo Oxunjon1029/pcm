@@ -19,7 +19,7 @@ const NonAdminUser = ({ lang }) => {
   const [userCollections, setUserCollections] = useState([]);
   const user = useSelector(selectUser);
   const url = useSelector(selectUrl);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState(null);
   const location = useLocation();
   const [createCollection, { isLoading: loading }] =
     useCreateCollectionMutation();

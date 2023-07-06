@@ -14,7 +14,6 @@ const Items = ({
   collectionItems,
   user,
   lang,
-  collectionItemName,
   deleteOpen,
   handleDeleteClose,
   deleteCollectionItem,
@@ -24,7 +23,7 @@ const Items = ({
   handleDislikeItem,
   makeEditMode,
 }) => {
-  const location = useLocation()
+  const location = useLocation();
   return (
     <Box
       sx={{
@@ -36,6 +35,7 @@ const Items = ({
       }}>
       {collectionItems?.map((item) => (
         <Card
+          raised={true}
           key={item._id}
           sx={{
             display: 'flex',
@@ -44,12 +44,6 @@ const Items = ({
             flexGrow: 1,
             minHeight: '195px',
             maxWidth: '400px',
-            backgroundColor: `${
-              collectionItemName &&
-              item?.name[lang] === collectionItemName[lang]
-                ? '#3f51b5'
-                : ''
-            }`,
           }}>
           <CardContent>
             <Typography variant='h5'>{item?.name[lang]}</Typography>
@@ -109,7 +103,9 @@ const Items = ({
                 </IconButton>
 
                 <Typography component='div' fontSize='10px'>
-                  {item?.comments ? item?.comments?.length : 'Comments'}
+                  {item?.comments?.length === 0
+                    ? 'Comments'
+                    : item?.comments?.length}
                 </Typography>
               </Box>
               {!item?.likes?.includes(user?._id) && (
@@ -126,7 +122,7 @@ const Items = ({
                     <ThumbUpOffAltIcon color='primary' />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
-                    Likes
+                    {item?.likes.length === 0 ? 'Likes' : item?.likes.length}
                   </Typography>
                 </Box>
               )}
@@ -163,7 +159,9 @@ const Items = ({
                     <ThumbDownOffAltIcon color='primary' />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
-                    Dislikes
+                    {item?.dislikes.length === 0
+                      ? 'Dislikes'
+                      : item?.dislikes.length}
                   </Typography>
                 </Box>
               )}

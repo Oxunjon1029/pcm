@@ -14,7 +14,6 @@ import {
   useDeleteCollectionItemMutation,
   useLikeCollectionItemMutation,
   useUnlikeCollectionItemMutation,
-  useGetAllCollectionItemsQuery,
 } from '../features/api/collectionItemsApi';
 
 import { toast } from 'react-toastify';
@@ -23,12 +22,11 @@ import Items from '../components/Items';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
   const collectionId = location.state.collectionId;
-  const collectionItemName = location.state.itemName;
+  const searchedItems = location.state.searchedItems;
   const collectionItemsByTagSearch = location.state.collectionItems;
 
   const { data: collectionItemsByCollectionId, isLoading } =
     useGetAllCollectionItemsByCollectionIdQuery(collectionId);
-  const { data: allCollectionItems } = useGetAllCollectionItemsQuery();
 
   const [
     createCollectionItem,
@@ -200,12 +198,11 @@ const CollectionItems = ({ lang }) => {
             editMode={editMode}
             makeEditMode={makeEditMode}
             handleDeleteClose={handleDeleteClose}
-            collectionItemName={collectionItemName}
             collectionItems={
-              !collectionItemsByCollectionId && !collectionItemName
+              !collectionItemsByCollectionId && !searchedItems
                 ? collectionItemsByTagSearch
-                : collectionItemName
-                ? allCollectionItems
+                : searchedItems
+                ? searchedItems
                 : collectionItemsByCollectionId
             }
             handleIsLiked={handleIsLiked}

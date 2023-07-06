@@ -8,16 +8,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-const CustomDeleteModal = ({
-  open,
-  handleClose,
-  handleSubmit,
-  deleteMode,
-  likedItemId,
-  dislikedItemId,
-}) => {
+const CustomDeleteModal = ({ open, handleClose, handleSubmit, deleteMode }) => {
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open === undefined ? false : open} onClose={handleClose}>
       <DialogContent dividers>
         <Typography variant='h4'>Are you sure to delete !!</Typography>
       </DialogContent>
@@ -36,10 +29,6 @@ const CustomDeleteModal = ({
             onClick={() => {
               handleSubmit(deleteMode);
               handleClose();
-              // if(deleteMode === likedItemId || deleteMode === dislikedItemId){
-              //   deleteCookie('likedItemId')
-              //   deleteCookie('dislikedItemId')
-              // }
             }}
             variant='contained'>
             Ok

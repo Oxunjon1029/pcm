@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EnhancedTableHead from '../components/EnhandcedTableHead';
 import { Checkbox } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -57,7 +57,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const Admin = () => {
+const Admin = ({ lang }) => {
   const [changeUserStatus] = useChangeUserStatusMutation();
   const [addOrRemoveUserAsAdmin] = useAddOrRemoveUserAsAdminMutation();
   const [deleteUser] = useDeleteUserMutation();
@@ -263,6 +263,13 @@ const Admin = () => {
               rowCount={allUsers?.length}
             />
             <TableBody>
+              {isLoading && (
+                <TableRow>
+                  <TableCell>
+                    <Loader />
+                  </TableCell>
+                </TableRow>
+              )}
               {visibleRows &&
                 visibleRows?.map((row, index) => {
                   const isItemSelected = isSelected(row._id);
@@ -286,24 +293,24 @@ const Admin = () => {
                           }}
                         />
                       </TableCell>
-                      <TableCell>
-                        <Link to={`/user-profile/${row._id}`} state={row._id}>
-                          {row.name}
-                        </Link>
-                      </TableCell>
+                      <TableCell>{row.name}</TableCell>
                       <TableCell>{row.email}</TableCell>
                       <TableCell>{row.role}</TableCell>
                       <TableCell>{row.status}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant='contained'
+                          onClick={() => {
+                            navigator(`/user-profile/${row._id}`, {
+                              state: row._id,
+                            });
+                          }}>
+                          {lang === 'en' ? 'View' : "Ko'rish"}
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
-              {!visibleRows && isLoading && (
-                <TableRow>
-                  <TableCell>
-                    <Loader />
-                  </TableCell>
-                </TableRow>
-              )}
             </TableBody>
             <TableFooter>
               <TableRow>

@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import InputBase from '@mui/material/InputBase';
 import { alpha, styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -48,27 +48,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 const SearchModal = ({ open, handleClose, lang }) => {
   const [searchText, setSearchText] = useState('');
-  const {
-    isSuccess,
-    data: searchedItems,
-    isError,
-    error,
-  } = useSearchFullTextQuery(open && searchText);
+  const { data: searchedItems } = useSearchFullTextQuery(open && searchText);
   const handleSearch = (e) => {
     if (e.target.value && open) {
       setSearchText(e.target.value);
-    }else{
-      setSearchText('')
+    } else {
+      setSearchText('');
     }
   };
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(searchedItems);
-    }
-    if (isError) {
-      console.log(error);
-    }
-  }, [isSuccess, searchedItems, isError, error]);
+
   const navigate = useNavigate();
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -93,7 +81,7 @@ const SearchModal = ({ open, handleClose, lang }) => {
         <MenuList
           autoFocus={true}
           autoFocusItem={true}
-          variant="selectedMenu"
+          variant='selectedMenu'
           sx={{
             marginTop: '20px',
             borderTop: '1px solid #E7EBF0',
@@ -104,7 +92,7 @@ const SearchModal = ({ open, handleClose, lang }) => {
               onClick={() => {
                 navigate('/collection/items', {
                   state: {
-                    itemName: item?.name,
+                    searchedItems: searchedItems,
                   },
                 });
                 handleClose();

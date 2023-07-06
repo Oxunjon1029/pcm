@@ -31,6 +31,12 @@ const headCells = [
     disablePadding: false,
     label: 'Status',
   },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: 'Actions',
+  },
 ];
 const EnhandcedTableHead = (props) => {
   const {

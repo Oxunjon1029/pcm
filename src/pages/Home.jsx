@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Collections from '../components/Collections';
@@ -15,8 +15,7 @@ const Home = ({ lang }) => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const { isSuccess, isLoading, data } = useGetLargestFiveCollectionsQuery();
-  const { isSuccess: isLastestSuccess, data: lastestCollectionItems } =
-    useGetLastestCollectionItemsQuery();
+  const { data: lastestCollectionItems } = useGetLastestCollectionItemsQuery();
   const { data: searchedItemsByTag, isSuccess: tagSuccess } =
     useSearchItemsByTagQuery({ tag: tag, lang: lang });
   const { data: alltags } = useGetAllTagsQuery();
@@ -39,11 +38,7 @@ const Home = ({ lang }) => {
       });
     }
   }, [tagSuccess, searchedItemsByTag, navigate]);
-  useEffect(() => {
-    if (isLastestSuccess) {
-      console.log(lastestCollectionItems);
-    }
-  }, [isLastestSuccess, lastestCollectionItems]);
+
   return (
     <Box
       sx={{
@@ -60,7 +55,9 @@ const Home = ({ lang }) => {
           flexDirection: 'column',
           gap: '20px',
         }}>
-        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '700' }}>
+        <Typography
+          component='div'
+          sx={{ fontSize: '20px', fontWeight: '700' }}>
           Collection items
         </Typography>
         <Items
@@ -75,7 +72,9 @@ const Home = ({ lang }) => {
           flexDirection: 'column',
           gap: '20px',
         }}>
-        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '700' }}>
+        <Typography
+          component='div'
+          sx={{ fontSize: '20px', fontWeight: '700' }}>
           Collections
         </Typography>
         <Collections
@@ -93,24 +92,43 @@ const Home = ({ lang }) => {
           flexDirection: 'column',
           gap: '20px',
         }}>
-        <Typography component='div' sx={{ fontSize: '20px', fontWeight: '700' }}>
+        <Typography
+          component='div'
+          sx={{ fontSize: '20px', fontWeight: '700' }}>
           Tags
         </Typography>
-        <Box sx={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 2, sm: 1, md: 1, lg: 1 }}>
           {alltags?.map((tag) => (
-            <Button
-              onClick={() => setTag(tag?.title[lang])}
-              sx={{
-                flex: 1,
-                minWidth: '300px',
-                minHeight: '50px',
-                maxWidth: '400px  ',
-              }}
-              variant='contained'>
-              #{tag.title[lang]}
-            </Button>
+            <Grid item xs={6} sm={4} md={4} lg={3} xl={3} key={tag?._id}>
+              <Button
+                onClick={() => setTag(tag?.title[lang])}
+                sx={{
+                  flex: 1,
+                  minWidth: {
+                    xs: '180px',
+                    sm: '230px',
+                    md: '280px',
+                    lg: '300px',
+                    xl: '350px',
+                  },
+                  minHeight: '50px',
+                  maxWidth: {
+                    xs: '280px',
+                    sm: '280px',
+                    md: '300px',
+                    lg: '380px',
+                    xl: '400px',
+                  },
+                }}
+                variant='contained'>
+                #{tag.title[lang]}
+              </Button>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Box>
     </Box>
   );

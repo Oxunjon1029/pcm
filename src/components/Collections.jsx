@@ -208,10 +208,11 @@ const Collections = ({
           collections.map((collection) => {
             return (
               <Card
+                raised={true}
                 key={collection._id}
                 sx={{
                   flexGrow: 1,
-                  maxWidth: { lg: '320px' },
+                  maxWidth: { lg: '350px' },
                   minWidth: '300px',
                 }}>
                 {location.pathname === '/' && (
@@ -301,7 +302,7 @@ const Collections = ({
                         state: { collectionId: collection?._id },
                       });
                     }}>
-                    View
+                    {lang === 'en' ? 'View' : "Ko'rish"}
                   </Button>
                   <Box>
                     {loading ? (

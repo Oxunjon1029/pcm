@@ -9,12 +9,6 @@ export const collectionItemsApi = createApi({
   tagTypes: ['CollectionItem', 'Likes', 'Dislikes'],
 
   endpoints: (builder) => ({
-    getAllCollectionItems: builder.query({
-      query: () => ({
-        url: 'collections/items',
-        headers
-      })
-    }),
     getAllCollectionItemsByCollectionId: builder.query({
       query: (collectionId) => ({
         url: `collections/byCollectionId/items?collectionId=${collectionId}`,
@@ -96,6 +90,5 @@ export const {
   useDeleteCollectionItemMutation,
   useLikeCollectionItemMutation,
   useUnlikeCollectionItemMutation,
-  useGetAllCollectionItemsQuery,
   useGetLastestCollectionItemsQuery
 } = collectionItemsApi

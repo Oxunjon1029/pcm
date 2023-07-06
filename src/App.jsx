@@ -93,7 +93,7 @@ function App() {
               path='/admin-user'
               element={
                 <ProtectedRoute user={user}>
-                  <Admin />
+                  <Admin lang={lang} />
                 </ProtectedRoute>
               }
             />

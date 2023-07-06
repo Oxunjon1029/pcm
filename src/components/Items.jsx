@@ -33,6 +33,13 @@ const Items = ({
         justifyContent: { sm: 'center', xl: 'flex-start' },
         alignItems: { sm: 'center' },
       }}>
+      {collectionItems?.length === 0 && (
+        <Typography variant='h3' color='text.secondary'>
+          {lang === 'en'
+            ? 'There is no collection items yet'
+            : "Bu yerda hozircha kolleksiya elementlaru yo'q"}
+        </Typography>
+      )}
       {collectionItems?.map((item) => (
         <Card
           raised={true}
@@ -119,7 +126,11 @@ const Items = ({
                   <IconButton
                     disabled={!user || location.pathname === '/'}
                     onClick={() => handleIsLiked(item?._id)}>
-                    <ThumbUpOffAltIcon color='primary' />
+                    <ThumbUpOffAltIcon
+                      color={`${
+                        !user || location.pathname === '/' ? '' : 'primary'
+                      }`}
+                    />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
                     {item?.likes.length === 0 ? 'Likes' : item?.likes.length}
@@ -138,7 +149,11 @@ const Items = ({
                     key={item?._id}
                     disabled={!user || location.pathname === '/'}
                     onClick={() => handleIsLiked(item?._id)}>
-                    <ThumbUpIcon color='primary' />
+                    <ThumbUpIcon
+                      color={`${
+                        !user || location.pathname === '/' ? '' : 'primary'
+                      }`}
+                    />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
                     {item?.likes?.length}
@@ -156,7 +171,11 @@ const Items = ({
                   <IconButton
                     disabled={!user || location.pathname === '/'}
                     onClick={() => handleDislikeItem(item?._id)}>
-                    <ThumbDownOffAltIcon color='primary' />
+                    <ThumbDownOffAltIcon
+                      color={`${
+                        !user || location.pathname === '/' ? '' : 'primary'
+                      }`}
+                    />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
                     {item?.dislikes.length === 0
@@ -171,7 +190,11 @@ const Items = ({
                     key={item?._id}
                     disabled={!user || location.pathname === '/'}
                     onClick={() => handleDislikeItem(item?._id)}>
-                    <ThumbDownAltIcon color='primary' />
+                    <ThumbDownAltIcon
+                      color={`${
+                        !user || location.pathname === '/' ? '' : 'primary'
+                      }`}
+                    />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
                     {item?.dislike?.length}
@@ -186,9 +209,7 @@ const Items = ({
                   editMode === item?._id ||
                   !user ||
                   location.pathname === '/' ||
-                  (user &&
-                    user._id !== location.state.userId &&
-                    user.role !== 'admin')
+                  (user.role === 'user' && user._id !== location.state.userId)
                 }
                 onClick={() =>
                   makeEditMode(
@@ -207,9 +228,7 @@ const Items = ({
                 disabled={
                   !user ||
                   location.pathname === '/' ||
-                  (user &&
-                    user._id !== location.state.userId &&
-                    user.role !== 'admin')
+                  (user.role === 'user' && user._id !== location.state.userId)
                 }
                 color='error'
                 onClick={() => {

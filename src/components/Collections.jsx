@@ -191,19 +191,26 @@ const Collections = ({
           width: '100%',
           justifyContent: {
             xs: 'center',
-            md: 'center',
-            sm: 'center',
+            md: 'inherit',
+            sm: 'inherit',
             lg: 'inherit',
             xl: 'inherit',
           },
           alignItems: {
             xs: 'center',
-            md: 'center',
-            sm: 'center',
+            md: 'inherit',
+            sm: 'inherit',
             lg: 'inherit',
             xl: 'inherit',
           },
         }}>
+        {collections.length === 0 && (
+          <Typography variant='h3' color='text.secondary'>
+            {lang === 'en'
+              ? 'There is no collections yet'
+              : "Bu yerda hozircha kolleksiyalar yo'q"}
+          </Typography>
+        )}
         {collections &&
           collections.map((collection) => {
             return (
@@ -212,7 +219,7 @@ const Collections = ({
                 key={collection._id}
                 sx={{
                   flexGrow: 1,
-                  maxWidth: { lg: '350px' },
+                  maxWidth: { lg: '350px', sm: '320px', md: '350px' },
                   minWidth: '300px',
                 }}>
                 {location.pathname === '/' && (
@@ -301,7 +308,7 @@ const Collections = ({
                       navigate('/collection/items', {
                         state: {
                           collectionId: collection?._id,
-                          userId: collection?.userId,
+                          userId: collection?.createdBy,
                         },
                       });
                     }}>

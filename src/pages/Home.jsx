@@ -37,8 +37,9 @@ const Home = ({ lang }) => {
         state: { collectionItems: searchedItemsByTag },
       });
     }
-  }, [tagSuccess, searchedItemsByTag, navigate]);
+  }, [tagSuccess, searchedItemsByTag, navigate, lang]);
 
+ 
   return (
     <Box
       sx={{

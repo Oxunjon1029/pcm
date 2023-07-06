@@ -299,7 +299,10 @@ const Collections = ({
                     variant='contained'
                     onClick={() => {
                       navigate('/collection/items', {
-                        state: { collectionId: collection?._id },
+                        state: {
+                          collectionId: collection?._id,
+                          userId: collection?.userId,
+                        },
                       });
                     }}>
                     {lang === 'en' ? 'View' : "Ko'rish"}

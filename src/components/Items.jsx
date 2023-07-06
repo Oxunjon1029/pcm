@@ -183,7 +183,12 @@ const Items = ({
               <IconButton
                 color='success'
                 disabled={
-                  editMode === item?._id || !user || location.pathname === '/'
+                  editMode === item?._id ||
+                  !user ||
+                  location.pathname === '/' ||
+                  (user &&
+                    user._id !== location.state.userId &&
+                    user.role !== 'admin')
                 }
                 onClick={() =>
                   makeEditMode(
@@ -199,7 +204,13 @@ const Items = ({
                 <EditIcon />
               </IconButton>
               <IconButton
-                disabled={!user || location.pathname === '/'}
+                disabled={
+                  !user ||
+                  location.pathname === '/' ||
+                  (user &&
+                    user._id !== location.state.userId &&
+                    user.role !== 'admin')
+                }
                 color='error'
                 onClick={() => {
                   setDeleteOpen(true);

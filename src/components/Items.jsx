@@ -33,7 +33,7 @@ const Items = ({
         justifyContent: { sm: 'center', xl: 'flex-start' },
         alignItems: { sm: 'center' },
       }}>
-      {collectionItems?.length === 0 && (
+      {(!collectionItems || collectionItems?.length === 0) && (
         <Typography variant='h3' color='text.secondary'>
           {lang === 'en'
             ? 'There is no collection items'
@@ -50,7 +50,7 @@ const Items = ({
             justifyContent: 'space-between',
             flexGrow: 1,
             minHeight: '250px',
-            maxHeight:'300px',
+            maxHeight: '300px',
             maxWidth: { lg: '350px', sm: '320px', md: '350px' },
             minWidth: '300px',
           }}>

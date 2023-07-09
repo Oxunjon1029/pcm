@@ -13,7 +13,7 @@ export const tagsApi = createApi({
         url: 'tags',
         headers
       }),
-      providesTags: ['Tag']
+      providesTags: ['Tag'],
     }),
 
   })

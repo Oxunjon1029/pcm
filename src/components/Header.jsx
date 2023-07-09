@@ -15,8 +15,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import { deleteCookie } from '../utils/cookies';
 import { TOKEN } from '../utils/host';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../features/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser, setUser } from '../features/user/userSlice';
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -80,6 +80,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   };
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -187,6 +188,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                 {user && (
                   <MenuItem
                     onClick={() => {
+                      dispatch(setUser(null));
                       deleteCookie(TOKEN);
                       navigate('/login');
                       handleClose();

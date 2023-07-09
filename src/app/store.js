@@ -3,7 +3,6 @@ import { authApi } from '../features/api/authApi';
 import { usersApi } from '../features/api/usersApi';
 import { collectionsApi } from '../features/api/collectionsApi';
 import { collectionItemsApi } from '../features/api/collectionItemsApi';
-import { commentsApi } from '../features/api/commentsApi';
 import { searchApi } from '../features/api/searchApi';
 import { topicApi } from '../features/api/topicApi';
 import { tagsApi } from '../features/api/tagsApi';
@@ -21,7 +20,6 @@ export const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     [collectionsApi.reducerPath]: collectionsApi.reducer,
     [collectionItemsApi.reducerPath]: collectionItemsApi.reducer,
-    [commentsApi.reducerPath]: commentsApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
     [topicApi.reducerPath]: topicApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
@@ -31,7 +29,6 @@ export const store = configureStore({
     usersApi.middleware,
     collectionsApi.middleware,
     collectionItemsApi.middleware,
-    commentsApi.middleware,
     searchApi.middleware,
     topicApi.middleware,
     tagsApi.middleware,

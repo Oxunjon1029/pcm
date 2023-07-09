@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import TextFormField from './TextFormField';
-
 import { useGetAllTopicsQuery } from '../features/api/topicApi';
 import { SelectFormField } from './SelectFormField';
 const CreateCollectionForm = ({
@@ -20,6 +19,31 @@ const CreateCollectionForm = ({
     name_en: Yup.string().required(),
     description_uz: Yup.string().required(),
     description_en: Yup.string().required(),
+    strings: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required('Field Name is required'),
+      })
+    ),
+    multilineTexts: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required('Field Name is required'),
+      })
+    ),
+    integers: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required('Field Name is required'),
+      })
+    ),
+    dates: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required('Field Name is required'),
+      })
+    ),
+    booleans: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required('Field Name is required'),
+      })
+    ),
   });
   const handleFileUploadChange = async (e) => {
     const file = e.target.files[0];
@@ -56,7 +80,7 @@ const CreateCollectionForm = ({
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={collectCreateValidationSchema}>
-        {({ values }) => {
+        {({ values, handleChange }) => {
           return (
             <Form>
               <Field
@@ -98,7 +122,163 @@ const CreateCollectionForm = ({
                 type='file'
                 onChange={handleFileUploadChange}
               />
+              <FieldArray name={`strings`}>
+                {({ push, remove }) => (
+                  <div>
+                    {values.strings &&
+                      values.strings.map((field, index) => (
+                        <div key={index}>
+                          <Field
+                            name={`strings[${index}].name`}
+                            label='Field Name'
+                            value={field.name}
+                            onChange={handleChange}
+                            component={TextFormField}
+                          />
+                          <Button
+                            variant='contained'
+                            onClick={() => remove(index)}>
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
 
+                    <Button
+                      variant='contained'
+                      sx={{ margin: '20px 0' }}
+                      disabled={values.strings.length === 3}
+                      onClick={() => push({ name: '', })}>
+                      Add Custom String Field
+                    </Button>
+                  </div>
+                )}
+              </FieldArray>
+              <FieldArray name={`multilineTexts`}>
+                {({ push, remove }) => (
+                  <div>
+                    {values.multilineTexts &&
+                      values.multilineTexts.map((field, index) => (
+                        <div key={index}>
+                          <Field
+                            name={`multilineTexts[${index}].name`}
+                            label='Field Name'
+                            value={field.name}
+                            onChange={handleChange}
+                            component={TextFormField}
+                          />
+                          <Button
+                            variant='contained'
+                            onClick={() => remove(index)}>
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
+
+                    <Button
+                      variant='contained'
+                      sx={{ margin: '20px 0' }}
+                      disabled={values.multilineTexts.length === 3}
+                      onClick={() => push({ name: '' })}>
+                      Add Custom Mutiline Text Field
+                    </Button>
+                  </div>
+                )}
+              </FieldArray>
+              <FieldArray name={`integers`}>
+                {({ push, remove }) => (
+                  <div>
+                    {values.integers &&
+                      values.integers.map((field, index) => (
+                        <div key={index}>
+                          <Field
+                            name={`integers[${index}].name`}
+                            label='Field Name'
+                            value={field.name}
+                            onChange={handleChange}
+                            component={TextFormField}
+                          />
+
+                          <Button
+                            variant='contained'
+                            onClick={() => remove(index)}>
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
+
+                    <Button
+                      variant='contained'
+                      sx={{ margin: '20px 0' }}
+                      disabled={values.integers.length === 3}
+                      onClick={() => push({ name: '' })}>
+                      Add Custom Integer Field
+                    </Button>
+                  </div>
+                )}
+              </FieldArray>
+              <FieldArray name={`dates`}>
+                {({ push, remove }) => (
+                  <div>
+                    {values.dates &&
+                      values.dates.map((field, index) => (
+                        <div key={index}>
+                          <Field
+                            name={`dates[${index}].name`}
+                            label='Field Name'
+                            value={field.name}
+                            onChange={handleChange}
+                            component={TextFormField}
+                          />
+
+                          <Button
+                            variant='contained'
+                            onClick={() => remove(index)}>
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
+
+                    <Button
+                      variant='contained'
+                      sx={{ margin: '20px 0' }}
+                      disabled={values.dates.length === 3}
+                      onClick={() => push({ name: '' })}>
+                      Add Custom Date Field
+                    </Button>
+                  </div>
+                )}
+              </FieldArray>
+              <FieldArray name={`booleans`}>
+                {({ push, remove }) => (
+                  <div>
+                    {values.booleans &&
+                      values.booleans.map((field, index) => (
+                        <div key={index}>
+                          <Field
+                            name={`booleans[${index}].name`}
+                            label='Field Name'
+                            value={field.name}
+                            onChange={handleChange}
+                            component={TextFormField}
+                          />
+                          <Button
+                            variant='contained'
+                            onClick={() => remove(index)}>
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
+
+                    <Button
+                      variant='contained'
+                      sx={{ margin: '20px 0' }}
+                      disabled={values.booleans.length === 3}
+                      onClick={() => push({ name: '' })}>
+                      Add Custom Checkbox Field
+                    </Button>
+                  </div>
+                )}
+              </FieldArray>
               <LoadingButton
                 fullWidth
                 type='submit'

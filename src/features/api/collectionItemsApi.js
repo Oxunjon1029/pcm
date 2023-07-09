@@ -14,7 +14,7 @@ export const collectionItemsApi = createApi({
         url: `collections/byCollectionId/items?collectionId=${collectionId}`,
         headers
       }),
-      providesTags: ['CollectionItem']
+      providesTags: ['CollectionItem'],
     }),
     createCollectionItem: builder.mutation({
       query(args) {
@@ -78,7 +78,8 @@ export const collectionItemsApi = createApi({
       query: () => ({
         url: 'collections/items/lastest',
         headers
-      })
+      }),
+      providesTags: ['CollectionItem'],
     })
   })
 })

@@ -23,7 +23,7 @@ const NonAdminUser = ({ lang }) => {
   const location = useLocation();
   const [createCollection, { isLoading: loading }] =
     useCreateCollectionMutation();
-  const { isSuccess, data, isError, error, isLoading } =
+  const { isSuccess, data, isError, error, isLoading, refetch } =
     useGetAllCollectionsQuery();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const handleDeleteModalClose = () => {
@@ -35,7 +35,6 @@ const NonAdminUser = ({ lang }) => {
   const handleOpen = () => {
     setOpen(true);
     if (isUrlSuccess) {
-      console.log('createMode', s3Url);
       dispatch(setUrl(s3Url));
     }
   };
@@ -69,6 +68,13 @@ const NonAdminUser = ({ lang }) => {
             createdBy: location.state ? location.state : user?._id,
             imageUrl: file ? imageUrl : '',
             topic,
+            customFields: {
+              strings: values?.strings,
+              multilineTexts: values?.multilineTexts,
+              integers: values?.integers,
+              dates: values?.dates,
+              booleans: values?.booleans,
+            },
           };
           createCollection(data);
           actions.resetForm();
@@ -85,6 +91,11 @@ const NonAdminUser = ({ lang }) => {
     topic_uz: '',
     topic_en: '',
     imageUrl: '',
+    strings: [],
+    multilineTexts: [],
+    integers: [],
+    dates: [],
+    booleans: [],
   };
   useEffect(() => {
     if (isSuccess) {
@@ -106,7 +117,8 @@ const NonAdminUser = ({ lang }) => {
     if (isError) {
       console.log(error);
     }
-  }, [location, isSuccess, isError, data, error, user]);
+    refetch();
+  }, [location, isSuccess, isError, data, error, user, refetch]);
   return (
     <Box
       sx={{

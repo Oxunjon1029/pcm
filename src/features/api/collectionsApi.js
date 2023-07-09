@@ -13,7 +13,13 @@ export const collectionsApi = createApi({
         url: 'collection',
         headers
       }),
-      providesTags: ['Collection']
+      providesTags: ['Collection'],
+    }),
+    getCollectionById: builder.query({
+      query: (id) => ({
+        url: `collection/${id}`,
+        headers
+      })
     }),
     createCollection: builder.mutation({
       query(data) {
@@ -72,5 +78,6 @@ export const {
   useUpdateCollectionsMutation,
   useGetAllCollectionsQuery,
   useGetS3UrlQuery,
-  useGetLargestFiveCollectionsQuery
+  useGetLargestFiveCollectionsQuery,
+  useGetCollectionByIdQuery
 } = collectionsApi

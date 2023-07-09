@@ -7,7 +7,7 @@ import { useLocation } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/user/userSlice';
 
-const Comments = ({ lang, socket }) => {
+const Comments = ({ socket }) => {
   const location = useLocation();
   const [comments, setComments] = useState([]);
   const user = useSelector(selectUser);
@@ -16,7 +16,6 @@ const Comments = ({ lang, socket }) => {
   });
   useEffect(() => {
     socket.on('newComment', (comment) => {
-      console.log(comment);
       setComments(comment);
     });
   }, [socket]);
@@ -25,7 +24,7 @@ const Comments = ({ lang, socket }) => {
     let data = {
       content: values.content,
       userName: user?.name,
-      itemId:location.state.itemId
+      itemId: location.state.itemId,
     };
     socket.emit('newComment', data);
     actions.resetForm();
@@ -39,7 +38,7 @@ const Comments = ({ lang, socket }) => {
         flexDirection: 'column',
         width: '96%',
         margin: '100px auto',
-        height:'85vh'
+        height: '85vh',
       }}>
       <Box sx={{ width: '50%' }}>
         <Formik
@@ -58,7 +57,11 @@ const Comments = ({ lang, socket }) => {
                 onBlur={handleBlur}
                 component={TextFormField}
               />
-              <Button disabled={!user} type='submit' variant='contained' color='primary'>
+              <Button
+                disabled={!user}
+                type='submit'
+                variant='contained'
+                color='primary'>
                 Write comment
               </Button>
             </Form>
@@ -73,7 +76,7 @@ const Comments = ({ lang, socket }) => {
           maxHeight: '900px',
           overflowY: 'auto',
           padding: '10px',
-          boxShadow:"10px 10px 10px 10px rgba(0,0,0,0.12)"
+          boxShadow: '10px 10px 10px 10px rgba(0,0,0,0.12)',
         }}>
         {comments &&
           comments?.map((comment) => (

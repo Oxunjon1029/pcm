@@ -36,8 +36,8 @@ const Items = ({
       {collectionItems?.length === 0 && (
         <Typography variant='h3' color='text.secondary'>
           {lang === 'en'
-            ? 'There is no collection items yet'
-            : "Bu yerda hozircha kolleksiya elementlaru yo'q"}
+            ? 'There is no collection items'
+            : "Bu yerda kolleksiya elementlari yo'q"}
         </Typography>
       )}
       {collectionItems?.map((item) => (
@@ -49,8 +49,10 @@ const Items = ({
             flexDirection: 'column',
             justifyContent: 'space-between',
             flexGrow: 1,
-            minHeight: '195px',
-            maxWidth: '400px',
+            minHeight: '250px',
+            maxHeight:'300px',
+            maxWidth: { lg: '350px', sm: '320px', md: '350px' },
+            minWidth: '300px',
           }}>
           <CardContent>
             <Typography variant='h5'>{item?.name[lang]}</Typography>
@@ -65,8 +67,12 @@ const Items = ({
                 item?.entags.map((tag, index) => (
                   <Typography
                     key={index}
-                    variant='h6'
-                    sx={{ fontSize: '15px' }}>
+                    component='div'
+                    sx={{
+                      fontSize: '15px',
+                      display: 'inline',
+                      wordBreak: 'normal',
+                    }}>
                     #{tag?.title}
                   </Typography>
                 ))}
@@ -74,9 +80,29 @@ const Items = ({
                 item?.uztags.map((tag, index) => (
                   <Typography
                     key={index}
-                    variant='h6'
-                    sx={{ fontSize: '15px' }}>
+                    component='div'
+                    sx={{
+                      fontSize: '15px',
+                      display: 'inline',
+                      wordBreak: 'normal',
+                    }}>
                     #{tag?.title}
+                  </Typography>
+                ))}
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              {item?.customFields?.strings &&
+                item?.customFields?.strings?.map((string) => (
+                  <Typography key={string?.value}>
+                    {string?.name}: {string?.value}
+                  </Typography>
+                ))}
+            </Box>
+            <Box>
+              {item?.customFields?.dates &&
+                item?.customFields?.dates?.map((date) => (
+                  <Typography key={date?.value}>
+                    {date?.name}: {date?.value}
                   </Typography>
                 ))}
             </Box>
@@ -185,7 +211,13 @@ const Items = ({
                 </Box>
               )}
               {item?.dislikes?.includes(user?._id) && (
-                <Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
                   <IconButton
                     key={item?._id}
                     disabled={!user || location.pathname === '/'}
@@ -197,7 +229,7 @@ const Items = ({
                     />
                   </IconButton>
                   <Typography component='div' fontSize='10px'>
-                    {item?.dislike?.length}
+                    {item?.dislikes?.length}
                   </Typography>
                 </Box>
               )}
@@ -218,6 +250,8 @@ const Items = ({
                       name_en: item?.name['en'],
                       uztags: item?.uztags,
                       entags: item?.entags,
+                      strings: item?.customFields?.strings,
+                      dates: item?.customFields?.dates,
                     },
                     item?._id
                   )

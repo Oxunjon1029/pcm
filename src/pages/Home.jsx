@@ -14,8 +14,17 @@ const Home = ({ lang }) => {
   const [tag, setTag] = useState('');
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const { isSuccess, isLoading, data } = useGetLargestFiveCollectionsQuery();
-  const { data: lastestCollectionItems } = useGetLastestCollectionItemsQuery();
+  const {
+    isSuccess,
+    isLoading,
+    data,
+    refetch: largestRefetch,
+  } = useGetLargestFiveCollectionsQuery();
+  const {
+    data: lastestCollectionItems,
+    isSuccess: isLatestItemsSuccess,
+    refetch,
+  } = useGetLastestCollectionItemsQuery();
   const { data: searchedItemsByTag, isSuccess: tagSuccess } =
     useSearchItemsByTagQuery({ tag: tag, lang: lang });
   const { data: alltags } = useGetAllTagsQuery();
@@ -30,16 +39,25 @@ const Home = ({ lang }) => {
     if (isSuccess) {
       setHomeCollections(data);
     }
-  }, [isSuccess, data]);
+    largestRefetch();
+  }, [isSuccess, data, largestRefetch]);
   useEffect(() => {
-    if (tagSuccess && searchedItemsByTag.length > 0) {
-      navigate('/collection/items', {
-        state: { collectionItems: searchedItemsByTag },
-      });
+    if (tagSuccess) {
+      if(searchedItemsByTag.length > 0){
+        navigate('/collection/items', {
+          state: { collectionItems: searchedItemsByTag },
+        });
+      }
     }
-  }, [tagSuccess, searchedItemsByTag, navigate, lang]);
+  }, [tagSuccess, searchedItemsByTag, navigate]);
 
- 
+  const [latestItems, setLatestItems] = useState([]);
+  useEffect(() => {
+    if (isLatestItemsSuccess) {
+      setLatestItems(lastestCollectionItems);
+    }
+    refetch();
+  }, [isLatestItemsSuccess, lastestCollectionItems, latestItems, refetch]);
   return (
     <Box
       sx={{
@@ -61,11 +79,7 @@ const Home = ({ lang }) => {
           sx={{ fontSize: '20px', fontWeight: '700' }}>
           Collection items
         </Typography>
-        <Items
-          user={user}
-          collectionItems={lastestCollectionItems}
-          lang={lang}
-        />
+        <Items user={user} collectionItems={latestItems} lang={lang} />
       </Box>
       <Box
         sx={{
@@ -105,7 +119,9 @@ const Home = ({ lang }) => {
           {alltags?.map((tag) => (
             <Grid item xs={6} sm={4} md={4} lg={3} xl={3} key={tag?._id}>
               <Button
-                onClick={() => setTag(tag?.title[lang])}
+                onClick={() => {
+                  setTag(tag?.title[lang]);
+                }}
                 sx={{
                   flex: 1,
                   minWidth: {

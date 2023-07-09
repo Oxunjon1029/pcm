@@ -15,7 +15,6 @@ import {
   useLikeCollectionItemMutation,
   useUnlikeCollectionItemMutation,
 } from '../features/api/collectionItemsApi';
-
 import { toast } from 'react-toastify';
 import Items from '../components/Items';
 
@@ -24,9 +23,13 @@ const CollectionItems = ({ lang }) => {
   const collectionId = location.state.collectionId;
   const searchedItems = location.state.searchedItems;
   const collectionItemsByTagSearch = location.state.collectionItems;
-
-  const { data: collectionItemsByCollectionId, isLoading } =
-    useGetAllCollectionItemsByCollectionIdQuery(collectionId);
+  const [itemsByCollectionId, setItemsByCollectionId] = useState([]);
+  const {
+    data: collectionItemsByCollectionId,
+    isLoading,
+    isSuccess: isItemsByCollIdSuccess,
+    refetch,
+  } = useGetAllCollectionItemsByCollectionIdQuery(collectionId);
 
   const [
     createCollectionItem,
@@ -83,18 +86,42 @@ const CollectionItems = ({ lang }) => {
   const validationSchema = yup.object({
     name_uz: yup.string().required(),
     name_en: yup.string().required(),
+    strings: yup.array().of(
+      yup.object({
+        name: yup.string().required(),
+        value: yup.string(),
+      })
+    ),
+    dates: yup.array().of(
+      yup.object({
+        name: yup.string().required(),
+        value: yup.string(),
+      })
+    ),
   });
 
   const formik = useFormik({
     initialValues: {
       name_uz: '',
       name_en: '',
+      strings: [],
+      dates: [],
     },
     validationSchema,
   });
 
-  const makeEditMode = async ({ name_uz, name_en, uztags, entags }, id) => {
-    await formik.setValues({ name_uz, name_en, uztags, entags });
+  const makeEditMode = async (
+    { name_uz, name_en, uztags, entags, strings, dates },
+    id
+  ) => {
+    await formik.setValues({
+      name_uz,
+      name_en,
+      uztags,
+      entags,
+      strings,
+      dates,
+    });
     setEditMode(id);
     setOpenEditMode(true);
   };
@@ -140,6 +167,22 @@ const CollectionItems = ({ lang }) => {
     }
   }, [isDeleted, isDeletedErr, deleteMsg, deleteErrMsg]);
 
+  useEffect(() => {
+    if (isItemsByCollIdSuccess) {
+      setItemsByCollectionId(collectionItemsByCollectionId);
+    }
+    if (!searchedItems && !collectionItemsByTagSearch) {
+      refetch();
+    }
+  }, [
+    isItemsByCollIdSuccess,
+    collectionItemsByCollectionId,
+    itemsByCollectionId,
+    refetch,
+    searchedItems,
+    collectionItemsByTagSearch,
+  ]);
+  
   return (
     <Box
       sx={{
@@ -169,6 +212,8 @@ const CollectionItems = ({ lang }) => {
         updateCollectionItem={updateCollectionItem}
         setEditMode={setEditMode}
         collectionId={collectionId}
+        validationSchema={validationSchema}
+        formik={formik}
       />
       <Box
         sx={{
@@ -194,16 +239,17 @@ const CollectionItems = ({ lang }) => {
             user={user}
             lang={lang}
             deleteOpen={deleteOpen}
+            setDeleteOpen={setDeleteOpen}
             deleteCollectionItem={deleteCollectionItem}
             editMode={editMode}
             makeEditMode={makeEditMode}
             handleDeleteClose={handleDeleteClose}
             collectionItems={
-              !collectionItemsByCollectionId && !searchedItems
+              itemsByCollectionId.length === 0 && !searchedItems
                 ? collectionItemsByTagSearch
                 : searchedItems
                 ? searchedItems
-                : collectionItemsByCollectionId
+                : itemsByCollectionId
             }
             handleIsLiked={handleIsLiked}
             handleDislikeItem={handleDislikeItem}

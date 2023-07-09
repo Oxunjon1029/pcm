@@ -13,7 +13,9 @@ const CreateCollectionItemModal = ({
   createCollectionItem,
   updateCollectionItem,
   setEditMode,
-  collectionId
+  collectionId,
+  validationSchema,
+  formik,
 }) => {
   const { isSuccess, data } = useGetAllTagsQuery();
   const [tags, setTags] = useState([]);
@@ -35,6 +37,8 @@ const CreateCollectionItemModal = ({
           updateCollectionItem={updateCollectionItem}
           setEditMode={setEditMode}
           collectionId={collectionId}
+          validationSchema={validationSchema}
+          formik={formik}
         />
       </DialogContent>
     </Dialog>

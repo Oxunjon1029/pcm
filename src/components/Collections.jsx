@@ -60,6 +60,31 @@ const Collections = ({
     description_uz: yup.string(),
     name_en: yup.string().required(),
     description_en: yup.string(),
+    strings: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required('Field Name is required'),
+      })
+    ),
+    integers: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required('Field Name is required'),
+      })
+    ),
+    multilineTexts: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required('Field Name is required'),
+      })
+    ),
+    dates: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required('Field Name is required'),
+      })
+    ),
+    booleans: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required('Field Name is required'),
+      })
+    ),
   });
 
   const makeEditMode = async (
@@ -71,11 +96,15 @@ const Collections = ({
       imageUrl,
       topic_uz,
       topic_en,
+      strings,
+      integers,
+      multilineTexts,
+      dates,
+      booleans,
     },
     id
   ) => {
     if (isS3urlSuccess) {
-      console.log('editMode', s3url);
       dispatch(setUrl(s3url));
     }
     await formik.setValues({
@@ -86,6 +115,11 @@ const Collections = ({
       imageUrl,
       topic_en,
       topic_uz,
+      strings,
+      dates,
+      integers,
+      multilineTexts,
+      booleans,
     });
     setOpenEditMode(true);
     setEditMode(id);
@@ -104,6 +138,11 @@ const Collections = ({
       imageUrl: '',
       topic_uz: '',
       topic_en: '',
+      strings: [],
+      dates: [],
+      integers: [],
+      multilineTexts: [],
+      booleans: [],
     },
     validationSchema: validationSchema,
   });
@@ -130,7 +169,14 @@ const Collections = ({
               en: values?.topic_en,
               uz: values?.topic_uz,
             },
-            imageUrl: (await url) ? await url?.split('?')[0] : values?.imageUrl,
+            imageUrl: file ? await url?.split('?')[0] : values?.imageUrl,
+            customFields: {
+              strings: values?.strings,
+              multilineTexts: values?.multilineTexts,
+              integers: values?.integers,
+              dates: values?.dates,
+              booleans: values?.booleans,
+            },
           };
           updateCollection({ id: editMode, data });
           actions.resetForm();
@@ -207,8 +253,8 @@ const Collections = ({
         {collections.length === 0 && (
           <Typography variant='h3' color='text.secondary'>
             {lang === 'en'
-              ? 'There is no collections yet'
-              : "Bu yerda hozircha kolleksiyalar yo'q"}
+              ? 'There is no collections'
+              : "Bu yerda kolleksiyalar yo'q"}
           </Typography>
         )}
         {collections &&
@@ -340,6 +386,12 @@ const Collections = ({
                               imageUrl: collection.imageUrl,
                               topic_uz: collection.topic['uz'],
                               topic_en: collection.topic['en'],
+                              strings: collection?.customFields?.strings,
+                              multilineTexts:
+                                collection?.customFields?.multilineTexts,
+                              integers: collection?.customFields?.integers,
+                              dates: collection?.customFields?.dates,
+                              booleans: collection?.customFields?.booleans,
                             },
                             collection._id
                           )

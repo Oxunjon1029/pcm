@@ -11,14 +11,14 @@ export const usersApi = createApi({
     getAllUsers: builder.query({
       query: () => ({
         url: 'users',
-        headers
+        headers,
       }),
       providesTags: ['User']
     }),
     getUserById: builder.query({
       query: (id) => ({
         url: `users/${id}`,
-        headers
+        headers,
       })
     }),
     changeUserStatus: builder.mutation({
@@ -40,7 +40,7 @@ export const usersApi = createApi({
           url: `/users/delete`,
           headers,
           method: 'DELETE',
-          body: { selectedIds: selectedIds }
+          body: { selectedIds: selectedIds },
         }
       },
 
@@ -53,7 +53,7 @@ export const usersApi = createApi({
           url: 'users/role',
           method: 'PUT',
           headers,
-          body: args
+          body: args,
         }
       },
       invalidatesTags: ['User'],

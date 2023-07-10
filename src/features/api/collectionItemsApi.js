@@ -12,7 +12,7 @@ export const collectionItemsApi = createApi({
     getAllCollectionItemsByCollectionId: builder.query({
       query: (collectionId) => ({
         url: `collections/byCollectionId/items?collectionId=${collectionId}`,
-        headers
+        headers,
       }),
       providesTags: ['CollectionItem'],
     }),
@@ -22,8 +22,9 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/${collectionId}/items/create`,
           method: 'POST',
-          headers,
-          body: data
+
+          body: data,
+          headers
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -34,8 +35,9 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/update/${itemId}`,
           method: 'PUT',
-          headers,
-          body: data
+
+          body: data,
+          headers
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -45,7 +47,8 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/delete/${itemId}`,
           method: 'DELETE',
-          headers,
+
+          headers
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -56,8 +59,9 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/${itemId}/like`,
           method: 'POST',
-          headers,
-          body: { userId: userId }
+
+          body: { userId: userId },
+          headers
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -68,8 +72,9 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/${itemId}/unlike`,
           method: 'POST',
-          headers,
-          body: { userId: userId }
+
+          body: { userId: userId },
+          headers
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -79,6 +84,7 @@ export const collectionItemsApi = createApi({
         url: 'collections/items/lastest',
         headers
       }),
+
       providesTags: ['CollectionItem'],
     })
   })

@@ -18,16 +18,16 @@ export const collectionsApi = createApi({
     getCollectionById: builder.query({
       query: (id) => ({
         url: `collection/${id}`,
-        headers
+        headers,
       })
     }),
     createCollection: builder.mutation({
       query(data) {
         return {
           url: 'collections/create',
-          headers,
           method: 'POST',
-          body: data
+          body: data,
+          headers
         }
       },
       invalidatesTags: ['Collection', 'S3Url']
@@ -38,8 +38,8 @@ export const collectionsApi = createApi({
         return {
           url: `collections/edit/${id}`,
           method: 'PUT',
-          headers,
-          body: data
+          body: data,
+          headers
         }
       },
       invalidatesTags: ['Collection', 'S3Url']
@@ -49,7 +49,7 @@ export const collectionsApi = createApi({
         return {
           url: `collections/delete/${id}`,
           method: 'DELETE',
-          headers,
+          headers
         }
       },
       invalidatesTags: ['Collection']
@@ -66,7 +66,7 @@ export const collectionsApi = createApi({
     getLargestFiveCollections: builder.query({
       query: () => ({
         url: 'collections/largest',
-        headers
+        headers,
       })
     })
   })

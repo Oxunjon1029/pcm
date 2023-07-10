@@ -37,7 +37,7 @@ const Collections = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const url = useSelector(selectUrl);
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState(null);
   const [editMode, setEditMode] = useState('');
   const [openEditMode, setOpenEditMode] = useState(false);
   const [id, setId] = useState('');
@@ -155,7 +155,9 @@ const Collections = ({
       body: file,
     })
       .then(async (data) => {
+        console.log(data.url)
         if (data.url) {
+          console.log(file,values?.imageUrl)
           let data = {
             name: {
               en: values?.name_en,
@@ -333,9 +335,15 @@ const Collections = ({
                           flexDirection: 'column',
                           gap: '6px',
                         }}>
-                        <Typography variant='h6' color='text.secondary'>
-                          {collection.description[lang]}
-                        </Typography>
+                        <Typography
+                          variant='h6'
+                          color='text.secondary'
+                          component='div'
+                          dangerouslySetInnerHTML={{
+                            __html: collection.description[lang],
+                          }}
+                        />
+
                         <Typography variant='h6' color='text.primary'>
                           {collection.topic && collection.topic[lang]}
                         </Typography>

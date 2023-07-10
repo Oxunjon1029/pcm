@@ -24,6 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      
       if (data.user.role === 'admin') {
         if (data.user.status === 'active') {
           toast.success(`${data?.user?.name} is successfully logged in`);

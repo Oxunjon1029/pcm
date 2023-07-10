@@ -182,7 +182,7 @@ const CollectionItems = ({ lang }) => {
     searchedItems,
     collectionItemsByTagSearch,
   ]);
-  
+
   return (
     <Box
       sx={{
@@ -196,7 +196,10 @@ const CollectionItems = ({ lang }) => {
       <Box>
         <Button
           size='medium'
-          disabled={!user}
+          disabled={
+            !user ||
+            (user.role === 'user' && user._id !== location.state.userId)
+          }
           variant='contained'
           color='secondary'
           onClick={handleOpen}>

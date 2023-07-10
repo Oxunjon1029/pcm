@@ -113,7 +113,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
           <Box
             sx={{
               display: 'flex',
-              gap: { xs: '20px', md: '40px', lg: '20px' },
+              gap: { xs: '30px', sm: '20px', md: '20px', lg: '20px' },
               justifyContent: 'center',
               alignItems: 'center',
               height: '70px',

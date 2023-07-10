@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import TextFormField from './TextFormField';
 import { useGetAllTopicsQuery } from '../features/api/topicApi';
 import { SelectFormField } from './SelectFormField';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const CreateCollectionForm = ({
   handleSubmit,
   initialValues,
@@ -93,16 +95,36 @@ const CreateCollectionForm = ({
                 name='name_uz'
                 component={TextFormField}
               />
-              <Field
-                label='Description(en)'
-                name='description_en'
-                component={TextFormField}
-              />
-              <Field
-                label='Description(uz)'
-                name='description_uz'
-                component={TextFormField}
-              />
+              <Field label='Description(en)' name='description_en'>
+                {({ field, form }) => {
+                  return (
+                    <Box>
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={field.value}
+                        onChange={(event, editor) => {
+                          form.setFieldValue(field.name, editor.getData());
+                        }}
+                      />
+                    </Box>
+                  );
+                }}
+              </Field>
+              <Field label='Description(uz)' name='description_uz'>
+                {({ field, form }) => {
+                  return (
+                    <Box>
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={field.value}
+                        onChange={(event, editor) => {
+                          form.setFieldValue(field.name, editor.getData());
+                        }}
+                      />
+                    </Box>
+                  );
+                }}
+              </Field>
 
               <Field
                 options={uzOptions}
@@ -147,7 +169,7 @@ const CreateCollectionForm = ({
                       variant='contained'
                       sx={{ margin: '20px 0' }}
                       disabled={values.strings.length === 3}
-                      onClick={() => push({ name: '', })}>
+                      onClick={() => push({ name: '' })}>
                       Add Custom String Field
                     </Button>
                   </div>

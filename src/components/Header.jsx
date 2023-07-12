@@ -190,8 +190,9 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                     onClick={() => {
                       dispatch(setUser(null));
                       deleteCookie(TOKEN);
-                      navigate('/login');
                       handleClose();
+                      
+                      navigate('/login');
                     }}>
                     Logout
                   </MenuItem>

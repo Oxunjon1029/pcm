@@ -12,15 +12,11 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload
-    },
-    setAllUsers: (state, action) => {
-      state.allUsers = action.payload
     }
   }
 })
 
-export const { setUser, setAllUsers } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 export const selectUser = state => state.user.user;
-export const selectAllUsers = state => state.user.allUsers
 
 export default userSlice.reducer

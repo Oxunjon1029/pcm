@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, headers } from '../../utils/host';
+import { baseUrl } from '../../utils/host';
 
 export const topicApi = createApi({
   reducerPath: 'topicApi',
@@ -11,7 +11,6 @@ export const topicApi = createApi({
     getAllTopics: builder.query({
       query: () => ({
         url: 'topic',
-        headers
       }),
       providesTags: ['Topic']
     }),

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, headers } from '../../utils/host';
-
+import { baseUrl, TOKEN } from '../../utils/host';
+import Cookie from 'js-cookie'
 export const collectionsApi = createApi({
   reducerPath: 'collectionsApi',
   baseQuery: fetchBaseQuery({
@@ -11,14 +11,22 @@ export const collectionsApi = createApi({
     getAllCollections: builder.query({
       query: () => ({
         url: 'collection',
-        headers
+        headers: {
+          "Content-type": 'application/json; charset=utf-8',
+          "Accept": 'application/json',
+          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+        },
       }),
       providesTags: ['Collection'],
     }),
     getCollectionById: builder.query({
       query: (id) => ({
         url: `collection/${id}`,
-        headers,
+        headers: {
+          "Content-type": 'application/json; charset=utf-8',
+          "Accept": 'application/json',
+          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+        },
       })
     }),
     createCollection: builder.mutation({
@@ -27,7 +35,12 @@ export const collectionsApi = createApi({
           url: 'collections/create',
           method: 'POST',
           body: data,
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
+
         }
       },
       invalidatesTags: ['Collection', 'S3Url']
@@ -39,7 +52,13 @@ export const collectionsApi = createApi({
           url: `collections/edit/${id}`,
           method: 'PUT',
           body: data,
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
+
+
         }
       },
       invalidatesTags: ['Collection', 'S3Url']
@@ -49,7 +68,11 @@ export const collectionsApi = createApi({
         return {
           url: `collections/delete/${id}`,
           method: 'DELETE',
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
         }
       },
       invalidatesTags: ['Collection']
@@ -58,7 +81,11 @@ export const collectionsApi = createApi({
       query() {
         return {
           url: 'collections/s3Url',
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          }
         }
       },
       providesTags: ['S3Url']
@@ -66,7 +93,6 @@ export const collectionsApi = createApi({
     getLargestFiveCollections: builder.query({
       query: () => ({
         url: 'collections/largest',
-        headers,
       })
     })
   })

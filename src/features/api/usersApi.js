@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, headers } from '../../utils/host';
-
+import { baseUrl, TOKEN } from '../../utils/host';
+import Cookie from "js-cookie";
 export const usersApi = createApi({
   reducerPath: 'usersApi',
   baseQuery: fetchBaseQuery({
@@ -11,14 +11,24 @@ export const usersApi = createApi({
     getAllUsers: builder.query({
       query: () => ({
         url: 'users',
-        headers,
+        headers: {
+          "Content-type": 'application/json; charset=utf-8',
+          "Accept": 'application/json',
+          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+        },
+
       }),
       providesTags: ['User']
     }),
     getUserById: builder.query({
       query: (id) => ({
         url: `users/${id}`,
-        headers,
+        headers: {
+          "Content-type": 'application/json; charset=utf-8',
+          "Accept": 'application/json',
+          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+        },
+
       })
     }),
     changeUserStatus: builder.mutation({
@@ -26,8 +36,13 @@ export const usersApi = createApi({
         return {
           url: `/users/status`,
           method: 'PUT',
-          headers,
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
           body: args,
+
         }
       },
       invalidatesTags: ['User'],
@@ -38,9 +53,14 @@ export const usersApi = createApi({
       query: (selectedIds) => {
         return {
           url: `/users/delete`,
-          headers,
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
           method: 'DELETE',
           body: { selectedIds: selectedIds },
+
         }
       },
 
@@ -52,8 +72,13 @@ export const usersApi = createApi({
         return {
           url: 'users/role',
           method: 'PUT',
-          headers,
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
           body: args,
+
         }
       },
       invalidatesTags: ['User'],

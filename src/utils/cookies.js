@@ -1,4 +1,5 @@
 import Cookie from "js-cookie";
+// import { TOKEN } from "./host";
 
 export const deleteCookie = (name) => {
   Cookie.remove(name);
@@ -9,6 +10,5 @@ export const setCookie = (name, value) => {
 };
 
 export const getCookie = (name) => {
-  const v = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-  return v ? v[2] : null;
+  return Cookie.get(name) ? Cookie.get(name) : null
 };

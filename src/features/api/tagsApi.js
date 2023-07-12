@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, headers } from '../../utils/host';
+import { baseUrl } from '../../utils/host';
 
 export const tagsApi = createApi({
   reducerPath: 'tagsApi',
@@ -11,7 +11,6 @@ export const tagsApi = createApi({
     getAllTags: builder.query({
       query: () => ({
         url: 'tags',
-        headers
       }),
       providesTags: ['Tag'],
     }),

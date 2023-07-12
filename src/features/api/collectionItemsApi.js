@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, headers } from '../../utils/host';
-
+import { baseUrl, TOKEN } from '../../utils/host';
+import Cookie from 'js-cookie'
 export const collectionItemsApi = createApi({
   reducerPath: 'collectionItemsApi',
   baseQuery: fetchBaseQuery({
@@ -12,7 +12,6 @@ export const collectionItemsApi = createApi({
     getAllCollectionItemsByCollectionId: builder.query({
       query: (collectionId) => ({
         url: `collections/byCollectionId/items?collectionId=${collectionId}`,
-        headers,
       }),
       providesTags: ['CollectionItem'],
     }),
@@ -22,9 +21,12 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/${collectionId}/items/create`,
           method: 'POST',
-
           body: data,
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -35,9 +37,13 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/update/${itemId}`,
           method: 'PUT',
-
           body: data,
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
+
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -47,8 +53,12 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/delete/${itemId}`,
           method: 'DELETE',
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
 
-          headers
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -59,9 +69,13 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/${itemId}/like`,
           method: 'POST',
-
           body: { userId: userId },
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
+
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -72,9 +86,13 @@ export const collectionItemsApi = createApi({
         return {
           url: `collections/items/${itemId}/unlike`,
           method: 'POST',
-
           body: { userId: userId },
-          headers
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
+
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -82,7 +100,6 @@ export const collectionItemsApi = createApi({
     getLastestCollectionItems: builder.query({
       query: () => ({
         url: 'collections/items/lastest',
-        headers
       }),
 
       providesTags: ['CollectionItem'],

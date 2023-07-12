@@ -31,7 +31,6 @@ const Comments = ({ socket, lang }) => {
     socket.emit('newComment', data);
     actions.resetForm();
   };
-
   return (
     <Box
       sx={{
@@ -43,8 +42,14 @@ const Comments = ({ socket, lang }) => {
         height: '85vh',
       }}>
       <Breadcrumbs aria-label='breadcrumb'>
-        <Link to='/collection/items'>{lang === 'en'?"Collection items":'Kolleksiya elementlari'}</Link>
-        <Typography color='text.primary'>{lang === 'en'?"Comments":"Izohlar"}</Typography>
+        <Link
+          to='/collection/items'
+          state={{ collectionId: location.state.collectionId,userId:location.state.userId }}>
+          {lang === 'en' ? 'Collection items' : 'Kolleksiya elementlari'}
+        </Link>
+        <Typography color='text.primary'>
+          {lang === 'en' ? 'Comments' : 'Izohlar'}
+        </Typography>
       </Breadcrumbs>
       <Box sx={{ width: '50%' }}>
         <Formik

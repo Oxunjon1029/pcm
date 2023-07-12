@@ -1,5 +1,11 @@
 import React from 'react';
-import { Typography, Box, TableFooter } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+} from '@mui/material';
 import CustomDeleteModal from './CustomDeleteModal';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
@@ -10,35 +16,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TablePagination from '@mui/material/TablePagination';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 const Items = ({
   collectionItems,
   user,
@@ -52,17 +31,7 @@ const Items = ({
   handleDislikeItem,
   makeEditMode,
 }) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  
   const location = useLocation();
   const navigator = useNavigate();
   return (
@@ -81,289 +50,232 @@ const Items = ({
             : "Bu yerda kolleksiya elementlari yo'q"}
         </Typography>
       )}
-      {(collectionItems || collectionItems?.length > 0) && (
-        <TableContainer
-          component={Paper}
-          elevation={8}
-          sx={{ width: '1450px' }}>
-          <Table sx={{ minWidth: '650' }}>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: 'text.secondary' }}>
-                <StyledTableCell>
-                  {lang === 'en' ? 'Item name' : 'Element nomi'}
-                </StyledTableCell>
-                <StyledTableCell align='left'>
-                  {lang === 'en' ? 'Tags' : 'Taglar'}
-                </StyledTableCell>
+      {(collectionItems || collectionItems?.length > 0) &&
+        collectionItems.map((item) => (
+          <Card
+            key={item?._id}
+            raised
+            sx={{
+              minWidth: '350px',
+              height: '270px',
+              maxWidth: '400px',
+              flexGrow: 1,
+            }}>
+            <CardContent>
+              <Typography variant='h5'>{item?.name[lang]}</Typography>
+              <Box
+                sx={{
+                  minHeight: '50px',
+                  overflowY: 'auto',
+                  margin: '20px 0',
+                }}>
+                {item?.customFields?.strings &&
+                  item?.customFields?.strings?.map((string) => (
+                    <Typography key={string?._id}>
+                      {string?.name}:{string?.value}
+                    </Typography>
+                  ))}
+                {item?.customFields?.dates &&
+                  item?.customFields?.dates?.map((date) => (
+                    <Typography key={date?._id}>
+                      {date?.name}:{date?.value}
+                    </Typography>
+                  ))}
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: '5px',
+                  flexWrap: 'wrap',
+                  wordBreak: 'normal',
+                }}>
+                {lang === 'en' &&
+                  item?.entags?.map((tag) => (
+                    <Typography key={tag?._id}>#{tag?.title}</Typography>
+                  ))}
+              </Box>
+              <Box sx={{ display: 'flex', gap: '5px' }}>
+                {lang === 'uz' &&
+                  item?.uztags?.map((tag) => (
+                    <Typography key={tag?._id}>#{tag?.title}</Typography>
+                  ))}
+              </Box>
+            </CardContent>
+            <CardActions
+              sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <IconButton
+                    onClick={() =>
+                      navigator('/comments', {
+                        state: {
+                          comments: item?.comments,
+                          itemId: item?._id,
+                          collectionId: location.state.collectionId,
+                          userId: location.state.userId,
+                        },
+                      })
+                    }>
+                    <CommentIcon color='primary' />
+                  </IconButton>
 
-                <StyledTableCell align='center'>
-                  Comment/Like/Dislike
-                </StyledTableCell>
-                <StyledTableCell>Actions</StyledTableCell>
-                {collectionItems?.map((item) => (
-                  <>
-                    {item?.customFields?.strings &&
-                      item?.customFields?.strings?.map((string) => (
-                        <StyledTableCell>{string?.name}</StyledTableCell>
-                      ))}
-                  </>
-                ))}
-                {collectionItems?.map((item) => (
-                  <>
-                    {item?.customFields?.dates &&
-                      item?.customFields?.dates?.map((date) => (
-                        <StyledTableCell key={date?._id}>
-                          {date?.name}
-                        </StyledTableCell>
-                      ))}
-                  </>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {collectionItems?.map((item) => (
-                <StyledTableRow key={item?._id}>
-                  <StyledTableCell>{item?.name[lang]}</StyledTableCell>
-                  {lang === 'en' && (
-                    <TableRow
-                      sx={{
-                        display: 'flex',
-                        maxwidth: 400,
-                        minWidth: 100,
-                        flexWrap: 'wrap',
-                        height: 100,
-                      }}>
-                      {item?.entags?.map((tag) => (
-                        <StyledTableCell key={tag?._id}>
-                          #{tag?.title}
-                        </StyledTableCell>
-                      ))}
-                    </TableRow>
-                  )}
-                  {lang === 'uz' && (
-                    <TableRow
-                      sx={{
-                        display: 'flex',
-                        maxwidth: 400,
-                        minWidth: 100,
-                        flexWrap: 'wrap',
-                        height: 100,
-                      }}>
-                      {item?.uztags?.map((tag) => (
-                        <StyledTableCell key={tag?._id}>
-                          #{tag?.title}
-                        </StyledTableCell>
-                      ))}
-                    </TableRow>
-                  )}
-
-                  <StyledTableCell>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                      }}>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <IconButton
-                          onClick={() =>
-                            navigator('/comments', {
-                              state: {
-                                comments: item?.comments,
-                                itemId: item?._id,
-                              },
-                            })
-                          }>
-                          <CommentIcon color='primary' />
-                        </IconButton>
-
-                        <Typography component='div' fontSize='10px'>
-                          {item?.comments?.length === 0
-                            ? 'Comments'
-                            : item?.comments?.length}
-                        </Typography>
-                      </Box>
-                      {!item?.likes?.includes(user?._id) && (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <IconButton
-                            disabled={!user || location.pathname === '/'}
-                            onClick={() => handleIsLiked(item?._id)}>
-                            <ThumbUpOffAltIcon
-                              color={`${
-                                !user || location.pathname === '/'
-                                  ? ''
-                                  : 'primary'
-                              }`}
-                            />
-                          </IconButton>
-                          <Typography component='div' fontSize='10px'>
-                            {item?.likes.length === 0
-                              ? 'Likes'
-                              : item?.likes.length}
-                          </Typography>
-                        </Box>
-                      )}
-                      {item?.likes?.includes(user?._id) && (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <IconButton
-                            key={item?._id}
-                            disabled={!user || location.pathname === '/'}
-                            onClick={() => handleIsLiked(item?._id)}>
-                            <ThumbUpIcon
-                              color={`${
-                                !user || location.pathname === '/'
-                                  ? ''
-                                  : 'primary'
-                              }`}
-                            />
-                          </IconButton>
-                          <Typography component='div' fontSize='10px'>
-                            {item?.likes?.length}
-                          </Typography>
-                        </Box>
-                      )}
-                      {!item?.dislikes?.includes(user?._id) && (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <IconButton
-                            disabled={!user || location.pathname === '/'}
-                            onClick={() => handleDislikeItem(item?._id)}>
-                            <ThumbDownOffAltIcon
-                              color={`${
-                                !user || location.pathname === '/'
-                                  ? ''
-                                  : 'primary'
-                              }`}
-                            />
-                          </IconButton>
-                          <Typography component='div' fontSize='10px'>
-                            {item?.dislikes.length === 0
-                              ? 'Dislikes'
-                              : item?.dislikes.length}
-                          </Typography>
-                        </Box>
-                      )}
-                      {item?.dislikes?.includes(user?._id) && (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <IconButton
-                            key={item?._id}
-                            disabled={!user || location.pathname === '/'}
-                            onClick={() => handleDislikeItem(item?._id)}>
-                            <ThumbDownAltIcon
-                              color={`${
-                                !user || location.pathname === '/'
-                                  ? ''
-                                  : 'primary'
-                              }`}
-                            />
-                          </IconButton>
-                          <Typography component='div' fontSize='10px'>
-                            {item?.dislikes?.length}
-                          </Typography>
-                        </Box>
-                      )}
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <Box>
-                      <IconButton
-                        color='success'
-                        disabled={
-                          editMode === item?._id ||
-                          !user ||
-                          location.pathname === '/' ||
-                          (user.role === 'user' &&
-                            user._id !== location.state.userId)
-                        }
-                        onClick={() =>
-                          makeEditMode(
-                            {
-                              name_uz: item?.name['uz'],
-                              name_en: item?.name['en'],
-                              uztags: item?.uztags,
-                              entags: item?.entags,
-                              strings: item?.customFields?.strings,
-                              dates: item?.customFields?.dates,
-                            },
-                            item?._id
-                          )
-                        }>
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        disabled={
-                          !user ||
-                          location.pathname === '/' ||
-                          (user.role === 'user' &&
-                            user._id !== location.state.userId)
-                        }
-                        color='error'
-                        onClick={() => {
-                          setDeleteOpen(true);
-                        }}>
-                        <DeleteIcon />
-                      </IconButton>
-                      <CustomDeleteModal
-                        open={deleteOpen}
-                        handleClose={handleDeleteClose}
-                        deleteMode={item?._id}
-                        handleSubmit={deleteCollectionItem}
+                  <Typography component='div' fontSize='10px'>
+                    {item?.comments?.length === 0
+                      ? 'Comments'
+                      : item?.comments?.length}
+                  </Typography>
+                </Box>
+                {!item?.likes?.includes(user?._id) && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <IconButton
+                      disabled={!user || location.pathname === '/'}
+                      onClick={() => handleIsLiked(item?._id)}>
+                      <ThumbUpOffAltIcon
+                        color={`${
+                          !user || location.pathname === '/' ? '' : 'primary'
+                        }`}
                       />
-                    </Box>
-                  </StyledTableCell>
-                  {item?.customFields?.strings &&
-                    item?.customFields?.strings?.map((string) => (
-                      <TableCell key={string?._id}>{string?.value}</TableCell>
-                    ))}
-                  {item?.customFields?.dates &&
-                    item?.customFields?.dates?.map((date) => (
-                      <TableCell key={date?._id}>{date?.value}</TableCell>
-                    ))}
-                </StyledTableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, 100]}
-                count={collectionItems.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      )}
+                    </IconButton>
+                    <Typography component='div' fontSize='10px'>
+                      {item?.likes.length === 0 ? 'Likes' : item?.likes.length}
+                    </Typography>
+                  </Box>
+                )}
+                {item?.likes?.includes(user?._id) && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <IconButton
+                      key={item?._id}
+                      disabled={!user || location.pathname === '/'}
+                      onClick={() => handleIsLiked(item?._id)}>
+                      <ThumbUpIcon
+                        color={`${
+                          !user || location.pathname === '/' ? '' : 'primary'
+                        }`}
+                      />
+                    </IconButton>
+                    <Typography component='div' fontSize='10px'>
+                      {item?.likes?.length}
+                    </Typography>
+                  </Box>
+                )}
+                {!item?.dislikes?.includes(user?._id) && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <IconButton
+                      disabled={!user || location.pathname === '/'}
+                      onClick={() => handleDislikeItem(item?._id)}>
+                      <ThumbDownOffAltIcon
+                        color={`${
+                          !user || location.pathname === '/' ? '' : 'primary'
+                        }`}
+                      />
+                    </IconButton>
+                    <Typography component='div' fontSize='10px'>
+                      {item?.dislikes.length === 0
+                        ? 'Dislikes'
+                        : item?.dislikes.length}
+                    </Typography>
+                  </Box>
+                )}
+                {item?.dislikes?.includes(user?._id) && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <IconButton
+                      key={item?._id}
+                      disabled={!user || location.pathname === '/'}
+                      onClick={() => handleDislikeItem(item?._id)}>
+                      <ThumbDownAltIcon
+                        color={`${
+                          !user || location.pathname === '/' ? '' : 'primary'
+                        }`}
+                      />
+                    </IconButton>
+                    <Typography component='div' fontSize='10px'>
+                      {item?.dislikes?.length}
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+              <Box>
+                <IconButton
+                  color='success'
+                  disabled={
+                    editMode === item?._id ||
+                    !user ||
+                    location.pathname === '/' ||
+                    (user.role === 'user' && user._id !== location.state.userId)
+                  }
+                  onClick={() =>
+                    makeEditMode(
+                      {
+                        name_uz: item?.name['uz'],
+                        name_en: item?.name['en'],
+                        uztags: item?.uztags,
+                        entags: item?.entags,
+                        strings: item?.customFields?.strings,
+                        dates: item?.customFields?.dates,
+                      },
+                      item?._id
+                    )
+                  }>
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  disabled={
+                    !user ||
+                    location.pathname === '/' ||
+                    (user.role === 'user' && user._id !== location.state.userId)
+                  }
+                  color='error'
+                  onClick={() => {
+                    setDeleteOpen(true);
+                  }}>
+                  <DeleteIcon />
+                </IconButton>
+                <CustomDeleteModal
+                  open={deleteOpen}
+                  handleClose={handleDeleteClose}
+                  deleteMode={item?._id}
+                  handleSubmit={deleteCollectionItem}
+                />
+              </Box>
+            </CardActions>
+          </Card>
+        ))}
     </Box>
+    
   );
 };
 

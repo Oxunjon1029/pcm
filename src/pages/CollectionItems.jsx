@@ -183,7 +183,6 @@ const CollectionItems = ({ lang }) => {
     searchedItems,
     collectionItemsByTagSearch,
   ]);
-
   return (
     <Box
       sx={{

@@ -7,6 +7,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import { useSearchFullTextQuery } from '../features/api/searchApi';
 import { useNavigate } from 'react-router';
+import IconButton from '@mui/material/IconButton';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -17,33 +18,15 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginLeft: 0,
   width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
+  display:'flex',
+  justifyContent:'space-between'
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(() => ({
   color: 'inherit',
+  width:'90%',
   '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
-    transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
   },
 }));
 const SearchModal = ({ open, handleClose, lang }) => {
@@ -62,9 +45,9 @@ const SearchModal = ({ open, handleClose, lang }) => {
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
         <Search sx={{ width: '100%' }}>
-          <SearchIconWrapper>
-            <SearchIcon fontSize='medium' />
-          </SearchIconWrapper>
+          <IconButton>
+              <SearchIcon fontSize='medium' />
+          </IconButton>
           <StyledInputBase
             placeholder='Search…'
             onChange={handleSearch}

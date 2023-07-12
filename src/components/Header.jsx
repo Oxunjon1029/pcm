@@ -17,6 +17,9 @@ import { deleteCookie } from '../utils/cookies';
 import { TOKEN } from '../utils/host';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, setUser } from '../features/user/userSlice';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -153,7 +156,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                 aria-haspopup='true'
                 onClick={handleMenu}
                 color='inherit'>
-                <AccountCircle />
+                <MoreVertIcon />
               </IconButton>
               <Menu
                 id='menu-appbar'
@@ -170,6 +173,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
                 <MenuItem
+                  divider
                   selected={location.pathname === '/signup'}
                   onClick={() => {
                     navigate('/signup');
@@ -178,33 +182,41 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                   Sign up
                 </MenuItem>
                 <MenuItem
+                  divider
+                  sx={{ justifyContent: 'flex-start' }}
                   selected={location.pathname === '/login'}
                   onClick={() => {
                     navigate('/login');
                     handleClose();
                   }}>
+                  <LoginIcon sx={{ marginRight: '10px' }} />
                   Login
                 </MenuItem>
-                {user && (
-                  <MenuItem
-                    onClick={() => {
-                      dispatch(setUser(null));
-                      deleteCookie(TOKEN);
-                      handleClose();
-                      
-                      navigate('/login');
-                    }}>
-                    Logout
-                  </MenuItem>
-                )}
+
                 <MenuItem
+                  divider
                   selected={location.pathname === '/user-profile'}
                   onClick={() => {
                     navigate('/user-profile');
                     handleClose();
                   }}>
+                  <AccountCircle sx={{ marginRight: '10px' }} />
                   Profile
                 </MenuItem>
+                {user && (
+                  <MenuItem
+                    divider
+                    onClick={() => {
+                      dispatch(setUser(null));
+                      deleteCookie(TOKEN);
+                      handleClose();
+
+                      navigate('/login');
+                    }}>
+                    <LogoutIcon />
+                    Logout
+                  </MenuItem>
+                )}
               </Menu>
             </div>
           </Box>

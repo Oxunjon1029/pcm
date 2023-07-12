@@ -159,9 +159,8 @@ const CreateCollectionForm = ({
                           />
                           <Button
                             variant='contained'
-                            onClick={async () => {
-                              await remove(index);
-                              console.log(values?.strings);
+                            onClick={() => {
+                              remove(index);
                             }}>
                             Remove
                           </Button>

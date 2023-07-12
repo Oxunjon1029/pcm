@@ -6,8 +6,10 @@ import TextFormField from '../components/TextFormField';
 import { useLocation } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/user/userSlice';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import { Link } from 'react-router-dom';
 
-const Comments = ({ socket }) => {
+const Comments = ({ socket, lang }) => {
   const location = useLocation();
   const [comments, setComments] = useState([]);
   const user = useSelector(selectUser);
@@ -40,6 +42,10 @@ const Comments = ({ socket }) => {
         margin: '100px auto',
         height: '85vh',
       }}>
+      <Breadcrumbs aria-label='breadcrumb'>
+        <Link to='/collection/items'>{lang === 'en'?"Collection items":'Kolleksiya elementlari'}</Link>
+        <Typography color='text.primary'>{lang === 'en'?"Comments":"Izohlar"}</Typography>
+      </Breadcrumbs>
       <Box sx={{ width: '50%' }}>
         <Formik
           initialValues={{ content: '' }}

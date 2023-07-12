@@ -1,4 +1,4 @@
-import { Button, Box } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { useFormik } from 'formik';
@@ -17,7 +17,8 @@ import {
 } from '../features/api/collectionItemsApi';
 import { toast } from 'react-toastify';
 import Items from '../components/Items';
-
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import { Link } from 'react-router-dom';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
   const collectionId = location.state.collectionId;
@@ -193,6 +194,14 @@ const CollectionItems = ({ lang }) => {
         flexDirection: 'column',
         gap: '20px',
       }}>
+      <Breadcrumbs aria-label='breadcrumb'>
+        <Link to='/user-profile'>
+          {lang === 'en' ? 'Collections' : 'Kolleksiyalar'}
+        </Link>
+        <Typography color='text.primary'>
+          {lang === 'en' ? 'Collection items' : 'Kolleksiya elementlari'}
+        </Typography>
+      </Breadcrumbs>
       <Box>
         <Button
           size='medium'

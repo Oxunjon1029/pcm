@@ -155,9 +155,9 @@ const Collections = ({
       body: file,
     })
       .then(async (data) => {
-        console.log(data.url)
+        console.log(data.url);
         if (data.url) {
-          console.log(file,values?.imageUrl)
+          console.log(file, values?.imageUrl);
           let data = {
             name: {
               en: values?.name_en,
@@ -338,6 +338,12 @@ const Collections = ({
                         <Typography
                           variant='h6'
                           color='text.secondary'
+                          sx={{
+                            maxHeight: '80px',
+                            overflowY: 'auto',
+                            borderBottom: '1px solid',
+                            minHeight:'80px'
+                          }}
                           component='div'
                           dangerouslySetInnerHTML={{
                             __html: collection.description[lang],

@@ -194,7 +194,9 @@ const CollectionItems = ({ lang }) => {
         gap: '20px',
       }}>
       <Breadcrumbs aria-label='breadcrumb'>
-        <Link to='/user-profile'>
+        <Link
+          to='/user-profile'
+          style={{ pointerEvents: `${!user ? 'none' : ''}` }}>
           {lang === 'en' ? 'Collections' : 'Kolleksiyalar'}
         </Link>
         <Typography color='text.primary'>

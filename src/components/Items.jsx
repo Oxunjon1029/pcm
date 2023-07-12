@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  CardActions,
-} from '@mui/material';
+import { Typography, Box, Card, CardContent, CardActions } from '@mui/material';
 import CustomDeleteModal from './CustomDeleteModal';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
@@ -16,7 +10,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 
 const Items = ({
   collectionItems,
@@ -31,7 +24,6 @@ const Items = ({
   handleDislikeItem,
   makeEditMode,
 }) => {
-  
   const location = useLocation();
   const navigator = useNavigate();
   return (
@@ -56,9 +48,9 @@ const Items = ({
             key={item?._id}
             raised
             sx={{
-              minWidth: '350px',
+              minWidth: '250px',
               height: '270px',
-              maxWidth: '400px',
+              maxWidth: '380px',
               flexGrow: 1,
             }}>
             <CardContent>
@@ -121,8 +113,12 @@ const Items = ({
                         state: {
                           comments: item?.comments,
                           itemId: item?._id,
-                          collectionId: location.state.collectionId,
-                          userId: location.state.userId,
+                          collectionId: location.state?.collectionId
+                            ? location.state?.collectionId
+                            : '',
+                          userId: location.state?.userId
+                            ? location.state?.userId
+                            : '',
                         },
                       })
                     }>
@@ -275,7 +271,6 @@ const Items = ({
           </Card>
         ))}
     </Box>
-    
   );
 };
 

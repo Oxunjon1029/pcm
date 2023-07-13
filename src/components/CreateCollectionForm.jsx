@@ -5,6 +5,7 @@ import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import TextFormField from './TextFormField';
 import { useGetAllTopicsQuery } from '../features/api/topicApi';
+import { useRemoveCustomFieldMutation } from '../features/api/collectionItemsApi';
 import { SelectFormField } from './SelectFormField';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -16,6 +17,8 @@ const CreateCollectionForm = ({
 }) => {
   const [topics, setTopics] = useState([]);
   const { isSuccess: success, data: topic } = useGetAllTopicsQuery();
+  const [removeCustomField, { isSuccess, data, isError, error }] =
+    useRemoveCustomFieldMutation();
   const collectCreateValidationSchema = Yup.object({
     name_uz: Yup.string().required(),
     name_en: Yup.string().required(),
@@ -71,6 +74,14 @@ const CreateCollectionForm = ({
     uzOptions.push(uzData);
     enOptions.push(enData);
   });
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+    }
+    if (isError) {
+      console.log(error);
+    }
+  }, [isSuccess, isError, data, error]);
   return (
     <Box
       sx={{
@@ -161,6 +172,13 @@ const CreateCollectionForm = ({
                             variant='contained'
                             onClick={() => {
                               remove(index);
+                              if (mode && values?.strings[index].name !== '') {
+                                removeCustomField({
+                                  collectionId: mode,
+                                  name: values?.strings[index].name,
+                                  field: 'strings',
+                                });
+                              }
                             }}>
                             Remove
                           </Button>
@@ -256,7 +274,16 @@ const CreateCollectionForm = ({
 
                           <Button
                             variant='contained'
-                            onClick={() => remove(index)}>
+                            onClick={() => {
+                              remove(index);
+                              if (mode && values?.dates[index].name !== '') {
+                                removeCustomField({
+                                  collectionId: mode,
+                                  name: values?.dates[index].name,
+                                  field: 'dates',
+                                });
+                              }
+                            }}>
                             Remove
                           </Button>
                         </div>

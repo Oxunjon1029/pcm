@@ -103,6 +103,21 @@ export const collectionItemsApi = createApi({
       }),
 
       providesTags: ['CollectionItem'],
+    }),
+    removeCustomField: builder.mutation({
+      query(data) {
+        return {
+          url: 'collection/items/customfield/remove',
+          headers: {
+            "Content-type": 'application/json; charset=utf-8',
+            "Accept": 'application/json',
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          },
+          body: data,
+          method: 'POST'
+        }
+      },
+      invalidatesTags: ['CollectionItem']
     })
   })
 })
@@ -114,5 +129,6 @@ export const {
   useDeleteCollectionItemMutation,
   useLikeCollectionItemMutation,
   useUnlikeCollectionItemMutation,
-  useGetLastestCollectionItemsQuery
+  useGetLastestCollectionItemsQuery,
+  useRemoveCustomFieldMutation
 } = collectionItemsApi

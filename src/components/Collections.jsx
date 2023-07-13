@@ -267,7 +267,7 @@ const Collections = ({
                 key={collection._id}
                 sx={{
                   flexGrow: 1,
-                  maxWidth: { lg: '350px', sm: '320px', md: '350px' },
+                  maxWidth: { lg: '350px', sm: '365px', md: '420px' },
                   minWidth: '300px',
                 }}>
                 {location.pathname === '/' && (

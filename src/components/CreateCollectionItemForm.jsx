@@ -69,13 +69,16 @@ const CreateCollectionItemForm = ({
       en: values?.name_en,
       uz: values?.name_uz,
     };
-    let customFields = {
-      strings: values?.strings,
-      dates: values?.dates,
-    };
+
     createCollectionItem({
       collectionId: collectionId,
-      data: { name, uztags: value, entags: enValue, customFields },
+      data: {
+        name,
+        uztags: value,
+        entags: enValue,
+        strings: values?.strings,
+        dates: values?.dates,
+      },
     });
     handleClose();
     actions.resetForm();
@@ -85,13 +88,16 @@ const CreateCollectionItemForm = ({
       en: values?.name_en,
       uz: values?.name_uz,
     };
-    let customFields = {
-      strings: values?.strings,
-      dates: values?.dates,
-    };
+
     updateCollectionItem({
       itemId: mode,
-      data: { name, uztags: value, entags: enValue, customFields },
+      data: {
+        name,
+        uztags: value,
+        entags: enValue,
+        strings: values?.strings,
+        dates: values?.dates,
+      },
     });
     handleClose();
     setEditMode('');
@@ -170,6 +176,7 @@ const CreateCollectionItemForm = ({
                           (field, index) => {
                             return (
                               <Box
+                                key={index + 'customString'}
                                 sx={{
                                   display: 'flex',
                                   gap: '10px',
@@ -230,6 +237,7 @@ const CreateCollectionItemForm = ({
                         (field, index) => {
                           return (
                             <Box
+                              key={index + 'customDates'}
                               sx={{
                                 display: 'flex',
                                 gap: '10px',

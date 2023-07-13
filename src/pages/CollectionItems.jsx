@@ -186,7 +186,7 @@ const CollectionItems = ({ lang }) => {
   return (
     <Box
       sx={{
-        width: '96%',
+        width: '98%',
         margin: '100px  auto',
         marginBottom: '20px',
         display: 'flex',
@@ -235,6 +235,7 @@ const CollectionItems = ({ lang }) => {
           flexWrap: 'wrap',
           justifyContent: { sm: 'center', xl: 'flex-start' },
           alignItems: { sm: 'center' },
+          width: '100%',
         }}>
         {isLoading || createLoading || updateLoading || deleteLoading ? (
           <Box

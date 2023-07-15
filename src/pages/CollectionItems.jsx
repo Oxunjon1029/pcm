@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import CreateCollectionItemModal from '../components/CreateCollectionItemModal';
 import Loader from '../components/Loader';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../features/user/userSlice';
+import { selectTag, selectText, selectUser } from '../features/user/userSlice';
 import {
   useGetAllCollectionItemsByCollectionIdQuery,
   useCreateCollectionItemMutation,
@@ -14,6 +14,8 @@ import {
   useDeleteCollectionItemMutation,
   useLikeCollectionItemMutation,
   useUnlikeCollectionItemMutation,
+  useSearchItemsByTagQuery,
+  useSearchFullTextQuery,
 } from '../features/api/collectionItemsApi';
 import { toast } from 'react-toastify';
 import Items from '../components/Items';
@@ -21,9 +23,18 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link } from 'react-router-dom';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
-  const collectionId = location.state.collectionId;
-  const searchedItems = location.state.searchedItems;
-  const collectionItemsByTagSearch = location.state.collectionItems;
+  const tag = useSelector(selectTag);
+  const text = useSelector(selectText);
+  const user = useSelector(selectUser);
+  const collectionId = location.state?.collectionId;
+  const searchedItems = location.state?.searchedItems;
+  const collectionItemsByTagSearch = location.state?.collectionItems;
+  const { refetch: tagRefetch, data: tagData } = useSearchItemsByTagQuery({
+    tag: tag,
+    lang: lang,
+  });
+  const { refetch: searchedRefetch, data: textData } =
+    useSearchFullTextQuery(text);
   const [itemsByCollectionId, setItemsByCollectionId] = useState([]);
   const {
     data: collectionItemsByCollectionId,
@@ -69,7 +80,7 @@ const CollectionItems = ({ lang }) => {
   const [open, setOpen] = useState(false);
   const [openEditMode, setOpenEditMode] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const user = useSelector(selectUser);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -172,17 +183,34 @@ const CollectionItems = ({ lang }) => {
     if (isItemsByCollIdSuccess) {
       setItemsByCollectionId(collectionItemsByCollectionId);
     }
+
+    if (collectionItemsByTagSearch) {
+      tagRefetch();
+    }
+    if (searchedItems) {
+      searchedRefetch();
+    }
     if (!searchedItems && !collectionItemsByTagSearch) {
       refetch();
+    }
+    if (collectionItemsByTagSearch?.length > 0) {
+      tagRefetch();
+    }
+    if (searchedItems?.length > 0) {
+      searchedRefetch();
     }
   }, [
     isItemsByCollIdSuccess,
     collectionItemsByCollectionId,
     itemsByCollectionId,
-    refetch,
     searchedItems,
     collectionItemsByTagSearch,
+    collectionId,
+    refetch,
+    tagRefetch,
+    searchedRefetch,
   ]);
+  
   return (
     <Box
       sx={{
@@ -208,7 +236,7 @@ const CollectionItems = ({ lang }) => {
           size='medium'
           disabled={
             !user ||
-            (user.role === 'user' && user._id !== location.state.userId)
+            (user.role === 'user' && user._id !== location.state?.userId)
           }
           variant='contained'
           color='secondary'
@@ -260,9 +288,9 @@ const CollectionItems = ({ lang }) => {
             handleDeleteClose={handleDeleteClose}
             collectionItems={
               itemsByCollectionId.length === 0 && !searchedItems
-                ? collectionItemsByTagSearch
+                ? tagData
                 : searchedItems
-                ? searchedItems
+                ? textData
                 : itemsByCollectionId
             }
             handleIsLiked={handleIsLiked}

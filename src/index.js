@@ -6,6 +6,8 @@ import { store } from './app/store';
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App';
 import Loader from './components/Loader';
+
+// Create a new instance of QueryClient
 const container = document.getElementById('root');
 const root = createRoot(container);
 

@@ -1,17 +1,18 @@
 import { Box, Button, Typography, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Collections from '../components/Collections';
 import Items from '../components/Items';
-import { selectUser } from '../features/user/userSlice';
+import { selectUser, setTag } from '../features/user/userSlice';
 import { useGetLastestCollectionItemsQuery } from '../features/api/collectionItemsApi';
 import { useGetLargestFiveCollectionsQuery } from '../features/api/collectionsApi';
 import { useGetAllTagsQuery } from '../features/api/tagsApi';
-import { useSearchItemsByTagQuery } from '../features/api/searchApi';
+import { useSearchItemsByTagQuery } from '../features/api/collectionItemsApi';
 import { useNavigate } from 'react-router';
 const Home = ({ lang }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [tag, setTag] = useState('');
+  const [tag, setFirstTag] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const {
@@ -43,9 +44,11 @@ const Home = ({ lang }) => {
   }, [isSuccess, data, largestRefetch]);
   useEffect(() => {
     if (tagSuccess) {
-      if(searchedItemsByTag.length > 0){
+      if (searchedItemsByTag.length > 0) {
         navigate('/collection/items', {
-          state: { collectionItems: searchedItemsByTag },
+          state: {
+            collectionItems: searchedItemsByTag,
+          },
         });
       }
     }
@@ -73,7 +76,7 @@ const Home = ({ lang }) => {
           display: 'flex',
           flexDirection: 'column',
           gap: '20px',
-          width:'100%',
+          width: '100%',
         }}>
         <Typography
           component='div'
@@ -120,8 +123,10 @@ const Home = ({ lang }) => {
           {alltags?.map((tag) => (
             <Grid item xs={6} sm={4} md={4} lg={3} xl={3} key={tag?._id}>
               <Button
-                onClick={() => {
-                  setTag(tag?.title[lang]);
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFirstTag(tag?.title[lang]);
+                  dispatch(setTag(tag?.title[lang]));
                 }}
                 sx={{
                   flex: 1,

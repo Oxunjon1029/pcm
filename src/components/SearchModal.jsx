@@ -5,9 +5,11 @@ import { alpha, styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import { useSearchFullTextQuery } from '../features/api/searchApi';
+import { useSearchFullTextQuery } from '../features/api/collectionItemsApi';
 import { useNavigate } from 'react-router';
 import IconButton from '@mui/material/IconButton';
+import { useDispatch } from 'react-redux';
+import { setText } from '../features/user/userSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -18,25 +20,29 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginLeft: 0,
   width: '100%',
-  display:'flex',
-  justifyContent:'space-between'
+  display: 'flex',
+  justifyContent: 'space-between',
 }));
 
 const StyledInputBase = styled(InputBase)(() => ({
   color: 'inherit',
-  width:'90%',
+  width: '90%',
   '& .MuiInputBase-input': {
     width: '100%',
   },
 }));
 const SearchModal = ({ open, handleClose, lang }) => {
   const [searchText, setSearchText] = useState('');
-  const { data: searchedItems } = useSearchFullTextQuery(open && searchText);
+  const dispatch = useDispatch()
+  const { data: searchedItems } =
+    useSearchFullTextQuery( searchText);
   const handleSearch = (e) => {
     if (e.target.value && open) {
       setSearchText(e.target.value);
+      dispatch(setText(e.target.value))
     } else {
       setSearchText('');
+      
     }
   };
 
@@ -46,7 +52,7 @@ const SearchModal = ({ open, handleClose, lang }) => {
       <DialogTitle>
         <Search sx={{ width: '100%' }}>
           <IconButton>
-              <SearchIcon fontSize='medium' />
+            <SearchIcon fontSize='medium' />
           </IconButton>
           <StyledInputBase
             placeholder='Search…'

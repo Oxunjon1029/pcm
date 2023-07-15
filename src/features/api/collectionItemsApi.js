@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl, TOKEN } from '../../utils/host';
 import Cookie from 'js-cookie'
+
 export const collectionItemsApi = createApi({
   reducerPath: 'collectionItemsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${baseUrl}/api/v1/`
   }),
-  tagTypes: ['CollectionItem', 'Likes', 'Dislikes'],
+  tagTypes: ['CollectionItem'],
 
   endpoints: (builder) => ({
     getAllCollectionItemsByCollectionId: builder.query({
@@ -78,7 +79,8 @@ export const collectionItemsApi = createApi({
 
         }
       },
-      invalidatesTags: ['CollectionItem']
+      invalidatesTags: ['CollectionItem'],
+
     }),
     unlikeCollectionItem: builder.mutation({
       query(args) {
@@ -95,7 +97,8 @@ export const collectionItemsApi = createApi({
 
         }
       },
-      invalidatesTags: ['CollectionItem']
+      invalidatesTags: ['CollectionItem'],
+
     }),
     getLastestCollectionItems: builder.query({
       query: () => ({
@@ -118,6 +121,25 @@ export const collectionItemsApi = createApi({
         }
       },
       invalidatesTags: ['CollectionItem']
+    }),
+    searchFullText: builder.query({
+      query: (text) => ({
+        url: `/itemOrComment/search?text=${text}`,
+        headers: {
+          "Accept": '*/*'
+        }
+      }),
+      providesTags: ['CollectionItem']
+    }),
+    searchItemsByTag: builder.query({
+      query: ({ tag, lang }) => ({
+        url: `itemsByTag/search?tag=${tag}&lang=${lang}`,
+        headers: {
+          "Accept": '*/*'
+        },
+
+      }),
+      providesTags: ['CollectionItem']
     })
   })
 })
@@ -130,5 +152,7 @@ export const {
   useLikeCollectionItemMutation,
   useUnlikeCollectionItemMutation,
   useGetLastestCollectionItemsQuery,
-  useRemoveCustomFieldMutation
+  useRemoveCustomFieldMutation,
+  useSearchFullTextQuery,
+  useSearchItemsByTagQuery
 } = collectionItemsApi

@@ -206,11 +206,10 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                 {user && (
                   <MenuItem
                     divider
-                    onClick={() => {
-                      dispatch(setUser(null));
-                      deleteCookie(TOKEN);
+                    onClick={async () => {
                       handleClose();
-
+                      deleteCookie(TOKEN);
+                      dispatch(setUser(null));
                       navigate('/login');
                     }}>
                     <LogoutIcon />

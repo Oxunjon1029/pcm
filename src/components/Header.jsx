@@ -116,12 +116,13 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
           <Box
             sx={{
               display: 'flex',
-              gap: { xs: '30px', sm: '20px', md: '20px', lg: '20px' },
+              gap: { xs: '40px', sm: '40px', md: '40px', lg: '20px' },
               justifyContent: 'center',
               alignItems: 'center',
               height: '70px',
             }}>
             <Select
+              sx={{ flex: 1 }}
               labelId='demo-simple-select-label'
               id='demo-simple-select'
               value={lang}
@@ -133,7 +134,8 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
               ))}
             </Select>
             <IconButton
-              sx={{ borderRadius: '12px', border: '1px solid white' }}
+            
+              sx={{ borderRadius: '12px', border: '1px solid white',flex:1 }}
               onClick={() => setOpenSearchModal(true)}
               color='inherit'>
               <SearchIcon />
@@ -148,7 +150,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
               checked={checked}
               onChange={changeMode}
             />
-            <div>
+            <div style={{flex:1}}>
               <IconButton
                 size='large'
                 aria-label='account of current user'
@@ -212,7 +214,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                       dispatch(setUser(null));
                       navigate('/login');
                     }}>
-                    <LogoutIcon />
+                    <LogoutIcon sx={{ marginRight: '10px' }} />
                     Logout
                   </MenuItem>
                 )}

@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
-// import { TOKEN } from "./host";
+import jwt_decode from 'jwt-decode';
+
 
 export const deleteCookie = (name) => {
   Cookie.remove(name);
@@ -12,3 +13,12 @@ export const setCookie = (name, value) => {
 export const getCookie = (name) => {
   return Cookie.get(name) ? Cookie.get(name) : null
 };
+export const isTokenExpired = async (token) => {
+  if (await token) {
+    const exprTime = jwt_decode(token).exp
+    const currentTime = Date.now() / 1000;
+    return exprTime < currentTime
+  }
+  if (!(await token)) return true
+
+}

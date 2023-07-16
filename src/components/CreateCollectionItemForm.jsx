@@ -5,6 +5,8 @@ import TextFormField from './TextFormField';
 import useAutocomplete from '@mui/base/useAutocomplete';
 import AutomCompleteChips from './AutomCompleteChips';
 import { useGetCollectionByIdQuery } from '../features/api/collectionsApi';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 const CreateCollectionItemForm = ({
   initialValues,
   mode,
@@ -78,6 +80,9 @@ const CreateCollectionItemForm = ({
         entags: enValue,
         strings: values?.strings,
         dates: values?.dates,
+        multilineTexts:values?.multilineTexts,
+        integers:values?.integers,
+        booleans:values?.integers
       },
     });
     handleClose();
@@ -97,6 +102,9 @@ const CreateCollectionItemForm = ({
         entags: enValue,
         strings: values?.strings,
         dates: values?.dates,
+        multilineTexts:values?.multilineTexts,
+        integers:values?.integers,
+        booleans:values?.integers
       },
     });
     handleClose();
@@ -105,6 +113,9 @@ const CreateCollectionItemForm = ({
   };
   const [stringFieldName, setStringFieldName] = useState(['']);
   const [dateFieldName, setDateFieldName] = useState(['']);
+  const [integerFieldName, setIntegerFieldName] = useState(['']);
+  const [textFieldName, setTextFieldName] = useState(['']);
+  const [booleanFieldName, setBooleanFieldName] = useState(['']);
   return (
     <Box
       sx={{
@@ -273,6 +284,185 @@ const CreateCollectionItemForm = ({
                                     push({ name: field.name });
                                   }
                                   setDateFieldName((prev) => [
+                                    ...prev,
+                                    field.name,
+                                  ]);
+                                }}>
+                                +
+                              </Button>
+                            </Box>
+                          );
+                        }
+                      )}
+                    </div>
+                  )}
+                </FieldArray>
+              )}
+              {collectionById?.customFields?.multilineTexts?.length > 0 && (
+                <FieldArray name='multilineTexts'>
+                  {({ push }) => (
+                    <div>
+                      <div>
+                        {collectionById?.customFields?.multilineTexts?.map(
+                          (field, index) => {
+                            return (
+                              <Box
+                                key={index + 'customString'}
+                                sx={{
+                                  display: 'flex',
+                                  gap: '10px',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                {!textFieldName.includes(field.name) && (
+                                  <Field
+                                    key={field?.name}
+                                    title='Please click plus button to fill up the input'
+                                    disabled={
+                                      !textFieldName.includes(field.name)
+                                    }
+                                    type='string'
+                                    label={field?.name}
+                                    name={`multilineTexts[${index}].value`}
+                                    onChange={handleChange}
+                                    component={TextFormField}
+                                  />
+                                )}
+                                {textFieldName.includes(field.name) && (
+                                  <Field
+                                    key={field?.name}
+                                    type='string'
+                                    label={field?.name}
+                                    name={`multilineTexts[${index}].value`}
+                                    onChange={handleChange}
+                                    component={TextFormField}
+                                  />
+                                )}
+                                <Button
+                                  variant='contained'
+                                  onClick={() => {
+                                    if (!mode) {
+                                      push({ name: field.name });
+                                    }
+                                    setTextFieldName((prev) => [
+                                      ...prev,
+                                      field.name,
+                                    ]);
+                                  }}>
+                                  +
+                                </Button>
+                              </Box>
+                            );
+                          }
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </FieldArray>
+              )}
+              {collectionById?.customFields?.integers?.length > 0 && (
+                <FieldArray name='integers'>
+                  {({ push }) => (
+                    <div>
+                      {collectionById?.customFields?.integers?.map(
+                        (field, index) => {
+                          return (
+                            <Box
+                              key={index + 'integers'}
+                              sx={{
+                                display: 'flex',
+                                gap: '10px',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}>
+                              {!integerFieldName.includes(field.name) && (
+                                <Field
+                                  key={field?.name}
+                                  label={field?.name}
+                                  title='Please click plus button to fill up the input'
+                                  disabled={!integerFieldName.includes(field.name)}
+                                  type='number'
+                                  name={`integers[${index}].value`}
+                                  onChange={handleChange}
+                                  component={TextFormField}
+                                />
+                              )}
+                              {integerFieldName.includes(field.name) && (
+                                <Field
+                                  key={field?.name}
+                                  label={field?.name}
+                                  type='date'
+                                  name={`integers[${index}].value`}
+                                  onChange={handleChange}
+                                  component={TextFormField}
+                                />
+                              )}
+                              <Button
+                                variant='contained'
+                                onClick={() => {
+                                  if (!mode) {
+                                    push({ name: field.name });
+                                  }
+                                  setIntegerFieldName((prev) => [
+                                    ...prev,
+                                    field.name,
+                                  ]);
+                                }}>
+                                +
+                              </Button>
+                            </Box>
+                          );
+                        }
+                      )}
+                    </div>
+                  )}
+                </FieldArray>
+              )}
+              {collectionById?.customFields?.booleans?.length > 0 && (
+                <FieldArray name='booleans'>
+                  {({ push }) => (
+                    <div>
+                      {collectionById?.customFields?.booleans?.map(
+                        (field, index) => {
+                          return (
+                            <Box
+                              key={index + 'integers'}
+                              sx={{
+                                display: 'flex',
+                                gap: '10px',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}>
+                              {!booleanFieldName.includes(field.name) && (
+                                <Field
+                                  key={field?.name}
+                                  label={field?.name}
+                                  title='Please click plus button to fill up the input'
+                                  disabled={!booleanFieldName.includes(field.name)}
+                                  as={FormControlLabel}
+                                  control={<Checkbox  />}
+                                  name={`booleans[${index}].value`}
+                                  onChange={handleChange}
+                                  
+                                />
+                              )}
+                              {booleanFieldName.includes(field.name) && (
+                                <Field
+                                  key={field?.name}
+                                  label={field?.name}
+                                  as={FormControlLabel}
+                                  control={<Checkbox  />}
+                                  name={`booleans[${index}].value`}
+                                  onChange={handleChange}
+                                />
+                              )}
+                              <Button
+                                variant='contained'
+                                onClick={() => {
+                                  if (!mode) {
+                                    push({ name: field.name });
+                                  }
+                                  setBooleanFieldName((prev) => [
                                     ...prev,
                                     field.name,
                                   ]);

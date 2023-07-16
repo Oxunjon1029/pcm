@@ -70,6 +70,7 @@ const Home = ({ lang }) => {
         flexDirection: 'column',
         gap: '50px',
         width: '96%',
+        minHeight:'100vh'
       }}>
       <Box
         sx={{

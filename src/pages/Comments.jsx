@@ -43,11 +43,15 @@ const Comments = ({ socket, lang }) => {
       }}>
       <Breadcrumbs aria-label='breadcrumb'>
         <Link
-          style={{ pointerEvents: `${!user ? 'none' : ''}` }}
+          style={{
+            pointerEvents: `${
+              !user || !location.state?.collectionId ? 'none' : ''
+            }`,
+          }}
           to='/collection/items'
           state={{
-            collectionId: location.state.collectionId,
-            userId: location.state.userId,
+            collectionId: location.state?.collectionId,
+            userId: location.state?.userId,
           }}>
           {lang === 'en' ? 'Collection items' : 'Kolleksiya elementlari'}
         </Link>

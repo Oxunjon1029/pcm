@@ -27,7 +27,7 @@ import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, setUser } from '../features/user/userSlice';
-import { deleteCookie } from '../utils/cookies';
+import { deleteCookie, } from '../utils/cookies';
 import { TOKEN } from '../utils/host';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -190,6 +190,8 @@ const Admin = ({ lang }) => {
       navigator('/login');
     }
   }, [currUser, navigator]);
+
+ 
   return (
     <Box
       sx={{

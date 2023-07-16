@@ -24,13 +24,13 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      if ( data.user.role === 'admin') {
+      if (data.user.role === 'admin') {
         if (data.user.status === 'active') {
           toast.success(`${data?.user?.name} is successfully logged in`);
           navigator('/admin-user');
         }
       } else {
-        if ( data?.user?.status === 'active') {
+        if (data?.user?.status === 'active') {
           toast.success(`${data?.user?.name} is successfully logged in`);
           navigator('/user-profile');
         }

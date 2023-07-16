@@ -209,6 +209,8 @@ const Collections = ({
       toast.error(updateErrMessage?.message);
     }
   }, [updateErrMessage, isUpdateSuccess, updateMessage, isUpdateError]);
+
+  
   if (isLoading || updateLoading) {
     return (
       <Box
@@ -255,7 +257,7 @@ const Collections = ({
         {collections.length === 0 && (
           <Typography variant='h3' color='text.secondary'>
             {lang === 'en'
-              ? 'There is no collections'
+              ? 'There are no collections'
               : "Bu yerda kolleksiyalar yo'q"}
           </Typography>
         )}
@@ -336,8 +338,8 @@ const Collections = ({
                           gap: '6px',
                         }}>
                         <Typography
-                          variant='h6'
                           color='text.secondary'
+                          className="collection_description"
                           sx={{
                             maxHeight: '80px',
                             overflowY: 'auto',

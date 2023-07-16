@@ -21,6 +21,8 @@ import { toast } from 'react-toastify';
 import Items from '../components/Items';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link } from 'react-router-dom';
+
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
   const tag = useSelector(selectTag);
@@ -110,6 +112,24 @@ const CollectionItems = ({ lang }) => {
         value: yup.string(),
       })
     ),
+    integers: yup.array().of(
+      yup.object({
+        name: yup.string().required(),
+        value: yup.number(),
+      })
+    ),
+    multilineTexts: yup.array().of(
+      yup.object({
+        name: yup.string().required(),
+        value: yup.string(),
+      })
+    ),
+    booleans: yup.array().of(
+      yup.object({
+        name: yup.string().required(),
+        value: yup.boolean(),
+      })
+    ),
   });
 
   const formik = useFormik({
@@ -118,12 +138,25 @@ const CollectionItems = ({ lang }) => {
       name_en: '',
       strings: [],
       dates: [],
+      multilineTexts: [],
+      integers: [],
+      booleans: [],
     },
     validationSchema,
   });
 
   const makeEditMode = async (
-    { name_uz, name_en, uztags, entags, strings, dates },
+    {
+      name_uz,
+      name_en,
+      uztags,
+      entags,
+      strings,
+      dates,
+      integers,
+      multilineTexts,
+      booleans,
+    },
     id
   ) => {
     await formik.setValues({
@@ -133,6 +166,9 @@ const CollectionItems = ({ lang }) => {
       entags,
       strings,
       dates,
+      multilineTexts,
+      integers,
+      booleans,
     });
     setEditMode(id);
     setOpenEditMode(true);
@@ -210,7 +246,7 @@ const CollectionItems = ({ lang }) => {
     tagRefetch,
     searchedRefetch,
   ]);
-  
+
   return (
     <Box
       sx={{
@@ -220,11 +256,12 @@ const CollectionItems = ({ lang }) => {
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
+        minHeight: '100vh',
       }}>
       <Breadcrumbs aria-label='breadcrumb'>
         <Link
           to='/user-profile'
-          style={{ pointerEvents: `${!user ? 'none' : ''}` }}>
+          style={{ pointerEvents: `${!user || !collectionId ? 'none' : ''}` }}>
           {lang === 'en' ? 'Collections' : 'Kolleksiyalar'}
         </Link>
         <Typography color='text.primary'>
@@ -241,6 +278,7 @@ const CollectionItems = ({ lang }) => {
           variant='contained'
           color='secondary'
           onClick={handleOpen}>
+          <AddCircleIcon sx={{ marginRight: '5px' }} />
           {lang === 'en' ? 'Create item' : 'Yangi element yaratish'}
         </Button>
       </Box>

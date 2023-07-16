@@ -12,6 +12,7 @@ import { useGetAllCollectionsQuery } from '../features/api/collectionsApi';
 import Loader from '../components/Loader';
 import { useGetS3UrlQuery } from '../features/api/collectionsApi';
 
+
 const NonAdminUser = ({ lang }) => {
   const { data: s3Url, isSuccess: isUrlSuccess } = useGetS3UrlQuery();
   const [open, setOpen] = useState(false);
@@ -119,7 +120,7 @@ const NonAdminUser = ({ lang }) => {
     }
     refetch();
   }, [location, isSuccess, isError, data, error, user, refetch]);
-  return (
+   return (
     <Box
       sx={{
         display: 'flex',
@@ -128,6 +129,7 @@ const NonAdminUser = ({ lang }) => {
         width: '96%',
         margin: '100px auto',
         marginBottom: { xs: '40px', lg: '20px' },
+        minHeight:'100vh'
       }}>
       <Box
         sx={{
@@ -136,7 +138,7 @@ const NonAdminUser = ({ lang }) => {
           alignItems: 'center',
         }}>
         <Button variant='contained' color='secondary' onClick={handleOpen}>
-          <AddCircleIcon />
+          <AddCircleIcon sx={{ marginRight: '5px' }}  />
           {lang === 'en' ? 'Create Collection' : 'Yangi kolleksiya yaratish'}
         </Button>
 

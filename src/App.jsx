@@ -84,7 +84,7 @@ function App() {
           languages={languages}
           handleChange={onChangeLang}
         />
-        <Box sx={{minHeight:'100vh'}}>
+        <Box>
           <Routes>
             <Route index path='/' element={<Home lang={lang} />} />
             <Route path='/login' element={<Login />} />

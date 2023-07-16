@@ -34,7 +34,11 @@ const Footer = () => {
         padding: '20px',
         boxShadow: '10px 10px 10px 10px rgba(0,0,0,0.1)',
       }}>
-      <Typography sx={{cursor:'pointer'}} component='div' fontSize='16px' onClick={() => navigate('/')}>
+      <Typography
+        sx={{ cursor: 'pointer' }}
+        component='div'
+        fontSize='16px'
+        onClick={() => navigate('/')}>
         PCM
       </Typography>
       <Box
@@ -51,7 +55,10 @@ const Footer = () => {
             onClick={() => navigate(el.to)}
             sx={{
               pointerEvents: `${
-                el.id === 'admin' && (!user || user) && user?.role !== 'admin' && 'none'
+                el.id === 'admin' &&
+                (!user || user) &&
+                user?.role !== 'admin' &&
+                'none'
               }`,
             }}>
             {el.content}

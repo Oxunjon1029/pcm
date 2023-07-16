@@ -307,7 +307,7 @@ const CreateCollectionItemForm = ({
                           (field, index) => {
                             return (
                               <Box
-                                key={index + 'customString'}
+                                key={index + 'text'}
                                 sx={{
                                   display: 'flex',
                                   gap: '10px',
@@ -391,7 +391,7 @@ const CreateCollectionItemForm = ({
                                 <Field
                                   key={field?.name}
                                   label={field?.name}
-                                  type='date'
+                                  type='number'
                                   name={`integers[${index}].value`}
                                   onChange={handleChange}
                                   component={TextFormField}
@@ -426,7 +426,7 @@ const CreateCollectionItemForm = ({
                         (field, index) => {
                           return (
                             <Box
-                              key={index + 'integers'}
+                              key={index + 'booleans'}
                               sx={{
                                 display: 'flex',
                                 gap: '10px',

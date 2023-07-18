@@ -110,8 +110,10 @@ const Items = ({
               <CardContent>
                 <Typography variant='h5'>{item?.name[lang]}</Typography>
                 <Box
+                  className='collection_item_custom_fields_box'
                   sx={{
                     minHeight: '50px',
+                    maxHeight: '60px',
                     overflowY: 'auto',
                     margin: '20px 0',
                   }}>

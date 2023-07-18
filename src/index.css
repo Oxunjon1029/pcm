@@ -26,18 +26,22 @@ a {
   width: 500px !important;
   margin: 20px 0 !important;
 }
-.collection_description::-webkit-scrollbar {
+.collection_description::-webkit-scrollbar,
+.collection_item_custom_fields_box::-webkit-scrollbar {
   width: 10px;
 }
-.collection_description::-webkit-scrollbar-track {
+.collection_description::-webkit-scrollbar-track,
+.collection_item_custom_fields_box::-webkit-scrollbar-track {
   background-color: transparent;
 }
-.collection_description::-webkit-scrollbar-thumb {
+.collection_description::-webkit-scrollbar-thumb,
+.collection_item_custom_fields_box::-webkit-scrollbar-thumb {
   background-color: grey;
   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
   border-radius: 40px;
 }
-.collection_description {
+.collection_description,
+.collection_item_custom_fields_box {
   scrollbar-width: thin;
   scrollbar-color: #d4aa70 #e4e4e4;
 }

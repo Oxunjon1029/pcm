@@ -14,8 +14,10 @@ export const collectionsApi = createApi({
         headers: {
           "Content-type": 'application/json; charset=utf-8',
           "Accept": 'application/json',
-          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+          
         },
+        
       }),
       providesTags: ['Collection'],
     }),
@@ -25,8 +27,10 @@ export const collectionsApi = createApi({
         headers: {
           "Content-type": 'application/json; charset=utf-8',
           "Accept": 'application/json',
-          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+          "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+          
         },
+        
       })
     }),
     createCollection: builder.mutation({
@@ -38,9 +42,10 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            
           },
-
+          
         }
       },
       invalidatesTags: ['Collection', 'S3Url']
@@ -55,10 +60,11 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            
           },
 
-
+          
         }
       },
       invalidatesTags: ['Collection', 'S3Url']
@@ -71,8 +77,10 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            
           },
+          
         }
       },
       invalidatesTags: ['Collection']
@@ -84,8 +92,9 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
-          }
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            
+          },
         }
       },
       providesTags: ['S3Url']

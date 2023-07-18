@@ -26,8 +26,10 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+
           },
+
         }
       },
       invalidatesTags: ['CollectionItem']
@@ -42,7 +44,8 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+
           },
 
         }
@@ -57,7 +60,8 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+
           },
 
         }
@@ -74,8 +78,10 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+
           },
+
 
         }
       },
@@ -92,7 +98,8 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+
           },
 
         }
@@ -114,10 +121,12 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : ''
+            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
           },
           body: data,
-          method: 'POST'
+          method: 'POST',
+
+
         }
       },
       invalidatesTags: ['CollectionItem']

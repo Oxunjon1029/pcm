@@ -200,8 +200,9 @@ const Admin = ({ lang }) => {
         justifyContent: 'center',
         alignItems: 'center',
         width: '96%',
-        margin: '100px  auto',
+        margin: '50px  auto',
         marginBottom: '0px',
+        minHeight:'81vh'
       }}>
       <Box
         sx={{

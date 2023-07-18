@@ -14,7 +14,7 @@ const CustomForm = ({
     <Card
       sx={{
         boxShadow: '10px 10px 10px 10px rgba(0,0,0,0.11)',
-        width: 400
+        width: 400,
       }}>
       <CardContent>
         <Formik

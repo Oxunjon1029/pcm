@@ -8,6 +8,7 @@ export const usersApi = createApi({
   }),
   tagTypes: ['User'],
   endpoints: (builder) => ({
+
     getAllUsers: builder.query({
       query: () => ({
         url: 'users',
@@ -91,5 +92,5 @@ export const {
   useChangeUserStatusMutation,
   useDeleteUserMutation,
   useGetAllUsersQuery,
-  useGetUserByIdQuery
+  useGetUserByIdQuery,
 } = usersApi

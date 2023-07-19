@@ -17,6 +17,7 @@ import {
   useSearchItemsByTagQuery,
   useSearchFullTextQuery,
 } from '../features/api/collectionItemsApi';
+import { useGetCollectionByIdQuery } from '../features/api/collectionsApi';
 import { toast } from 'react-toastify';
 import Items from '../components/Items';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -29,6 +30,8 @@ const CollectionItems = ({ lang }) => {
   const text = useSelector(selectText);
   const user = useSelector(selectUser);
   const collectionId = location.state?.collectionId;
+  const { refetch: collectionRefetch } =
+    useGetCollectionByIdQuery(collectionId);
   const searchedItems = location.state?.searchedItems;
   const collectionItemsByTagSearch = location.state?.collectionItems;
   const { refetch: tagRefetch, data: tagData } = useSearchItemsByTagQuery({
@@ -219,6 +222,7 @@ const CollectionItems = ({ lang }) => {
   useEffect(() => {
     if (isItemsByCollIdSuccess) {
       setItemsByCollectionId(collectionItemsByCollectionId);
+      collectionRefetch();
     }
 
     if (collectionItemsByTagSearch) {
@@ -236,6 +240,7 @@ const CollectionItems = ({ lang }) => {
     if (searchedItems?.length > 0) {
       searchedRefetch();
     }
+    
   }, [
     isItemsByCollIdSuccess,
     collectionItemsByCollectionId,
@@ -246,8 +251,8 @@ const CollectionItems = ({ lang }) => {
     refetch,
     tagRefetch,
     searchedRefetch,
+    collectionRefetch,
   ]);
-
   return (
     <Box
       sx={{

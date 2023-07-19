@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button } from '@mui/material';
-// import LoadingButton from '@mui/lab/LoadingButton';
+
 import { Formik, Form, Field, FieldArray } from 'formik';
 import TextFormField from './TextFormField';
 import useAutocomplete from '@mui/base/useAutocomplete';
@@ -19,7 +19,8 @@ const CreateCollectionItemForm = ({
   collectionId,
   validationSchema,
 }) => {
-  const { data: collectionById } = useGetCollectionByIdQuery(collectionId);
+  const { data: collectionById, refetch } =
+    useGetCollectionByIdQuery(collectionId);
   let uztags = [],
     entags = [];
   tags.forEach((tag) => {
@@ -117,6 +118,9 @@ const CreateCollectionItemForm = ({
   const [integerFieldName, setIntegerFieldName] = useState(['']);
   const [textFieldName, setTextFieldName] = useState(['']);
   const [booleanFieldName, setBooleanFieldName] = useState(['']);
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   return (
     <Box
       sx={{
@@ -230,6 +234,9 @@ const CreateCollectionItemForm = ({
                                   )}
                                   <Button
                                     variant='contained'
+                                    disabled={stringFieldName.includes(
+                                      field.name
+                                    )}
                                     onClick={() => {
                                       if (!mode) {
                                         push({ name: field.name });
@@ -301,6 +308,7 @@ const CreateCollectionItemForm = ({
                                 )}
                                 <Button
                                   variant='contained'
+                                  disabled={dateFieldName.includes(field.name)}
                                   onClick={() => {
                                     if (!mode) {
                                       push({ name: field.name });
@@ -372,6 +380,9 @@ const CreateCollectionItemForm = ({
                                   )}
                                   <Button
                                     variant='contained'
+                                    disabled={textFieldName.includes(
+                                      field.name
+                                    )}
                                     onClick={() => {
                                       if (!mode) {
                                         push({ name: field.name });
@@ -443,6 +454,9 @@ const CreateCollectionItemForm = ({
                                 )}
                                 <Button
                                   variant='contained'
+                                  disabled={integerFieldName.includes(
+                                    field.name
+                                  )}
                                   onClick={() => {
                                     if (!mode) {
                                       push({ name: field.name });
@@ -562,6 +576,9 @@ const CreateCollectionItemForm = ({
                                 )}
                                 <Button
                                   variant='contained'
+                                  disabled={booleanFieldName.includes(
+                                    booleanField.name
+                                  )}
                                   onClick={() => {
                                     if (!mode) {
                                       push({ name: booleanField.name });

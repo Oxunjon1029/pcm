@@ -367,32 +367,35 @@ const Items = ({
                   </StyledTableCell>
                   <StyledTableCell>Actions</StyledTableCell>
                   <StyledTableCell>
-                    {collectionById?.customFields?.strings &&
-                      collectionById?.customFields?.strings?.map((item) => (
-                        <Box
-                          key={item?._id + 'strings'}
-                          sx={{
-                            display: 'flex',
-                            width: '100%',
-                            justifyContent: 'space-between',
-                          }}>
-                          <Typography>{item?.name}</Typography>
-                        </Box>
-                      ))}
+                    {collectionById?.customFields?.strings && (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: '100%',
+                          justifyContent: 'space-between',
+                        }}>
+                        {collectionById?.customFields?.strings?.map((item) => (
+                          <Typography key={item?._id + 'strings'}>
+                            {item?.name}
+                          </Typography>
+                        ))}
+                      </Box>
+                    )}
                   </StyledTableCell>
                   <StyledTableCell>
-                    {collectionById?.customFields?.dates &&
-                      collectionById?.customFields?.dates?.map((item) => (
-                        <Box
-                          key={item?._id + 'dates'}
-                          sx={{
-                            display: 'flex',
-                            width: '100%',
-                            justifyContent: 'space-between',
-                          }}>
-                          <Typography>{item?.name}</Typography>
-                        </Box>
-                      ))}
+                    {collectionById?.customFields?.dates && (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}>
+                        {collectionById?.customFields?.dates?.map((item) => (
+                          <Typography key={item?._id + 'dates'}>
+                            {item?.name}
+                          </Typography>
+                        ))}
+                      </Box>
+                    )}
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -611,9 +614,11 @@ const Items = ({
                           sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
+                            width: '100%',
                           }}>
                           {item?.strings?.map((string) => (
-                            <Typography key={string?._id}>
+                            <Typography
+                              key={string?._id}>
                               {string?.value}
                             </Typography>
                           ))}

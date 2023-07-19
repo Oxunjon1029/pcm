@@ -122,7 +122,6 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
               height: '70px',
             }}>
             <Select
-              sx={{ flex: 1 }}
               labelId='demo-simple-select-label'
               id='demo-simple-select'
               value={lang}
@@ -134,8 +133,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
               ))}
             </Select>
             <IconButton
-            
-              sx={{ borderRadius: '12px', border: '1px solid white',flex:1 }}
+              sx={{ borderRadius: '12px', border: '1px solid white', flex: 1 }}
               onClick={() => setOpenSearchModal(true)}
               color='inherit'>
               <SearchIcon />
@@ -150,7 +148,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
               checked={checked}
               onChange={changeMode}
             />
-            <div style={{flex:1}}>
+            <div style={{ flex: 1 }}>
               <IconButton
                 size='large'
                 aria-label='account of current user'

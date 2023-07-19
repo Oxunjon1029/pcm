@@ -15,8 +15,6 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
-    "axios": "^1.4.0",
-    "dayjs": "^1.11.9",
     "formik": "^2.4.2",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",

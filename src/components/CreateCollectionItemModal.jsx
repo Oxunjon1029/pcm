@@ -26,7 +26,7 @@ const CreateCollectionItemModal = ({
   }, [isSuccess, data, tags]);
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Collection item {mode ? 'update' : 'create'}</DialogTitle>
+      <DialogTitle sx={{textAlign:'center'}}>Collection item {mode ? 'update' : 'create'}</DialogTitle>
       <DialogContent dividers>
         <CreateCollectionItemForm
           initialValues={initialValues}

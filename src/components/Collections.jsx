@@ -155,9 +155,7 @@ const Collections = ({
       body: file,
     })
       .then(async (data) => {
-        console.log(data.url);
         if (data.url) {
-          console.log(file, values?.imageUrl);
           let data = {
             name: {
               en: values?.name_en,
@@ -186,7 +184,7 @@ const Collections = ({
           setEditMode('');
         }
       })
-      .catch((err) => console.log('imgerr', err));
+      .catch(() => {});
   };
   const handleDeleteCollection = () => {
     deleteCollection(id);

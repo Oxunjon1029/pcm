@@ -17,7 +17,7 @@ const CreateCollectionForm = ({
 }) => {
   const [topics, setTopics] = useState([]);
   const { isSuccess: success, data: topic } = useGetAllTopicsQuery();
-  const [removeCustomField, { isSuccess, data, isError, error }] =
+  const [removeCustomField] =
     useRemoveCustomFieldMutation();
   const collectCreateValidationSchema = Yup.object({
     name_uz: Yup.string().required(),
@@ -74,14 +74,7 @@ const CreateCollectionForm = ({
     uzOptions.push(uzData);
     enOptions.push(enData);
   });
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
-    }
-    if (isError) {
-      console.log(error);
-    }
-  }, [isSuccess, isError, data, error]);
+ 
   return (
     <Box
       sx={{

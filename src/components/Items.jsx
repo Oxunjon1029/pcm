@@ -20,7 +20,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-
+import { useGetCollectionByIdQuery } from '../features/api/collectionsApi';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -52,6 +52,11 @@ const Items = ({
   handleDislikeItem,
   makeEditMode,
 }) => {
+  const location = useLocation();
+  const navigator = useNavigate();
+  const { data: collectionById } = useGetCollectionByIdQuery(
+    location.state?.collectionId
+  );
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -63,9 +68,7 @@ const Items = ({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const location = useLocation();
-  const navigator = useNavigate();
-  console.log(collectionItems, collectionItems?.length > 0);
+
   return (
     <Box
       sx={{
@@ -364,40 +367,32 @@ const Items = ({
                   </StyledTableCell>
                   <StyledTableCell>Actions</StyledTableCell>
                   <StyledTableCell>
-                    {collectionItems?.map((item) => (
-                      <Box
-                        key={item?._id + 'strings'}
-                        sx={{
-                          display: 'flex',
-                          width: '100%',
-                          justifyContent: 'space-between',
-                        }}>
-                        {item?.strings &&
-                          item?.strings?.map((string) => (
-                            <Typography key={string?._id}>
-                              {string?.name}
-                            </Typography>
-                          ))}
-                      </Box>
-                    ))}
+                    {collectionById?.customFields?.strings &&
+                      collectionById?.customFields?.strings?.map((item) => (
+                        <Box
+                          key={item?._id + 'strings'}
+                          sx={{
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                          }}>
+                          <Typography>{item?.name}</Typography>
+                        </Box>
+                      ))}
                   </StyledTableCell>
                   <StyledTableCell>
-                    {collectionItems?.map((item) => (
-                      <Box
-                        key={item?._id + 'dates'}
-                        sx={{
-                          display: 'flex',
-                          width: '100%',
-                          justifyContent: 'space-between',
-                        }}>
-                        {item?.dates &&
-                          item?.dates?.map((string) => (
-                            <Typography key={string?._id}>
-                              {string?.name}
-                            </Typography>
-                          ))}
-                      </Box>
-                    ))}
+                    {collectionById?.customFields?.dates &&
+                      collectionById?.customFields?.dates?.map((item) => (
+                        <Box
+                          key={item?._id + 'dates'}
+                          sx={{
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                          }}>
+                          <Typography>{item?.name}</Typography>
+                        </Box>
+                      ))}
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -580,6 +575,9 @@ const Items = ({
                                 entags: item?.entags,
                                 strings: item?.strings,
                                 dates: item?.dates,
+                                integers: item?.integers,
+                                multilineTexts: item?.multilineTexts,
+                                booleans: item?.booleans,
                               },
                               item?._id
                             )

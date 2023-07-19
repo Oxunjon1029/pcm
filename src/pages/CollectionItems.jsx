@@ -159,6 +159,7 @@ const CollectionItems = ({ lang }) => {
     },
     id
   ) => {
+    console.log(integers, multilineTexts, booleans);
     await formik.setValues({
       name_uz,
       name_en,

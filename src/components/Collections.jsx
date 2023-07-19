@@ -217,7 +217,7 @@ const Collections = ({
           justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
-          height: '100%',
+          height: '50vh',
         }}>
         <Loader />
       </Box>

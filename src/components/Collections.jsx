@@ -12,7 +12,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, CardHeader, CardMedia } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../features/user/userSlice';
 import { useLocation, useNavigate } from 'react-router';
 import {
   useDeleteCollectionMutation,
@@ -41,7 +40,7 @@ const Collections = ({
   const [editMode, setEditMode] = useState('');
   const [openEditMode, setOpenEditMode] = useState(false);
   const [id, setId] = useState('');
-  const user = useSelector(selectUser);
+  const user = JSON.parse(localStorage.getItem('currentUser'));
   const location = useLocation();
   const [deleteCollection, { isSuccess, isError, isLoading, data, error }] =
     useDeleteCollectionMutation();
@@ -208,7 +207,6 @@ const Collections = ({
     }
   }, [updateErrMessage, isUpdateSuccess, updateMessage, isUpdateError]);
 
-  
   if (isLoading || updateLoading) {
     return (
       <Box
@@ -337,12 +335,12 @@ const Collections = ({
                         }}>
                         <Typography
                           color='text.secondary'
-                          className="collection_description"
+                          className='collection_description'
                           sx={{
                             maxHeight: '80px',
                             overflowY: 'auto',
                             borderBottom: '1px solid',
-                            minHeight:'80px'
+                            minHeight: '80px',
                           }}
                           component='div'
                           dangerouslySetInnerHTML={{

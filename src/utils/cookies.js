@@ -1,5 +1,4 @@
 import Cookie from "js-cookie";
-import { TOKEN } from "./host";
 
 
 export const deleteCookie = (name) => {
@@ -17,7 +16,7 @@ export const isTokenExpired = async (token, navigate) => {
   const decode = JSON.parse(atob(token.split('.')[1]));
   console.log(decode);
   if (decode?.exp * 1000 < new Date().getTime()) {
-    deleteCookie(TOKEN)
+    deleteCookie(process.env.REACT_APP_TOKEN)
     navigate('/login')
   }
 

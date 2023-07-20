@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import CreateCollectionItemModal from '../components/CreateCollectionItemModal';
 import Loader from '../components/Loader';
 import { useSelector } from 'react-redux';
-import { selectTag, selectText, selectUser } from '../features/user/userSlice';
+import { selectTag, selectText } from '../features/user/userSlice';
 import {
   useGetAllCollectionItemsByCollectionIdQuery,
   useCreateCollectionItemMutation,
@@ -28,7 +28,9 @@ const CollectionItems = ({ lang }) => {
   const location = useLocation();
   const tag = useSelector(selectTag);
   const text = useSelector(selectText);
-  const user = useSelector(selectUser);
+  const user = localStorage.getItem('currentUser')
+    ? JSON.parse(localStorage.getItem('currentUser'))
+    : null;
   const collectionId = location.state?.collectionId;
   const { refetch: collectionRefetch } =
     useGetCollectionByIdQuery(collectionId);
@@ -240,7 +242,6 @@ const CollectionItems = ({ lang }) => {
     if (searchedItems?.length > 0) {
       searchedRefetch();
     }
-    
   }, [
     isItemsByCollIdSuccess,
     collectionItemsByCollectionId,
@@ -253,9 +254,7 @@ const CollectionItems = ({ lang }) => {
     searchedRefetch,
     collectionRefetch,
   ]);
-  useEffect(()=>{
-   
-  },[])
+  useEffect(() => {}, []);
   return (
     <Box
       sx={{

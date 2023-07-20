@@ -5,20 +5,21 @@ import Collections from '../components/Collections';
 import CreateCollectionModal from '../components/CreateCollectionModal';
 import { useCreateCollectionMutation } from '../features/api/collectionsApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../features/user/userSlice';
 import { selectUrl, setUrl } from '../features/bucket/bucketUrlSlice';
 import { useLocation } from 'react-router';
 import { useGetAllCollectionsQuery } from '../features/api/collectionsApi';
 import Loader from '../components/Loader';
 import { useGetS3UrlQuery } from '../features/api/collectionsApi';
 
-
 const NonAdminUser = ({ lang }) => {
+  const user = localStorage.getItem('currentUser')
+    ? JSON.parse(localStorage.getItem('currentUser'))
+    : null;
   const { data: s3Url, isSuccess: isUrlSuccess } = useGetS3UrlQuery();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [userCollections, setUserCollections] = useState([]);
-  const user = useSelector(selectUser);
+  console.log(user);
   const url = useSelector(selectUrl);
   const [file, setFile] = useState(null);
   const location = useLocation();
@@ -120,7 +121,7 @@ const NonAdminUser = ({ lang }) => {
     }
     refetch();
   }, [location, isSuccess, isError, data, error, user, refetch]);
-   return (
+  return (
     <Box
       sx={{
         display: 'flex',
@@ -129,7 +130,7 @@ const NonAdminUser = ({ lang }) => {
         width: '96%',
         margin: '100px auto',
         marginBottom: { xs: '40px', lg: '20px' },
-        minHeight:'100vh'
+        minHeight: '100vh',
       }}>
       <Box
         sx={{
@@ -138,7 +139,7 @@ const NonAdminUser = ({ lang }) => {
           alignItems: 'center',
         }}>
         <Button variant='contained' color='secondary' onClick={handleOpen}>
-          <AddCircleIcon sx={{ marginRight: '5px' }}  />
+          <AddCircleIcon sx={{ marginRight: '5px' }} />
           {lang === 'en' ? 'Create Collection' : 'Yangi kolleksiya yaratish'}
         </Button>
 

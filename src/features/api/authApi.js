@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCookie } from '../../utils/cookies';
-import { baseUrl, TOKEN } from '../../utils/host';
 import { setUser } from '../user/userSlice';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${baseUrl}/api/v1/`
+    baseUrl: `${process.env.REACT_APP_BASE_URL}/api/v1/`
   }),
   endpoints: (builder) => ({
     registerUser: builder.mutation({
@@ -30,7 +29,8 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           await dispatch(setUser(data?.user))
-          setCookie(TOKEN, data?.token)
+          // await localStorage.setItem('currentUser', JSON.stringify(data?.user))
+          setCookie(process.env.REACT_APP_TOKEN, data?.token)
         } catch (error) { }
       },
     }),

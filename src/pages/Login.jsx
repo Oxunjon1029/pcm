@@ -24,6 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      localStorage.setItem('currentUser', JSON.stringify(data?.user));
       if (data.user.role === 'admin') {
         if (data.user.status === 'active') {
           toast.success(`${data?.user?.name} is successfully logged in`);
@@ -40,9 +41,6 @@ const Login = () => {
       toast.error(error?.data?.message);
     }
   }, [isSuccess, data, navigator, isError, error]);
-
- 
- 
 
   return (
     <Box

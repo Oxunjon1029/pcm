@@ -4,15 +4,15 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import TextFormField from '../components/TextFormField';
 import { useLocation } from 'react-router';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../features/user/userSlice';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link } from 'react-router-dom';
 
 const Comments = ({ socket, lang }) => {
   const location = useLocation();
   const [comments, setComments] = useState([]);
-  const user = useSelector(selectUser);
+  const user = localStorage.getItem('currentUser')
+    ? JSON.parse(localStorage.getItem('currentUser'))
+    : null;
   const validationSchema = yup.object({
     content: yup.string().required(),
   });

@@ -14,9 +14,6 @@ import Select from '@mui/material/Select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import { deleteCookie } from '../utils/cookies';
-import { TOKEN } from '../utils/host';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser, setUser } from '../features/user/userSlice';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -71,7 +68,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSearchModal, setOpenSearchModal] = React.useState(false);
-  const user = useSelector(selectUser);
+  const user = JSON.parse(localStorage.getItem('currentUser'));
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -83,7 +80,6 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   };
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -208,8 +204,8 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                     divider
                     onClick={async () => {
                       handleClose();
-                      deleteCookie(TOKEN);
-                      dispatch(setUser(null));
+                      deleteCookie(process.env.REACT_APP_TOKEN);
+                      localStorage.removeItem('currentUser')
                       navigate('/login');
                     }}>
                     <LogoutIcon sx={{ marginRight: '10px' }} />

@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, TOKEN } from '../../utils/host';
 import Cookie from 'js-cookie'
 
 export const collectionItemsApi = createApi({
   reducerPath: 'collectionItemsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${baseUrl}/api/v1/`
+    baseUrl: `${process.env.REACT_APP_BASE_URL}/api/v1/`
   }),
   tagTypes: ['CollectionItem'],
 
@@ -26,7 +25,7 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            "Authorization": Cookie.get(process.env.REACT_APP_TOKEn) ? Cookie.get(process.env.REACT_APP_TOKEn) : '',
 
           },
 
@@ -44,7 +43,7 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            "Authorization": Cookie.get(process.env.REACT_APP_TOKEn) ? Cookie.get(process.env.REACT_APP_TOKEn) : '',
 
           },
 
@@ -60,7 +59,7 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            "Authorization": Cookie.get(process.env.REACT_APP_TOKEn) ? Cookie.get(process.env.REACT_APP_TOKEn) : '',
 
           },
 
@@ -78,7 +77,7 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            "Authorization": Cookie.get(process.env.REACT_APP_TOKEn) ? Cookie.get(process.env.REACT_APP_TOKEn) : '',
 
           },
 
@@ -98,7 +97,7 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            "Authorization": Cookie.get(process.env.REACT_APP_TOKEn) ? Cookie.get(process.env.REACT_APP_TOKEn) : '',
 
           },
 
@@ -121,7 +120,7 @@ export const collectionItemsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(TOKEN) ? Cookie.get(TOKEN) : '',
+            "Authorization": Cookie.get(process.env.REACT_APP_TOKEn) ? Cookie.get(process.env.REACT_APP_TOKEn) : '',
           },
           body: data,
           method: 'POST',

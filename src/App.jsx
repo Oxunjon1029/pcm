@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,7 +12,6 @@ import NonAdminUser from './pages/NonAdminUser';
 import Comments from './pages/Comments';
 import CollectionItems from './pages/CollectionItems';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from './features/user/userSlice';
 import ProtectedRoute from './components/ProtectedRoute';
 import { asyncToggleTheme } from './features/theme/themeModeSlice';
 import { asyncToggleLang } from './features/lang/langSlice';
@@ -21,8 +20,6 @@ import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
 import { Box } from '@mui/material';
 import { io } from 'socket.io-client';
-import { baseUrl, TOKEN } from './utils/host';
-import { getCookie, isTokenExpired } from './utils/cookies';
 const languages = [
   {
     value: 'en',
@@ -33,9 +30,11 @@ const languages = [
     text: 'Uzbek',
   },
 ];
-const socket = io(`${baseUrl}`);
+const socket = io(`${process.env.REACT_APP_BASE_URL}`);
 function App() {
-  const user = useSelector(selectUser);
+  const user = localStorage.getItem('currentUser')
+    ? JSON.parse(localStorage.getItem('currentUser'))
+    : null;
   const dispatch = useDispatch();
   const [lang, setLang] = useState('en');
   const currLang = useSelector((state) => state.lang.lang);
@@ -68,10 +67,10 @@ function App() {
     },
   });
 
-  useEffect(() => {
-    const token = getCookie(TOKEN);
-    isTokenExpired(token, navigator);
-  }, []);
+  // useEffect(() => {
+  //   const token = getCookie(TOKEN);
+  //   isTokenExpired(token, navigator);
+  // }, []);
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

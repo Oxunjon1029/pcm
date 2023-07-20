@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,7 +21,8 @@ import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
 import { Box } from '@mui/material';
 import { io } from 'socket.io-client';
-import { baseUrl } from './utils/host';
+import { baseUrl, TOKEN } from './utils/host';
+import { getCookie, isTokenExpired } from './utils/cookies';
 const languages = [
   {
     value: 'en',
@@ -67,6 +68,10 @@ function App() {
     },
   });
 
+  useEffect(() => {
+    const token = getCookie(TOKEN);
+    isTokenExpired(token, navigator);
+  }, []);
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

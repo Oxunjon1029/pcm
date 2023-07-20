@@ -417,8 +417,7 @@ const Items = ({
                         </StyledTableCell>
                       )}
                       {lang === 'uz' && (
-                        <StyledTableCell
-                          sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <StyledTableCell>
                           {item?.uztags?.map((tag) => (
                             <Typography key={tag?._id}>
                               #{tag?.title}

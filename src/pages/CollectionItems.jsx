@@ -253,6 +253,9 @@ const CollectionItems = ({ lang }) => {
     searchedRefetch,
     collectionRefetch,
   ]);
+  useEffect(()=>{
+   
+  },[])
   return (
     <Box
       sx={{

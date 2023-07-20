@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookie from "js-cookie";
+import { REACT_APP_BASE_URL, REACT_APP_TOKEN } from '../../utils/host'
+
 export const usersApi = createApi({
   reducerPath: 'usersApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_BASE_URL}/api/v1/`
+    baseUrl: `${REACT_APP_BASE_URL}/api/v1/`
   }),
   tagTypes: ['User'],
   endpoints: (builder) => ({
@@ -14,7 +16,7 @@ export const usersApi = createApi({
         headers: {
           "Content-type": 'application/json; charset=utf-8',
           "Accept": 'application/json',
-          "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : ''
+          "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : ''
         },
 
       }),
@@ -26,7 +28,7 @@ export const usersApi = createApi({
         headers: {
           "Content-type": 'application/json; charset=utf-8',
           "Accept": 'application/json',
-          "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : ''
+          "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : ''
         },
 
       })
@@ -39,7 +41,7 @@ export const usersApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : ''
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : ''
           },
           body: args,
 
@@ -56,7 +58,7 @@ export const usersApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : ''
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : ''
           },
           method: 'DELETE',
           body: { selectedIds: selectedIds },
@@ -75,7 +77,7 @@ export const usersApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : ''
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : ''
           },
           body: args,
 

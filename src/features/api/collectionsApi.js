@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookie from 'js-cookie'
+import { REACT_APP_BASE_URL, REACT_APP_TOKEN } from '../../utils/host'
+
 export const collectionsApi = createApi({
   reducerPath: 'collectionsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_BASE_URL}/api/v1/`
+    baseUrl: `${REACT_APP_BASE_URL}/api/v1/`
   }),
   tagTypes: ['Collection', 'S3Url'],
   endpoints: (builder) => ({
@@ -13,7 +15,7 @@ export const collectionsApi = createApi({
         headers: {
           "Content-type": 'application/json; charset=utf-8',
           "Accept": 'application/json',
-          "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+          "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : '',
 
         },
 
@@ -26,7 +28,7 @@ export const collectionsApi = createApi({
         headers: {
           "Content-type": 'application/json; charset=utf-8',
           "Accept": 'application/json',
-          "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+          "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : '',
 
         },
 
@@ -41,7 +43,7 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : '',
 
           },
 
@@ -59,7 +61,7 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : '',
 
           },
 
@@ -76,7 +78,7 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : '',
 
           },
 
@@ -91,7 +93,7 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(process.env.REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
 
           },
         }

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { REACT_APP_BASE_URL } from '../../utils/host'
 
 
 export const searchApi = createApi({
   reducerPath: 'searchApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_BASE_URL}/api/v1/`
+    baseUrl: `${REACT_APP_BASE_URL}/api/v1/`
   }),
   endpoints: (builder) => ({
     searchFullText: builder.query({

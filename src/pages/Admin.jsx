@@ -27,8 +27,9 @@ import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, setUser } from '../features/user/userSlice';
-import { deleteCookie, } from '../utils/cookies';
+import { deleteCookie } from '../utils/cookies';
 import { TOKEN } from '../utils/host';
+import { setTag } from '../features/user/userSlice';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -191,7 +192,9 @@ const Admin = ({ lang }) => {
     }
   }, [currUser, navigator]);
 
- 
+  useEffect(() => {
+    dispatch(setTag(null));
+  }, [dispatch]);
   return (
     <Box
       sx={{
@@ -202,7 +205,7 @@ const Admin = ({ lang }) => {
         width: '96%',
         margin: '70px  auto',
         marginBottom: '0px',
-        minHeight:'82vh'
+        minHeight: '82vh',
       }}>
       <Box
         sx={{

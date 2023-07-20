@@ -221,6 +221,7 @@ const CollectionItems = ({ lang }) => {
 
   useEffect(() => {
     if (isItemsByCollIdSuccess) {
+      console.log(collectionId === '64b3f70bec2c7ea1c30a3284')
       setItemsByCollectionId(collectionItemsByCollectionId);
       collectionRefetch();
     }

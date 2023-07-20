@@ -93,7 +93,7 @@ export const collectionsApi = createApi({
           headers: {
             "Content-type": 'application/json; charset=utf-8',
             "Accept": 'application/json',
-            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(process.env.REACT_APP_TOKEN) : '',
+            "Authorization": Cookie.get(REACT_APP_TOKEN) ? Cookie.get(REACT_APP_TOKEN) : '',
 
           },
         }

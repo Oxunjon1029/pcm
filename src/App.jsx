@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
 import { Box } from '@mui/material';
 import { io } from 'socket.io-client';
+import { REACT_APP_BASE_URL } from './utils/host';
 const languages = [
   {
     value: 'en',
@@ -30,7 +31,7 @@ const languages = [
     text: 'Uzbek',
   },
 ];
-const socket = io(`${process.env.REACT_APP_BASE_URL}`);
+const socket = io(`${REACT_APP_BASE_URL}`);
 function App() {
   const user = localStorage.getItem('currentUser')
     ? JSON.parse(localStorage.getItem('currentUser'))

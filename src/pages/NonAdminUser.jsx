@@ -10,16 +10,14 @@ import { useLocation } from 'react-router';
 import { useGetAllCollectionsQuery } from '../features/api/collectionsApi';
 import Loader from '../components/Loader';
 import { useGetS3UrlQuery } from '../features/api/collectionsApi';
+import { selectUser } from '../features/user/userSlice';
 
 const NonAdminUser = ({ lang }) => {
-  const user = localStorage.getItem('currentUser')
-    ? JSON.parse(localStorage.getItem('currentUser'))
-    : null;
   const { data: s3Url, isSuccess: isUrlSuccess } = useGetS3UrlQuery();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [userCollections, setUserCollections] = useState([]);
-  console.log(user);
+  const user = useSelector(selectUser)
   const url = useSelector(selectUrl);
   const [file, setFile] = useState(null);
   const location = useLocation();

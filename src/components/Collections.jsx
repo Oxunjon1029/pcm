@@ -24,6 +24,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Loader from './Loader';
 import { selectUrl, setUrl } from '../features/bucket/bucketUrlSlice';
 import DefaultImage from '../utils/default.jpg';
+import { selectUser } from '../features/user/userSlice';
 const Collections = ({
   open,
   handleClose,
@@ -40,7 +41,8 @@ const Collections = ({
   const [editMode, setEditMode] = useState('');
   const [openEditMode, setOpenEditMode] = useState(false);
   const [id, setId] = useState('');
-  const user = JSON.parse(localStorage.getItem('currentUser'));
+
+  const user = useSelector(selectUser)
   const location = useLocation();
   const [deleteCollection, { isSuccess, isError, isLoading, data, error }] =
     useDeleteCollectionMutation();

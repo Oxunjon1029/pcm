@@ -25,9 +25,9 @@ import {
 } from '../features/api/usersApi';
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteCookie } from '../utils/cookies';
-import { setTag } from '../features/user/userSlice';
+import { selectUser, setTag, setUser } from '../features/user/userSlice';
 import { REACT_APP_TOKEN } from '../utils/host';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,10 +62,8 @@ const Admin = ({ lang }) => {
   const [addOrRemoveUserAsAdmin] = useAddOrRemoveUserAsAdminMutation();
   const [deleteUser] = useDeleteUserMutation();
   const { isSuccess, data, isError, error, isLoading } = useGetAllUsersQuery();
-  const currUser = localStorage.getItem('currentUser')
-    ? JSON.parse(localStorage.getItem('currentUser'))
-    : null;
   const dispatch = useDispatch();
+  const currUser = useSelector(selectUser)
   const [allUsers, setAllUsers] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -141,7 +139,7 @@ const Admin = ({ lang }) => {
         let newUser = data?.data.users?.find(
           (item) => item._id === currUser._id
         );
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        dispatch(setUser(newUser));
         setSelected([]);
       }
       if (data?.error) {
@@ -157,7 +155,7 @@ const Admin = ({ lang }) => {
           let newUser = data?.data.users?.find(
             (item) => item._id === currUser._id
           );
-          localStorage.setItem('currentUser', JSON.stringify(newUser));
+          dispatch(setUser(newUser));
           setSelected([]);
         }
         if (data?.error) {
@@ -171,7 +169,10 @@ const Admin = ({ lang }) => {
     deleteUser(selected).then((data) => {
       if (data?.data) {
         toast.success(data?.data?.message);
-        localStorage.setItem('currentUser', null);
+        let newUser = data?.data.users?.find(
+          (item) => item._id === currUser._id
+        );
+        dispatch(setUser(newUser));
         setSelected([]);
       }
       if (data?.error) {
@@ -186,7 +187,6 @@ const Admin = ({ lang }) => {
     }
     if (!currUser || currUser.status === 'blocked') {
       deleteCookie(REACT_APP_TOKEN);
-      localStorage.removeItem('currentUser');
       navigator('/login');
     }
   }, [currUser, navigator]);

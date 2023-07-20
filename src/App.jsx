@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import { Box } from '@mui/material';
 import { io } from 'socket.io-client';
 import { REACT_APP_BASE_URL } from './utils/host';
+import { selectUser } from './features/user/userSlice';
 const languages = [
   {
     value: 'en',
@@ -33,9 +34,7 @@ const languages = [
 ];
 const socket = io(`${REACT_APP_BASE_URL}`);
 function App() {
-  const user = localStorage.getItem('currentUser')
-    ? JSON.parse(localStorage.getItem('currentUser'))
-    : null;
+  const user = useSelector(selectUser)
   const dispatch = useDispatch();
   const [lang, setLang] = useState('en');
   const currLang = useSelector((state) => state.lang.lang);

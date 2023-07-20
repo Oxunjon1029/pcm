@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Typography, MenuItem } from '@mui/material';
+// import { useSelector } from 'react-redux';
+// import { selectUser } from '../features/user/userSlice';
+import { useLocation, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/user/userSlice';
-import { useLocation, useNavigate } from 'react-router';
 const footerElements = [
   {
     id: 'admin',
@@ -21,9 +23,10 @@ const footerElements = [
   },
 ];
 const Footer = () => {
-  const user = useSelector(selectUser);
+  const user = useSelector(selectUser)
   const location = useLocation();
   const navigate = useNavigate();
+
   return (
     <Box
       sx={{

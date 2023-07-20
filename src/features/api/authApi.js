@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCookie } from '../../utils/cookies';
-// import { setUser } from '../user/userSlice';
 import { REACT_APP_BASE_URL, REACT_APP_TOKEN } from '../../utils/host'
+import { setUser } from '../user/userSlice';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
@@ -28,8 +28,7 @@ export const authApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          // await dispatch(setUser(data?.user))
-          await localStorage.setItem('currentUser', JSON.stringify(data?.user))
+          await dispatch(setUser(data?.user))
           setCookie(REACT_APP_TOKEN, data?.token)
         } catch (error) { }
       },

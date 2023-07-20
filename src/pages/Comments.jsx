@@ -6,13 +6,13 @@ import TextFormField from '../components/TextFormField';
 import { useLocation } from 'react-router';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/user/userSlice';
 
 const Comments = ({ socket, lang }) => {
   const location = useLocation();
   const [comments, setComments] = useState([]);
-  const user = localStorage.getItem('currentUser')
-    ? JSON.parse(localStorage.getItem('currentUser'))
-    : null;
+  const user = useSelector(selectUser)
   const validationSchema = yup.object({
     content: yup.string().required(),
   });

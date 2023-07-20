@@ -10,11 +10,13 @@ const CreateCollectionModal = ({
   handleSubmit,
   initialValues,
   mode,
-  setFile
+  setFile,
 }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Collection {mode ? 'update' : 'create'}</DialogTitle>
+      <DialogTitle sx={{ textAlign: 'center' }}>
+        Collection {mode ? 'update' : 'create'}
+      </DialogTitle>
       <DialogContent dividers>
         <CreateCollectionForm
           handleSubmit={handleSubmit}

@@ -128,6 +128,8 @@ const Comments = ({ socket, lang }) => {
               </Typography>
             </Box>
           ))}
+    </Box>
+
         {comments.length === 0 &&
           location.state?.comments?.map((comment) => (
             <Box
@@ -160,7 +162,6 @@ const Comments = ({ socket, lang }) => {
             </Box>
           ))}
       </Box>
-    </Box>
   );
 };
 

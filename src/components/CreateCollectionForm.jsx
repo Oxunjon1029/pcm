@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Button } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -17,8 +22,7 @@ const CreateCollectionForm = ({
 }) => {
   const [topics, setTopics] = useState([]);
   const { isSuccess: success, data: topic } = useGetAllTopicsQuery();
-  const [removeCustomField] =
-    useRemoveCustomFieldMutation();
+  const [removeCustomField] = useRemoveCustomFieldMutation();
   const collectCreateValidationSchema = Yup.object({
     name_uz: Yup.string().required(),
     name_en: Yup.string().required(),
@@ -74,7 +78,7 @@ const CreateCollectionForm = ({
     uzOptions.push(uzData);
     enOptions.push(enData);
   });
- 
+
   return (
     <Box
       sx={{
@@ -103,6 +107,7 @@ const CreateCollectionForm = ({
                 {({ field, form }) => {
                   return (
                     <Box>
+                      <Typography>Description(en)</Typography>
                       <CKEditor
                         editor={ClassicEditor}
                         data={field.value}
@@ -118,6 +123,7 @@ const CreateCollectionForm = ({
                 {({ field, form }) => {
                   return (
                     <Box>
+                      <Typography>Description(uz)</Typography>
                       <CKEditor
                         editor={ClassicEditor}
                         data={field.value}

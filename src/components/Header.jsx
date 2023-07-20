@@ -17,6 +17,7 @@ import { deleteCookie } from '../utils/cookies';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { REACT_APP_TOKEN } from '../utils/host';
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -204,7 +205,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                     divider
                     onClick={async () => {
                       handleClose();
-                      deleteCookie(process.env.REACT_APP_TOKEN);
+                      deleteCookie(REACT_APP_TOKEN);
                       localStorage.removeItem('currentUser')
                       navigate('/login');
                     }}>

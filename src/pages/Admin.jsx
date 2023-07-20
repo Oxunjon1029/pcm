@@ -28,6 +28,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { deleteCookie } from '../utils/cookies';
 import { setTag } from '../features/user/userSlice';
+import { REACT_APP_TOKEN } from '../utils/host';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -184,7 +185,7 @@ const Admin = ({ lang }) => {
       navigator('/user-profile');
     }
     if (!currUser || currUser.status === 'blocked') {
-      deleteCookie(process.env.REACT_APP_TOKEN);
+      deleteCookie(REACT_APP_TOKEN);
       localStorage.removeItem('currentUser');
       navigator('/login');
     }

@@ -43,6 +43,7 @@ const Collections = ({
   const [id, setId] = useState('');
 
   const user = useSelector(selectUser)
+  
   const location = useLocation();
   const [deleteCollection, { isSuccess, isError, isLoading, data, error }] =
     useDeleteCollectionMutation();

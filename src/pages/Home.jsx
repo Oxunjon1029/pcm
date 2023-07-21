@@ -15,6 +15,7 @@ const Home = ({ lang }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+
   const {
     isSuccess,
     isLoading,

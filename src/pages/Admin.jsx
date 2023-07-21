@@ -64,6 +64,7 @@ const Admin = ({ lang }) => {
   const { isSuccess, data, isError, error, isLoading } = useGetAllUsersQuery();
   const dispatch = useDispatch();
   const currUser = useSelector(selectUser)
+ 
   const [allUsers, setAllUsers] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -187,6 +188,7 @@ const Admin = ({ lang }) => {
     }
     if (!currUser || currUser.status === 'blocked') {
       deleteCookie(REACT_APP_TOKEN);
+      deleteCookie('currentUser')
       navigator('/login');
     }
   }, [currUser, navigator]);

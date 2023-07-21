@@ -22,13 +22,13 @@ import { toast } from 'react-toastify';
 import Items from '../components/Items';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link } from 'react-router-dom';
-
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
   const tag = useSelector(selectTag);
   const text = useSelector(selectText);
   const user = useSelector(selectUser)
+  
   const collectionId = location.state?.collectionId;
   const { refetch: collectionRefetch } =
     useGetCollectionByIdQuery(collectionId);
@@ -267,7 +267,7 @@ const CollectionItems = ({ lang }) => {
       <Breadcrumbs aria-label='breadcrumb'>
         <Link
           to='/user-profile'
-          style={{ pointerEvents: `${!user || !collectionId ? 'none' : ''}` }}>
+          style={{ pointerEvents: `${user.length === 0 || !collectionId ? 'none' : ''}` }}>
           {lang === 'en' ? 'Collections' : 'Kolleksiyalar'}
         </Link>
         <Typography color='text.primary'>

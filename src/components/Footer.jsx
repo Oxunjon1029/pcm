@@ -1,7 +1,5 @@
 import React from 'react';
 import { Box, Typography, MenuItem } from '@mui/material';
-// import { useSelector } from 'react-redux';
-// import { selectUser } from '../features/user/userSlice';
 import { useLocation, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/user/userSlice';
@@ -24,6 +22,7 @@ const footerElements = [
 ];
 const Footer = () => {
   const user = useSelector(selectUser)
+ 
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -59,7 +58,7 @@ const Footer = () => {
             sx={{
               pointerEvents: `${
                 el.id === 'admin' &&
-                (!user || user) &&
+                (user?.length === 0 || user) &&
                 user?.role !== 'admin' &&
                 'none'
               }`,

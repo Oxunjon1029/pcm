@@ -72,6 +72,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSearchModal, setOpenSearchModal] = React.useState(false);
   const user = useSelector(selectUser)
+  
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -83,7 +84,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   };
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -203,7 +204,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                   <AccountCircle sx={{ marginRight: '10px' }} />
                   Profile
                 </MenuItem>
-                {user && (
+                {user.length > 0 && (
                   <MenuItem
                     divider
                     onClick={async () => {

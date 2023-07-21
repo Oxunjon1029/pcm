@@ -34,7 +34,8 @@ const languages = [
 ];
 const socket = io(`${REACT_APP_BASE_URL}`);
 function App() {
-  const user = useSelector(selectUser)
+  const user = useSelector(selectUser);
+
   const dispatch = useDispatch();
   const [lang, setLang] = useState('en');
   const currLang = useSelector((state) => state.lang.lang);

@@ -204,7 +204,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                   <AccountCircle sx={{ marginRight: '10px' }} />
                   Profile
                 </MenuItem>
-                {user.length > 0 && (
+                {user && (
                   <MenuItem
                     divider
                     onClick={async () => {

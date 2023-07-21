@@ -30,7 +30,6 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           await dispatch(setUser(data?.user))
-          Cookie.set('currentUser', JSON.stringify(data?.user))
           setCookie(REACT_APP_TOKEN, data?.token)
         } catch (error) { }
       },

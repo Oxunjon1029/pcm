@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCookie } from '../../utils/cookies';
 import { REACT_APP_BASE_URL, REACT_APP_TOKEN } from '../../utils/host'
 import { setUser } from '../user/userSlice';
-import Cookie from 'js-cookie'
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({

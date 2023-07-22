@@ -3,19 +3,24 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Collections from '../components/Collections';
 import Items from '../components/Items';
-import { selectUser, setTag } from '../features/user/userSlice';
+import { selectUser, setEntag, setUztag } from '../features/user/userSlice';
 import { useGetLastestCollectionItemsQuery } from '../features/api/collectionItemsApi';
 import { useGetLargestFiveCollectionsQuery } from '../features/api/collectionsApi';
 import { useGetAllTagsQuery } from '../features/api/tagsApi';
 import { useSearchItemsByTagQuery } from '../features/api/collectionItemsApi';
 import { useNavigate } from 'react-router';
+import {
+  useLikeCollectionItemMutation,
+  useUnlikeCollectionItemMutation,
+} from '../features/api/collectionItemsApi';
 const Home = ({ lang }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [tag, setFirstTag] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-
+  const [likeCollectionItem] = useLikeCollectionItemMutation();
+  const [unlikeCollectionItem] = useUnlikeCollectionItemMutation();
   const {
     isSuccess,
     isLoading,
@@ -62,6 +67,20 @@ const Home = ({ lang }) => {
     }
     refetch();
   }, [isLatestItemsSuccess, lastestCollectionItems, latestItems, refetch]);
+
+  const handleIsLiked = (id) => {
+    likeCollectionItem({
+      itemId: id,
+      userId: user?._id,
+    });
+  };
+
+  const handleDislikeItem = (id) => {
+    unlikeCollectionItem({
+      itemId: id,
+      userId: user?._id,
+    });
+  };
   return (
     <Box
       sx={{
@@ -71,7 +90,7 @@ const Home = ({ lang }) => {
         flexDirection: 'column',
         gap: '50px',
         width: '96%',
-        minHeight:'100vh'
+        minHeight: '100vh',
       }}>
       <Box
         sx={{
@@ -85,7 +104,13 @@ const Home = ({ lang }) => {
           sx={{ fontSize: '20px', fontWeight: '700' }}>
           Collection items
         </Typography>
-        <Items user={user} collectionItems={latestItems} lang={lang} />
+        <Items
+          user={user}
+          collectionItems={latestItems}
+          lang={lang}
+          handleIsLiked={handleIsLiked}
+          handleDislikeItem={handleDislikeItem}
+        />
       </Box>
       <Box
         sx={{
@@ -128,7 +153,8 @@ const Home = ({ lang }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setFirstTag(tag?.title[lang]);
-                  dispatch(setTag(tag?.title[lang]));
+                  dispatch(setUztag(tag?.title['uz']));
+                  dispatch(setEntag(tag?.title['en']));
                 }}
                 sx={{
                   flex: 1,

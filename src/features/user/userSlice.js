@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
-  tag: null,
-  text: null
+  text: null,
+  uztag: null,
+  entag: null,
 }
 
 const userSlice = createSlice({
@@ -12,17 +13,21 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
     },
-    setTag: (state, action) => {
-      state.tag = action.payload
-    },
     setText: (state, action) => {
       state.text = action.payload
+    },
+    setUztag: (state, action) => {
+      state.uztag = action.payload
+    },
+    setEntag: (state, action) => {
+      state.entag = action.payload
     }
   }
 })
 
-export const { setUser, setTag, setText } = userSlice.actions;
+export const { setUser,  setText, setEntag, setUztag } = userSlice.actions;
 export const selectUser = state => state.user.user;
-export const selectTag = state => state.user.tag;
-export const selectText = state=> state.user.text 
+export const selectText = state => state.user.text
+export const selectUztag = state => state.user.uztag
+export const selectEntag = state => state.user.entag
 export default userSlice.reducer

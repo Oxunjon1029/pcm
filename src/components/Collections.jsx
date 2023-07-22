@@ -42,8 +42,8 @@ const Collections = ({
   const [openEditMode, setOpenEditMode] = useState(false);
   const [id, setId] = useState('');
 
-  const user = useSelector(selectUser)
-  
+  const user = useSelector(selectUser);
+
   const location = useLocation();
   const [deleteCollection, { isSuccess, isError, isLoading, data, error }] =
     useDeleteCollectionMutation();
@@ -352,7 +352,7 @@ const Collections = ({
                         />
 
                         <Typography variant='h6' color='text.primary'>
-                          {collection.topic && collection.topic[lang]}
+                          Topic: {collection.topic && collection.topic[lang]}
                         </Typography>
                       </Box>
                     )}
@@ -375,64 +375,62 @@ const Collections = ({
                     }}>
                     {lang === 'en' ? 'View' : "Ko'rish"}
                   </Button>
-                  <Box>
-                    {loading ? (
-                      <Skeleton
-                        animation='wave'
-                        variant='circular'
-                        width={10}
-                        height={10}
-                      />
-                    ) : (
-                      <IconButton
-                        color='success'
-                        disabled={
-                          editMode === collection._id ||
-                          !user ||
-                          location.pathname === '/'
-                        }
-                        onClick={() =>
-                          makeEditMode(
-                            {
-                              name_uz: collection.name['uz'],
-                              name_en: collection.name['en'],
-                              description_uz: collection.description['uz'],
-                              description_en: collection.description['en'],
-                              imageUrl: collection.imageUrl,
-                              topic_uz: collection.topic['uz'],
-                              topic_en: collection.topic['en'],
-                              strings: collection?.customFields?.strings,
-                              multilineTexts:
-                                collection?.customFields?.multilineTexts,
-                              integers: collection?.customFields?.integers,
-                              dates: collection?.customFields?.dates,
-                              booleans: collection?.customFields?.booleans,
-                            },
-                            collection._id
-                          )
-                        }>
-                        <EditIcon />
-                      </IconButton>
-                    )}
-                    {loading ? (
-                      <Skeleton
-                        animation='wave'
-                        variant='circular'
-                        width={10}
-                        height={10}
-                      />
-                    ) : (
-                      <IconButton
-                        color='error'
-                        onClick={() => {
-                          handleOpen();
-                          setId(collection?._id);
-                        }}
-                        disabled={!user || location.pathname === '/'}>
-                        <DeleteIcon />
-                      </IconButton>
-                    )}
-                  </Box>
+                  {location.pathname !== '/' && (
+                    <Box>
+                      {loading ? (
+                        <Skeleton
+                          animation='wave'
+                          variant='circular'
+                          width={10}
+                          height={10}
+                        />
+                      ) : (
+                        <IconButton
+                          color='success'
+                          disabled={editMode === collection._id || !user}
+                          onClick={() =>
+                            makeEditMode(
+                              {
+                                name_uz: collection.name['uz'],
+                                name_en: collection.name['en'],
+                                description_uz: collection.description['uz'],
+                                description_en: collection.description['en'],
+                                imageUrl: collection.imageUrl,
+                                topic_uz: collection.topic['uz'],
+                                topic_en: collection.topic['en'],
+                                strings: collection?.customFields?.strings,
+                                multilineTexts:
+                                  collection?.customFields?.multilineTexts,
+                                integers: collection?.customFields?.integers,
+                                dates: collection?.customFields?.dates,
+                                booleans: collection?.customFields?.booleans,
+                              },
+                              collection._id
+                            )
+                          }>
+                          <EditIcon />
+                        </IconButton>
+                      )}
+                      {loading ? (
+                        <Skeleton
+                          animation='wave'
+                          variant='circular'
+                          width={10}
+                          height={10}
+                        />
+                      ) : (
+                        <IconButton
+                          color='error'
+                          onClick={() => {
+                            handleOpen();
+                            setId(collection?._id);
+                          }}
+                          disabled={!user}>
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
+                    </Box>
+                  )}
                 </CardActions>
               </Card>
             );

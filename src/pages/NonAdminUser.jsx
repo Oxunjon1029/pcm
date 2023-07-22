@@ -16,8 +16,8 @@ const NonAdminUser = ({ lang }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [userCollections, setUserCollections] = useState([]);
-  const user = useSelector(selectUser)
- 
+  const user = useSelector(selectUser);
+
   const url = useSelector(selectUrl);
   const [file, setFile] = useState(null);
   const location = useLocation();
@@ -119,6 +119,7 @@ const NonAdminUser = ({ lang }) => {
     }
     refetch();
   }, [location, isSuccess, isError, data, error, user, refetch]);
+
   return (
     <Box
       sx={{

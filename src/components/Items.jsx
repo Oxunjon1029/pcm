@@ -198,12 +198,10 @@ const Items = ({
                         alignItems: 'center',
                       }}>
                       <IconButton
-                        disabled={!user || location.pathname === '/'}
+                        disabled={!user}
                         onClick={() => handleIsLiked(item?._id)}>
                         <ThumbUpOffAltIcon
-                          color={`${
-                            !user || location.pathname === '/' ? '' : 'primary'
-                          }`}
+                          color={`${!user ? '' : 'primary'}`}
                         />
                       </IconButton>
                       <Typography component='div' fontSize='10px'>
@@ -223,13 +221,9 @@ const Items = ({
                       }}>
                       <IconButton
                         key={item?._id}
-                        disabled={!user || location.pathname === '/'}
+                        disabled={!user}
                         onClick={() => handleIsLiked(item?._id)}>
-                        <ThumbUpIcon
-                          color={`${
-                            !user || location.pathname === '/' ? '' : 'primary'
-                          }`}
-                        />
+                        <ThumbUpIcon color={`${!user ? '' : 'primary'}`} />
                       </IconButton>
                       <Typography component='div' fontSize='10px'>
                         {item?.likes?.length}
@@ -245,12 +239,10 @@ const Items = ({
                         alignItems: 'center',
                       }}>
                       <IconButton
-                        disabled={!user || location.pathname === '/'}
+                        disabled={!user}
                         onClick={() => handleDislikeItem(item?._id)}>
                         <ThumbDownOffAltIcon
-                          color={`${
-                            !user || location.pathname === '/' ? '' : 'primary'
-                          }`}
+                          color={`${!user ? '' : 'primary'}`}
                         />
                       </IconButton>
                       <Typography component='div' fontSize='10px'>
@@ -270,13 +262,9 @@ const Items = ({
                       }}>
                       <IconButton
                         key={item?._id}
-                        disabled={!user || location.pathname === '/'}
+                        disabled={!user}
                         onClick={() => handleDislikeItem(item?._id)}>
-                        <ThumbDownAltIcon
-                          color={`${
-                            !user || location.pathname === '/' ? '' : 'primary'
-                          }`}
-                        />
+                        <ThumbDownAltIcon color={`${!user ? '' : 'primary'}`} />
                       </IconButton>
                       <Typography component='div' fontSize='10px'>
                         {item?.dislikes?.length}
@@ -284,47 +272,45 @@ const Items = ({
                     </Box>
                   )}
                 </Box>
-                <Box>
-                  <IconButton
-                    color='success'
-                    disabled={
-                      editMode === item?._id ||
-                      !user ||
-                      location.pathname === '/'
-                    }
-                    onClick={() =>
-                      makeEditMode(
-                        {
-                          name_uz: item?.name['uz'],
-                          name_en: item?.name['en'],
-                          uztags: item?.uztags,
-                          entags: item?.entags,
-                          strings: item?.strings,
-                          dates: item?.dates,
-                          booleans: item?.booleans,
-                          multilineTexts: item?.multilineTexts,
-                          integers: item?.integers,
-                        },
-                        item?._id
-                      )
-                    }>
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    disabled={!user || location.pathname === '/'}
-                    color='error'
-                    onClick={() => {
-                      setDeleteOpen(true);
-                    }}>
-                    <DeleteIcon />
-                  </IconButton>
-                  <CustomDeleteModal
-                    open={deleteOpen}
-                    handleClose={handleDeleteClose}
-                    deleteMode={item?._id}
-                    handleSubmit={deleteCollectionItem}
-                  />
-                </Box>
+                {location.pathname !== '/' && (
+                  <Box>
+                    <IconButton
+                      color='success'
+                      disabled={editMode === item?._id || !user}
+                      onClick={() =>
+                        makeEditMode(
+                          {
+                            name_uz: item?.name['uz'],
+                            name_en: item?.name['en'],
+                            uztags: item?.uztags,
+                            entags: item?.entags,
+                            strings: item?.strings,
+                            dates: item?.dates,
+                            booleans: item?.booleans,
+                            multilineTexts: item?.multilineTexts,
+                            integers: item?.integers,
+                          },
+                          item?._id
+                        )
+                      }>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      disabled={!user}
+                      color='error'
+                      onClick={() => {
+                        setDeleteOpen(true);
+                      }}>
+                      <DeleteIcon />
+                    </IconButton>
+                    <CustomDeleteModal
+                      open={deleteOpen}
+                      handleClose={handleDeleteClose}
+                      deleteMode={item?._id}
+                      handleSubmit={deleteCollectionItem}
+                    />
+                  </Box>
+                )}
               </CardActions>
             </Card>
           ))}

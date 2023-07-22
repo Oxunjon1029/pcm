@@ -27,7 +27,7 @@ import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCookie } from '../utils/cookies';
-import { selectUser, setTag, setUser } from '../features/user/userSlice';
+import { selectUser, setEntag, setUser, setUztag } from '../features/user/userSlice';
 import { REACT_APP_TOKEN } from '../utils/host';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -194,7 +194,8 @@ const Admin = ({ lang }) => {
   }, [currUser, navigator]);
 
   useEffect(() => {
-    dispatch(setTag(null));
+    dispatch(setUztag(null));
+    dispatch(setEntag(null));
   }, [dispatch]);
   return (
     <Box

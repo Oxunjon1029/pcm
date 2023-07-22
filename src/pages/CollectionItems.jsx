@@ -6,7 +6,12 @@ import * as yup from 'yup';
 import CreateCollectionItemModal from '../components/CreateCollectionItemModal';
 import Loader from '../components/Loader';
 import { useSelector } from 'react-redux';
-import { selectTag, selectText, selectUser } from '../features/user/userSlice';
+import {
+  selectEntag,
+  selectText,
+  selectUser,
+  selectUztag,
+} from '../features/user/userSlice';
 import {
   useGetAllCollectionItemsByCollectionIdQuery,
   useCreateCollectionItemMutation,
@@ -25,17 +30,18 @@ import { Link } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
-  const tag = useSelector(selectTag);
+  const uztag = useSelector(selectUztag);
+  const entag = useSelector(selectEntag);
   const text = useSelector(selectText);
-  const user = useSelector(selectUser)
-  
+  const user = useSelector(selectUser);
+
   const collectionId = location.state?.collectionId;
   const { refetch: collectionRefetch } =
     useGetCollectionByIdQuery(collectionId);
   const searchedItems = location.state?.searchedItems;
   const collectionItemsByTagSearch = location.state?.collectionItems;
   const { refetch: tagRefetch, data: tagData } = useSearchItemsByTagQuery({
-    tag: tag,
+    tag: lang === 'uz' ? uztag : entag,
     lang: lang,
   });
   const { refetch: searchedRefetch, data: textData } =
@@ -162,7 +168,6 @@ const CollectionItems = ({ lang }) => {
     },
     id
   ) => {
-    console.log(integers, multilineTexts, booleans);
     await formik.setValues({
       name_uz,
       name_en,
@@ -225,12 +230,6 @@ const CollectionItems = ({ lang }) => {
       collectionRefetch();
     }
 
-    if (collectionItemsByTagSearch) {
-      tagRefetch();
-    }
-    if (searchedItems) {
-      searchedRefetch();
-    }
     if (!searchedItems && !collectionItemsByTagSearch) {
       refetch();
     }
@@ -252,7 +251,7 @@ const CollectionItems = ({ lang }) => {
     searchedRefetch,
     collectionRefetch,
   ]);
-  useEffect(() => {}, []);
+
   return (
     <Box
       sx={{
@@ -267,7 +266,7 @@ const CollectionItems = ({ lang }) => {
       <Breadcrumbs aria-label='breadcrumb'>
         <Link
           to='/user-profile'
-          style={{ pointerEvents: `${user.length === 0 || !collectionId ? 'none' : ''}` }}>
+          style={{ pointerEvents: `${!user || !collectionId ? 'none' : ''}` }}>
           {lang === 'en' ? 'Collections' : 'Kolleksiyalar'}
         </Link>
         <Typography color='text.primary'>

@@ -353,7 +353,7 @@ const Items = ({
                   </StyledTableCell>
                   <StyledTableCell>Actions</StyledTableCell>
                   <StyledTableCell>
-                    {collectionById?.customFields?.strings && (
+                    {collectionById?.customFields?.strings ? (
                       <Box
                         sx={{
                           display: 'flex',
@@ -366,10 +366,27 @@ const Items = ({
                           </Typography>
                         ))}
                       </Box>
+                    ) : (
+                      <Box>
+                        {collectionItems?.map((item) => (
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }}>
+                            {item?.strings?.map((string) => (
+                              <Typography key={string?._id}>
+                                {string?.name}
+                              </Typography>
+                            ))}
+                          </Box>
+                        ))}
+                      </Box>
                     )}
                   </StyledTableCell>
                   <StyledTableCell>
-                    {collectionById?.customFields?.dates && (
+                    {collectionById?.customFields?.dates ? (
                       <Box
                         sx={{
                           display: 'flex',
@@ -379,6 +396,23 @@ const Items = ({
                           <Typography key={item?._id + 'dates'}>
                             {item?.name}
                           </Typography>
+                        ))}
+                      </Box>
+                    ) : (
+                      <Box>
+                        {collectionItems?.map((item) => (
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }}>
+                            {item?.dates?.map((date) => (
+                              <Typography key={date?._id}>
+                                {date?.name}
+                              </Typography>
+                            ))}
+                          </Box>
                         ))}
                       </Box>
                     )}

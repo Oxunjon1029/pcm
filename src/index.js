@@ -24,7 +24,7 @@ root.render(
               width: "100%",
               height: "100vh"
             }}>
-            <Loader />
+            <Loader size="60" />
           </div>}>
           <App />
         </Suspense>

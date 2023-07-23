@@ -11,8 +11,8 @@ import { selectUser } from '../features/user/userSlice';
 const Comments = ({ socket, lang }) => {
   const location = useLocation();
   const [comments, setComments] = useState([]);
-  const user = useSelector(selectUser)
- 
+  const user = useSelector(selectUser);
+
   const validationSchema = yup.object({
     content: yup.string().required(),
   });
@@ -107,7 +107,6 @@ const Comments = ({ socket, lang }) => {
                 flex: 1,
                 gap: '15px',
                 backgroundColor: 'white',
-                borderRadius: '15px',
                 padding: '10px',
               }}>
               <Typography
@@ -138,7 +137,6 @@ const Comments = ({ socket, lang }) => {
                 flex: 1,
                 gap: '15px',
                 backgroundColor: 'white',
-                borderRadius: '15px',
                 padding: '10px',
               }}>
               <Typography

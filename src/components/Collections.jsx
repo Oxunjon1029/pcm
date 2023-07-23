@@ -275,13 +275,13 @@ const Collections = ({
                   <CardHeader
                     title={
                       lang === 'en'
-                        ? 'Author:' + collection?.author
-                        : 'Egasi:' + collection?.author
+                        ? 'Author: ' + collection?.author
+                        : 'Egasi: ' + collection?.author
                     }
                     subheader={
                       lang === 'en'
-                        ? 'Items:' + collection.itemCount
-                        : 'Elementlar:' + collection.itemCount
+                        ? 'Items: ' + collection.itemCount
+                        : 'Elementlar: ' + collection.itemCount
                     }
                   />
                 )}

@@ -58,7 +58,7 @@ const Home = ({ lang }) => {
         });
       }
     }
-  }, [tagSuccess, searchedItemsByTag, navigate]);
+  }, [tagSuccess, searchedItemsByTag, navigate,user]);
 
   const [latestItems, setLatestItems] = useState([]);
   useEffect(() => {

@@ -9,7 +9,7 @@ import { useSearchFullTextQuery } from '../features/api/collectionItemsApi';
 import { useNavigate } from 'react-router';
 import IconButton from '@mui/material/IconButton';
 import { useDispatch } from 'react-redux';
-import { setText } from '../features/user/userSlice';
+import {  setText } from '../features/user/userSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -33,16 +33,14 @@ const StyledInputBase = styled(InputBase)(() => ({
 }));
 const SearchModal = ({ open, handleClose, lang }) => {
   const [searchText, setSearchText] = useState('');
-  const dispatch = useDispatch()
-  const { data: searchedItems } =
-    useSearchFullTextQuery( searchText);
+  const dispatch = useDispatch();
+  const { data: searchedItems } = useSearchFullTextQuery(searchText);
   const handleSearch = (e) => {
     if (e.target.value && open) {
       setSearchText(e.target.value);
-      dispatch(setText(e.target.value))
+      dispatch(setText(e.target.value));
     } else {
       setSearchText('');
-      
     }
   };
 

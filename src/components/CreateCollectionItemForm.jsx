@@ -91,24 +91,25 @@ const CreateCollectionItemForm = ({
     actions.resetForm();
   };
   const handleUpdateCollectionItemSubmit = (values, actions) => {
-    let name = {
-      en: values?.name_en,
-      uz: values?.name_uz,
-    };
+    console.log(values)
+    // let name = {
+    //   en: values?.name_en,
+    //   uz: values?.name_uz,
+    // };
 
-    updateCollectionItem({
-      itemId: mode,
-      data: {
-        name,
-        uztags: value,
-        entags: enValue,
-        strings: values?.strings,
-        dates: values?.dates,
-        multilineTexts: values?.multilineTexts,
-        integers: values?.integers,
-        booleans: values?.booleans,
-      },
-    });
+    // updateCollectionItem({
+    //   itemId: mode,
+    //   data: {
+    //     name,
+    //     uztags: value,
+    //     entags: enValue,
+    //     strings: values?.strings,
+    //     dates: values?.dates,
+    //     multilineTexts: values?.multilineTexts,
+    //     integers: values?.integers,
+    //     booleans: values?.booleans,
+    //   },
+    // });
     handleClose();
     setEditMode('');
     actions.resetForm();

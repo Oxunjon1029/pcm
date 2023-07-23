@@ -71,8 +71,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSearchModal, setOpenSearchModal] = React.useState(false);
-  const user = useSelector(selectUser)
-  
+  const user = useSelector(selectUser);
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -112,7 +112,9 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
               display: { xs: 'none', sm: 'block' },
               cursor: 'pointer',
             }}>
-            Personal collection management
+            {lang === 'en'
+              ? 'Personal collection management'
+              : 'Shaxsiy kolleksiya menejmenti'}
           </Typography>
           <Box
             sx={{
@@ -210,7 +212,7 @@ const Header = ({ checked, changeMode, lang, languages, handleChange }) => {
                     onClick={async () => {
                       handleClose();
                       deleteCookie(REACT_APP_TOKEN);
-                      dispatch(setUser(null))
+                      dispatch(setUser(null));
                       navigate('/login');
                     }}>
                     <LogoutIcon sx={{ marginRight: '10px' }} />

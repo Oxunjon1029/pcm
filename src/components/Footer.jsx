@@ -58,7 +58,7 @@ const Footer = () => {
             sx={{
               pointerEvents: `${
                 el.id === 'admin' &&
-                (user?.length === 0 || user) &&
+                (!user || user) &&
                 user?.role !== 'admin' &&
                 'none'
               }`,

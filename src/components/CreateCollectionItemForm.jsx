@@ -91,25 +91,24 @@ const CreateCollectionItemForm = ({
     actions.resetForm();
   };
   const handleUpdateCollectionItemSubmit = (values, actions) => {
-    console.log(values)
-    // let name = {
-    //   en: values?.name_en,
-    //   uz: values?.name_uz,
-    // };
+    let name = {
+      en: values?.name_en,
+      uz: values?.name_uz,
+    };
 
-    // updateCollectionItem({
-    //   itemId: mode,
-    //   data: {
-    //     name,
-    //     uztags: value,
-    //     entags: enValue,
-    //     strings: values?.strings,
-    //     dates: values?.dates,
-    //     multilineTexts: values?.multilineTexts,
-    //     integers: values?.integers,
-    //     booleans: values?.booleans,
-    //   },
-    // });
+    updateCollectionItem({
+      itemId: mode,
+      data: {
+        name,
+        uztags: value,
+        entags: enValue,
+        strings: values?.strings,
+        dates: values?.dates,
+        multilineTexts: values?.multilineTexts,
+        integers: values?.integers,
+        booleans: values?.booleans,
+      },
+    });
     handleClose();
     setEditMode('');
     actions.resetForm();
@@ -239,7 +238,15 @@ const CreateCollectionItemForm = ({
                                       field.name
                                     )}
                                     onClick={() => {
-                                      if (!mode) {
+                                      if (
+                                        values?.strings?.length === 0 ||
+                                        (values?.strings?.length > 0 &&
+                                          values?.strings[index] &&
+                                          values.strings[index].name !==
+                                            field.name) ||
+                                        (values?.strings?.length > 0 &&
+                                          !values?.strings[index])
+                                      ) {
                                         push({ name: field.name });
                                       }
                                       setStringFieldName((prev) => [
@@ -311,7 +318,15 @@ const CreateCollectionItemForm = ({
                                   variant='contained'
                                   disabled={dateFieldName.includes(field.name)}
                                   onClick={() => {
-                                    if (!mode) {
+                                    if (
+                                      values?.dates?.length === 0 ||
+                                      (values?.dates?.length > 0 &&
+                                        values?.dates[index] &&
+                                        values.dates[index].name !==
+                                          field.name) ||
+                                      (values?.dates?.length > 0 &&
+                                        !values?.dates[index])
+                                    ) {
                                       push({ name: field.name });
                                     }
                                     setDateFieldName((prev) => [
@@ -385,7 +400,15 @@ const CreateCollectionItemForm = ({
                                       field.name
                                     )}
                                     onClick={() => {
-                                      if (!mode) {
+                                      if (
+                                        values?.multilineTexts?.length === 0 ||
+                                        (values?.multilineTexts?.length > 0 &&
+                                          values?.multilineTexts[index] &&
+                                          values.multilineTexts[index].name !==
+                                            field.name) ||
+                                        (values?.multilineTexts?.length > 0 &&
+                                          !values?.multilineTexts[index])
+                                      ) {
                                         push({ name: field.name });
                                       }
                                       setTextFieldName((prev) => [
@@ -459,7 +482,15 @@ const CreateCollectionItemForm = ({
                                     field.name
                                   )}
                                   onClick={() => {
-                                    if (!mode) {
+                                    if (
+                                      values?.integers?.length === 0 ||
+                                      (values?.integers?.length > 0 &&
+                                        values?.integers[index] &&
+                                        values.integers[index].name !==
+                                          field.name) ||
+                                      (values?.integers?.length > 0 &&
+                                        !values?.integers[index])
+                                    ) {
                                       push({ name: field.name });
                                     }
                                     setIntegerFieldName((prev) => [
@@ -559,6 +590,7 @@ const CreateCollectionItemForm = ({
                                               values?.booleans[index]?.value
                                             }
                                             onChange={(e) => {
+                                              console.log(values?.booleans);
                                               const newCheckboxes = [
                                                 ...values?.booleans,
                                               ];
@@ -581,8 +613,19 @@ const CreateCollectionItemForm = ({
                                     booleanField.name
                                   )}
                                   onClick={() => {
-                                    if (!mode) {
-                                      push({ name: booleanField.name });
+                                    if (
+                                      values?.booleans?.length === 0 ||
+                                      (values?.booleans?.length > 0 &&
+                                        values?.booleans[index].name &&
+                                        values.booleans[index] !==
+                                          booleanField.name) ||
+                                      (values?.booleans?.length > 0 &&
+                                        !values?.booleans[index])
+                                    ) {
+                                      push({
+                                        name: booleanField.name,
+                                        value: false,
+                                      });
                                     }
                                     setBooleanFieldName((prev) => [
                                       ...prev,

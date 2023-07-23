@@ -314,8 +314,8 @@ const CollectionItems = ({ lang }) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '100%',
-              width: '50vh',
+              width: '100%',
+              height: '50vh',
             }}>
             <Loader />
           </Box>

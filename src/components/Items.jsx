@@ -1,5 +1,12 @@
 import React from 'react';
-import { Typography, Box, Card, CardContent, CardActions } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+} from '@mui/material';
 import CustomDeleteModal from './CustomDeleteModal';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
@@ -21,6 +28,7 @@ import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { useGetCollectionByIdQuery } from '../features/api/collectionsApi';
+import { generateCSV } from '../utils/generateCSVFile';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -85,6 +93,17 @@ const Items = ({
             ? 'There are no collection items'
             : "Bu yerda kolleksiya elementlari yo'q"}
         </Typography>
+      )}
+      {location.pathname !== '/' && (
+        <Box
+          sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end' }}>
+          <Button
+            onClick={() => generateCSV(collectionItems, 'collection_items')}
+            variant='contained'
+            color='secondary'>
+            Generate CSV
+          </Button>
+        </Box>
       )}
       <Box
         sx={{

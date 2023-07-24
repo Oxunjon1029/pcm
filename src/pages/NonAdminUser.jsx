@@ -6,18 +6,24 @@ import CreateCollectionModal from '../components/CreateCollectionModal';
 import { useCreateCollectionMutation } from '../features/api/collectionsApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUrl, setUrl } from '../features/bucket/bucketUrlSlice';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useGetAllCollectionsQuery } from '../features/api/collectionsApi';
 import Loader from '../components/Loader';
 import { useGetS3UrlQuery } from '../features/api/collectionsApi';
 import { selectUser } from '../features/user/userSlice';
+import { REACT_APP_TOKEN } from '../utils/host';
+import { deleteCookie } from '../utils/cookies';
 const NonAdminUser = ({ lang }) => {
-  const { data: s3Url, isSuccess: isUrlSuccess } = useGetS3UrlQuery();
+  const {
+    data: s3Url,
+    isSuccess: isUrlSuccess,
+    
+  } = useGetS3UrlQuery();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [userCollections, setUserCollections] = useState([]);
   const user = useSelector(selectUser);
-
+  const navigator = useNavigate()
   const url = useSelector(selectUrl);
   const [file, setFile] = useState(null);
   const location = useLocation();
@@ -115,10 +121,13 @@ const NonAdminUser = ({ lang }) => {
       }
     }
     if (isError) {
-      console.log(error);
+      if (error?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigator('/login')
+      }
     }
     refetch();
-  }, [location, isSuccess, isError, data, error, user, refetch]);
+  }, [location, isSuccess, isError, data, error, user, refetch,navigator]);
 
   return (
     <Box

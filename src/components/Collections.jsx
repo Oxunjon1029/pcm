@@ -25,6 +25,8 @@ import Loader from './Loader';
 import { selectUrl, setUrl } from '../features/bucket/bucketUrlSlice';
 import DefaultImage from '../utils/default.jpg';
 import { selectUser } from '../features/user/userSlice';
+import { deleteCookie } from '../utils/cookies';
+import { REACT_APP_TOKEN } from '../utils/host';
 const Collections = ({
   open,
   handleClose,
@@ -197,18 +199,30 @@ const Collections = ({
       toast.success(data?.message);
     }
     if (isError) {
-      toast.error(error?.message);
+      if (error?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigate('/login');
+      }
     }
-  }, [isSuccess, isError, data, error]);
+  }, [isSuccess, isError, data, error, navigate]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
       toast.success(updateMessage?.message);
     }
     if (isUpdateError) {
-      toast.error(updateErrMessage?.message);
+      if (updateErrMessage?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigate('/login');
+      }
     }
-  }, [updateErrMessage, isUpdateSuccess, updateMessage, isUpdateError]);
+  }, [
+    updateErrMessage,
+    isUpdateSuccess,
+    updateMessage,
+    isUpdateError,
+    navigate,
+  ]);
 
   if (isLoading || updateLoading) {
     return (

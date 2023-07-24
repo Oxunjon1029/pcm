@@ -389,6 +389,7 @@ const Items = ({
                       <Box>
                         {collectionItems?.map((item) => (
                           <Box
+                            key={item?._id + 'strings'}
                             sx={{
                               display: 'flex',
                               width: '100%',
@@ -421,6 +422,7 @@ const Items = ({
                       <Box>
                         {collectionItems?.map((item) => (
                           <Box
+                            key={item?._id + 'dates'}
                             sx={{
                               display: 'flex',
                               width: '100%',

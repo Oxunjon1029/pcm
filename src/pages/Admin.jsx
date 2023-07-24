@@ -27,7 +27,12 @@ import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCookie } from '../utils/cookies';
-import { selectUser, setEntag, setUser, setUztag } from '../features/user/userSlice';
+import {
+  selectUser,
+  setEntag,
+  setUser,
+  setUztag,
+} from '../features/user/userSlice';
 import { REACT_APP_TOKEN } from '../utils/host';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -63,8 +68,9 @@ const Admin = ({ lang }) => {
   const [deleteUser] = useDeleteUserMutation();
   const { isSuccess, data, isError, error, isLoading } = useGetAllUsersQuery();
   const dispatch = useDispatch();
-  const currUser = useSelector(selectUser)
- 
+  const currUser = useSelector(selectUser);
+
+  const navigate = useNavigate();
   const [allUsers, setAllUsers] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -129,9 +135,12 @@ const Admin = ({ lang }) => {
       setAllUsers(data);
     }
     if (isError) {
-      console.log(error);
+      if (error?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigate('/login');
+      }
     }
-  }, [isSuccess, isError, data, error]);
+  }, [isSuccess, isError, data, error, navigate]);
 
   const hanleUserStatusChange = (status) => {
     changeUserStatus({ selectedIds: selected, status: status }).then((data) => {
@@ -144,7 +153,12 @@ const Admin = ({ lang }) => {
         setSelected([]);
       }
       if (data?.error) {
-        toast.error(data?.error?.message);
+        if (data?.error) {
+          if (data?.error?.status === 401) {
+            deleteCookie(REACT_APP_TOKEN);
+            navigate('/login');
+          }
+        }
       }
     });
   };
@@ -160,7 +174,10 @@ const Admin = ({ lang }) => {
           setSelected([]);
         }
         if (data?.error) {
-          toast.error(data?.error?.message);
+          if (data?.error?.status === 401) {
+            deleteCookie(REACT_APP_TOKEN);
+            navigate('/login');
+          }
         }
       }
     );
@@ -177,7 +194,12 @@ const Admin = ({ lang }) => {
         setSelected([]);
       }
       if (data?.error) {
-        toast.error(data?.error?.message);
+        if (data?.error) {
+          if (data?.error?.status === 401) {
+            deleteCookie(REACT_APP_TOKEN);
+            navigate('/login');
+          }
+        }
       }
     });
   };
@@ -188,7 +210,7 @@ const Admin = ({ lang }) => {
     }
     if (!currUser || currUser.status === 'blocked') {
       deleteCookie(REACT_APP_TOKEN);
-      deleteCookie('currentUser')
+      deleteCookie('currentUser');
       navigator('/login');
     }
   }, [currUser, navigator]);

@@ -1,6 +1,6 @@
 import { Button, Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import CreateCollectionItemModal from '../components/CreateCollectionItemModal';
@@ -28,13 +28,15 @@ import Items from '../components/Items';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { deleteCookie } from '../utils/cookies';
+import { REACT_APP_TOKEN } from '../utils/host';
 const CollectionItems = ({ lang }) => {
   const location = useLocation();
   const uztag = useSelector(selectUztag);
   const entag = useSelector(selectEntag);
   const text = useSelector(selectText);
   const user = useSelector(selectUser);
-
+  const navigator = useNavigate();
   const collectionId = location.state?.collectionId;
   const { refetch: collectionRefetch } =
     useGetCollectionByIdQuery(collectionId);
@@ -178,7 +180,7 @@ const CollectionItems = ({ lang }) => {
       integers,
       multilineTexts,
       booleans,
-    })
+    });
     await formik.setValues({
       name_uz,
       name_en,
@@ -198,6 +200,11 @@ const CollectionItems = ({ lang }) => {
     likeCollectionItem({
       itemId: id,
       userId: user?._id,
+    }).catch((err) => {
+      if (err?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigator('/login');
+      }
     });
   };
 
@@ -205,6 +212,11 @@ const CollectionItems = ({ lang }) => {
     unlikeCollectionItem({
       itemId: id,
       userId: user?._id,
+    }).catch((err) => {
+      if (err?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigator('/login');
+      }
     });
   };
 
@@ -213,27 +225,36 @@ const CollectionItems = ({ lang }) => {
       toast.success(createMsg?.message);
     }
     if (isCreatedErr) {
-      toast.error(createErrMsg?.message);
+      if (createErrMsg?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigator('/login');
+      }
     }
-  }, [isCreated, isCreatedErr, createMsg, createErrMsg]);
+  }, [isCreated, isCreatedErr, createMsg, createErrMsg, navigator]);
 
   useEffect(() => {
     if (isUpdated) {
       toast.success(updateMsg?.message);
     }
     if (isUpdatedErr) {
-      toast.error(updateErrMsg?.message);
+      if (updateErrMsg?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigator('/login');
+      }
     }
-  }, [isUpdated, isUpdatedErr, updateMsg, updateErrMsg]);
+  }, [isUpdated, isUpdatedErr, updateMsg, updateErrMsg, navigator]);
 
   useEffect(() => {
     if (isDeleted) {
       toast.success(deleteMsg?.message);
     }
     if (isDeletedErr) {
-      toast.error(deleteErrMsg?.message);
+      if (deleteErrMsg?.status === 401) {
+        deleteCookie(REACT_APP_TOKEN);
+        navigator('/login');
+      }
     }
-  }, [isDeleted, isDeletedErr, deleteMsg, deleteErrMsg]);
+  }, [isDeleted, isDeletedErr, deleteMsg, deleteErrMsg, navigator]);
 
   useEffect(() => {
     if (isItemsByCollIdSuccess) {

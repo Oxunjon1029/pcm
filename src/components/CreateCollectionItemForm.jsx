@@ -21,6 +21,7 @@ const CreateCollectionItemForm = ({
 }) => {
   const { data: collectionById, refetch } =
     useGetCollectionByIdQuery(collectionId);
+    
   let uztags = [],
     entags = [];
   tags.forEach((tag) => {

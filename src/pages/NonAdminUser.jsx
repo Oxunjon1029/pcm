@@ -13,17 +13,14 @@ import { useGetS3UrlQuery } from '../features/api/collectionsApi';
 import { selectUser } from '../features/user/userSlice';
 import { REACT_APP_TOKEN } from '../utils/host';
 import { deleteCookie } from '../utils/cookies';
+import { setUztag, setEntag } from '../features/user/userSlice';
 const NonAdminUser = ({ lang }) => {
-  const {
-    data: s3Url,
-    isSuccess: isUrlSuccess,
-    
-  } = useGetS3UrlQuery();
+  const { data: s3Url, isSuccess: isUrlSuccess } = useGetS3UrlQuery();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [userCollections, setUserCollections] = useState([]);
   const user = useSelector(selectUser);
-  const navigator = useNavigate()
+  const navigator = useNavigate();
   const url = useSelector(selectUrl);
   const [file, setFile] = useState(null);
   const location = useLocation();
@@ -123,12 +120,15 @@ const NonAdminUser = ({ lang }) => {
     if (isError) {
       if (error?.status === 401) {
         deleteCookie(REACT_APP_TOKEN);
-        navigator('/login')
+        navigator('/login');
       }
     }
     refetch();
-  }, [location, isSuccess, isError, data, error, user, refetch,navigator]);
-
+  }, [location, isSuccess, isError, data, error, user, refetch, navigator]);
+  useEffect(() => {
+    dispatch(setUztag(null));
+    dispatch(setEntag(null));
+  }, [dispatch]);
   return (
     <Box
       sx={{
